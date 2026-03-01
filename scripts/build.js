@@ -12,6 +12,7 @@
  *   node scripts/build.js --monitor <id>     # Poll build until completion
  *   node scripts/build.js --platform ios     # Build for iOS instead of Android
  *   node scripts/build.js --profile preview  # Use a different build profile
+ *   node scripts/build.js --creds             # View all EAS credentials & keystores
  * 
  * See BUILD-TROUBLESHOOTING.md for known issues and solutions.
  */
@@ -463,6 +464,91 @@ async function fetchLogs(buildId) {
 }
 
 // ═══════════════════════════════════════════════════════════════
+// Credentials
+// ═══════════════════════════════════════════════════════════════
+
+async function showCredentials() {
+  banner('EAS Android Credentials');
+
+  try {
+    const data = await graphql(`{
+      app {
+        byFullName(fullName: "@moataz.alsbak/australian-citizenship-test") {
+          id
+          androidAppCredentials {
+            applicationIdentifier
+            isLegacy
+            androidAppBuildCredentialsList {
+              id
+              name
+              isDefault
+              androidKeystore {
+                id
+                keyAlias
+                type
+                createdAt
+                updatedAt
+                md5CertificateFingerprint
+              }
+            }
+          }
+        }
+      }
+    }`);
+
+    const creds = data.app.byFullName.androidAppCredentials;
+    if (!creds || creds.length === 0) {
+      log('No Android credentials found', 'warn');
+      return;
+    }
+
+    log(`Found ${creds.length} credential set(s):\n`, 'info');
+
+    for (const cred of creds) {
+      const pkg = cred.applicationIdentifier;
+      const isCurrent = pkg === EXPECTED_PACKAGE;
+      const marker = isCurrent ? colors.green(' ← CURRENT') : '';
+      console.log(`${colors.bold(pkg)}${marker}`);
+
+      if (cred.androidAppBuildCredentialsList.length === 0) {
+        console.log(`  ${colors.dim('(no build credentials)')}`);
+      }
+
+      for (const bc of cred.androidAppBuildCredentialsList) {
+        console.log(`  Credential: ${bc.name} ${bc.isDefault ? colors.green('(default)') : ''}`);
+        if (bc.androidKeystore) {
+          const ks = bc.androidKeystore;
+          console.log(`  Keystore ID: ${colors.dim(ks.id)}`);
+          console.log(`  Key Alias:   ${ks.keyAlias}`);
+          console.log(`  Type:        ${ks.type}`);
+          console.log(`  Created:     ${new Date(ks.createdAt).toLocaleDateString()}`);
+          if (ks.md5CertificateFingerprint) {
+            console.log(`  MD5:         ${ks.md5CertificateFingerprint}`);
+          }
+        } else {
+          console.log(`  Keystore:    ${colors.yellow('NONE')}`);
+        }
+      }
+      console.log('');
+    }
+
+    // Google Play signing key reference
+    console.log(colors.bold('Google Play Expected Signing Key:'));
+    console.log(`  SHA1: CF:1C:17:42:FF:71:E6:5E:6F:EC:98:BD:7A:8A:82:1D:7A:2D:C5:A1`);
+    console.log('');
+    console.log(colors.bold('Current EAS Keystore Signing Key:'));
+    console.log(`  SHA1: 26:32:AE:71:04:6C:6E:79:45:9F:D5:56:D1:4C:88:82:4A:E2:AD:97`);
+    console.log('');
+
+    log('If keys don\'t match, see BUILD-TROUBLESHOOTING.md Issue 5', 'info');
+    log('To manage credentials interactively: npx eas credentials --platform android', 'info');
+  } catch (e) {
+    log(`Failed to fetch credentials: ${e.message}`, 'error');
+    log('Try: npx eas credentials --platform android', 'info');
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
 // Main
 // ═══════════════════════════════════════════════════════════════
 
@@ -477,6 +563,7 @@ async function main() {
     else if (args[i] === '--monitor' && args[i + 1]) { flags.monitor = args[++i]; }
     else if (args[i] === '--platform' && args[i + 1]) { flags.platform = args[++i]; }
     else if (args[i] === '--profile' && args[i + 1]) { flags.profile = args[++i]; }
+    else if (args[i] === '--creds') { flags.creds = true; }
     else if (args[i] === '--help' || args[i] === '-h') { flags.help = true; }
   }
 
@@ -495,6 +582,7 @@ ${colors.bold('Usage:')}
   node scripts/build.js --monitor <id>       Poll until completion
   node scripts/build.js --platform ios       Build for iOS
   node scripts/build.js --profile preview    Use preview profile
+  node scripts/build.js --creds              View EAS credentials & keystores
   node scripts/build.js --help               Show this help
 
 ${colors.bold('Examples:')}
@@ -508,6 +596,11 @@ ${colors.bold('Documentation:')} See BUILD-TROUBLESHOOTING.md
   }
 
   // Handle individual commands
+  if (flags.creds) {
+    await showCredentials();
+    return;
+  }
+
   if (flags.status) {
     const build = await getBuildStatus(flags.status);
     console.log(JSON.stringify(build, null, 2));
