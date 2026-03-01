@@ -2,6 +2,8 @@ node_modules/
 .expo/
 dist/
 build/
+android/
+ios/
 *.aab
 *.apk
 *.ipa
@@ -11,5 +13,7 @@ screenshots/
 logo/
 Bill/
 .git/
+archive-output/
+inspect-output/
 AppData/
 AppData/**
