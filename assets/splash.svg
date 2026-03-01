@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1284" height="2778" viewBox="0 0 1284 2778">
+  <defs>
+    <linearGradient id="sbg" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0%" stop-color="#000C2D"/>
+      <stop offset="40%" stop-color="#001245"/>
+      <stop offset="70%" stop-color="#002B7F"/>
+      <stop offset="100%" stop-color="#00008B"/>
+    </linearGradient>
+    <linearGradient id="sgold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFE44D"/>
+      <stop offset="100%" stop-color="#FFD700"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1284" height="2778" fill="url(#sbg)"/>
+  
+  <!-- Decorative stars scattered -->
+  <circle cx="200" cy="400" r="3" fill="white" opacity="0.4"/>
+  <circle cx="1100" cy="300" r="2" fill="white" opacity="0.3"/>
+  <circle cx="300" cy="600" r="2" fill="white" opacity="0.35"/>
+  <circle cx="900" cy="500" r="3" fill="white" opacity="0.3"/>
+  <circle cx="150" cy="900" r="2" fill="white" opacity="0.25"/>
+  <circle cx="1050" cy="800" r="2" fill="white" opacity="0.3"/>
+  
+  <!-- Australian Flag (centred, scaled) -->
+  <g transform="translate(192, 700)">
+    <!-- Flag background -->
+    <rect width="900" height="450" fill="#00008B" rx="8"/>
+    
+    <!-- Union Jack canton -->
+    <g clip-path="url(#sc)">
+      <clipPath id="sc"><rect width="450" height="225"/></clipPath>
+      <rect width="450" height="225" fill="#00247D"/>
+      <line x1="0" y1="0" x2="450" y2="225" stroke="white" stroke-width="40"/>
+      <line x1="450" y1="0" x2="0" y2="225" stroke="white" stroke-width="40"/>
+      <line x1="0" y1="0" x2="450" y2="225" stroke="#CF142B" stroke-width="18"/>
+      <line x1="450" y1="0" x2="0" y2="225" stroke="#CF142B" stroke-width="18"/>
+      <rect y="90" width="450" height="45" fill="white"/>
+      <rect x="202" width="46" height="225" fill="white"/>
+      <rect y="97" width="450" height="31" fill="#CF142B"/>
+      <rect x="210" width="30" height="225" fill="#CF142B"/>
+    </g>
+    
+    <!-- Commonwealth Star -->
+    <text x="225" y="370" font-size="90" fill="white" font-family="serif" text-anchor="middle">★</text>
+    
+    <!-- Southern Cross -->
+    <text x="650" y="120" font-size="60" fill="white" font-family="serif" text-anchor="middle">★</text>
+    <text x="580" y="220" font-size="60" fill="white" font-family="serif" text-anchor="middle">★</text>
+    <text x="730" y="200" font-size="60" fill="white" font-family="serif" text-anchor="middle">★</text>
+    <text x="650" y="340" font-size="60" fill="white" font-family="serif" text-anchor="middle">★</text>
+    <text x="670" y="240" font-size="35" fill="white" font-family="serif" text-anchor="middle">★</text>
+  </g>
+  
+  <!-- App Title -->
+  <text x="642" y="1350" font-size="100" font-weight="900" fill="white" font-family="Arial, sans-serif" text-anchor="middle" letter-spacing="3">Australian</text>
+  <text x="642" y="1470" font-size="100" font-weight="900" fill="white" font-family="Arial, sans-serif" text-anchor="middle" letter-spacing="3">Citizenship</text>
+  <text x="642" y="1600" font-size="110" font-weight="900" fill="url(#sgold)" font-family="Arial, sans-serif" text-anchor="middle" letter-spacing="4">Test Prep</text>
+  
+  <!-- Gold divider -->
+  <rect x="350" y="1660" width="584" height="4" rx="2" fill="#FFD700" opacity="0.5"/>
+  
+  <!-- Subtitle -->
+  <text x="642" y="1740" font-size="44" fill="rgba(255,255,255,0.6)" font-family="Arial, sans-serif" text-anchor="middle" letter-spacing="6">OUR COMMON BOND</text>
+  
+  <!-- Aussie emojis row (using symbols) -->
+  <text x="642" y="1880" font-size="60" fill="rgba(255,255,255,0.4)" font-family="Arial, sans-serif" text-anchor="middle" letter-spacing="30">★  ✦  ★  ✦  ★</text>
+  
+  <!-- Bottom gold accent line -->
+  <rect y="2770" width="1284" height="8" fill="#FFD700" opacity="0.4"/>
+</svg>

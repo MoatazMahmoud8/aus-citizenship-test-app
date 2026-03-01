@@ -1,0 +1,641 @@
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  Alert,
+  Dimensions,
+  Platform,
+} from 'react-native';
+import { useRouter, useLocalSearchParams } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
+import * as Haptics from 'expo-haptics';
+import { Colors, Fonts, Spacing, BorderRadius, Shadows } from '../../constants/theme';
+import {
+  Question,
+  QuizAnswer,
+  QuizResult,
+  QUIZ_CONFIG,
+  QuestionCategory,
+} from '../../constants/types';
+import {
+  generateQuiz,
+  generateCategoryQuiz,
+  generateExamQuiz,
+  allQuestions,
+} from '../../data/questionBank';
+import {
+  saveQuizResult,
+  updateProgressAfterQuiz,
+  updateCategoryScore,
+  getSettings,
+} from '../../utils/storage';
+import { formatTime, generateQuizId } from '../../utils/helpers';
+
+const { width } = Dimensions.get('window');
+
+export default function QuizScreen() {
+  const router = useRouter();
+  const params = useLocalSearchParams<{
+    mode?: string;
+    category?: string;
+    count?: string;
+    examId?: string;
+  }>();
+
+  const [questions, setQuestions] = useState<Question[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
+  const [showExplanation, setShowExplanation] = useState(false);
+  const [answers, setAnswers] = useState<QuizAnswer[]>([]);
+  const [timeElapsed, setTimeElapsed] = useState(0);
+  const [questionStartTime, setQuestionStartTime] = useState(Date.now());
+  const [showTimer, setShowTimer] = useState(true);
+  const [hapticEnabled, setHapticEnabled] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const scrollRef = useRef<ScrollView>(null);
+
+  // Initialize quiz
+  useEffect(() => {
+    initQuiz();
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, []);
+
+  const initQuiz = async () => {
+    const settings = await getSettings();
+    setShowTimer(settings.showTimer);
+    setHapticEnabled(settings.hapticEnabled);
+
+    let quizQuestions: Question[];
+
+    if (params.mode === 'exam' && params.examId) {
+      const examId = parseInt(params.examId, 10);
+      quizQuestions = generateExamQuiz(examId);
+    } else if (params.mode === 'category' && params.category) {
+      quizQuestions = generateCategoryQuiz(
+        params.category as QuestionCategory,
+        20
+      );
+    } else if (params.mode === 'quick' && params.count) {
+      const count = parseInt(params.count, 10) || 10;
+      // Shuffle all questions and take requested count
+      const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
+      quizQuestions = shuffled.slice(0, count);
+    } else {
+      // Full practice test
+      quizQuestions = generateQuiz();
+    }
+
+    setQuestions(quizQuestions);
+    setIsLoading(false);
+    setQuestionStartTime(Date.now());
+
+    // Start timer
+    timerRef.current = setInterval(() => {
+      setTimeElapsed((prev) => prev + 1);
+    }, 1000);
+  };
+
+  const currentQuestion = questions[currentIndex];
+  const isLastQuestion = currentIndex === questions.length - 1;
+  const progress = questions.length > 0 ? ((currentIndex + 1) / questions.length) * 100 : 0;
+
+  const handleSelectAnswer = useCallback(
+    (optionIndex: number) => {
+      if (showExplanation) return; // Already answered
+
+      setSelectedAnswer(optionIndex);
+      setShowExplanation(true);
+
+      const isCorrect = optionIndex === currentQuestion.correctAnswer;
+      const timeTaken = Math.round((Date.now() - questionStartTime) / 1000);
+
+      // Haptic feedback (native only, not available on web)
+      if (hapticEnabled && Platform.OS !== 'web') {
+        if (isCorrect) {
+          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        } else {
+          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+        }
+      }
+
+      setAnswers((prev) => [
+        ...prev,
+        {
+          questionId: currentQuestion.id,
+          selectedAnswer: optionIndex,
+          isCorrect,
+          timeTaken,
+        },
+      ]);
+    },
+    [currentQuestion, showExplanation, questionStartTime, hapticEnabled]
+  );
+
+  const handleNext = useCallback(() => {
+    if (isLastQuestion) {
+      finishQuiz();
+    } else {
+      setCurrentIndex((prev) => prev + 1);
+      setSelectedAnswer(null);
+      setShowExplanation(false);
+      setQuestionStartTime(Date.now());
+      scrollRef.current?.scrollTo({ y: 0, animated: true });
+    }
+  }, [isLastQuestion, answers]);
+
+  const finishQuiz = async () => {
+    if (timerRef.current) clearInterval(timerRef.current);
+
+    const updatedAnswers = [...answers];
+    const totalCorrect = updatedAnswers.filter((a) => a.isCorrect).length;
+
+    // Calculate values score
+    const valuesQuestionIds = questions
+      .filter((q) => q.isValuesQuestion)
+      .map((q) => q.id);
+    const valuesAnswers = updatedAnswers.filter((a) =>
+      valuesQuestionIds.includes(a.questionId)
+    );
+    const valuesCorrect = valuesAnswers.filter((a) => a.isCorrect).length;
+
+    const scorePercent = (totalCorrect / questions.length) * 100;
+    const valuesAllCorrect = valuesCorrect === valuesQuestionIds.length;
+    const overallPass = scorePercent >= QUIZ_CONFIG.PASS_MARK_PERCENT;
+    const passed =
+      params.mode === 'full' || !params.mode
+        ? overallPass && (valuesQuestionIds.length === 0 || valuesAllCorrect)
+        : overallPass;
+
+    const result: QuizResult = {
+      id: generateQuizId(),
+      date: new Date().toISOString(),
+      totalQuestions: questions.length,
+      correctAnswers: totalCorrect,
+      valuesCorrect,
+      valuesTotalQuestions: valuesQuestionIds.length,
+      passed,
+      timeTaken: timeElapsed,
+      answers: updatedAnswers,
+      category: params.category as QuestionCategory | undefined || 'all',
+    };
+
+    // Save results
+    await saveQuizResult(result);
+    await updateProgressAfterQuiz(result);
+
+    // Update category scores
+    const categoryGroups: Record<string, { correct: number; total: number }> = {};
+    for (const answer of updatedAnswers) {
+      const question = questions.find((q) => q.id === answer.questionId);
+      if (question) {
+        if (!categoryGroups[question.category]) {
+          categoryGroups[question.category] = { correct: 0, total: 0 };
+        }
+        categoryGroups[question.category].total += 1;
+        if (answer.isCorrect) {
+          categoryGroups[question.category].correct += 1;
+        }
+      }
+    }
+    for (const [cat, scores] of Object.entries(categoryGroups)) {
+      await updateCategoryScore(
+        cat as QuestionCategory,
+        scores.correct,
+        scores.total
+      );
+    }
+
+    // Navigate to results
+    router.replace({
+      pathname: '/quiz/result',
+      params: {
+        resultId: result.id,
+        totalQuestions: result.totalQuestions.toString(),
+        correctAnswers: result.correctAnswers.toString(),
+        valuesCorrect: result.valuesCorrect.toString(),
+        valuesTotalQuestions: result.valuesTotalQuestions.toString(),
+        passed: result.passed.toString(),
+        timeTaken: result.timeTaken.toString(),
+        scorePercent: Math.round(scorePercent).toString(),
+      },
+    });
+  };
+
+  const handleQuit = () => {
+    Alert.alert(
+      'Quit Test?',
+      'Your progress will be lost. Are you sure?',
+      [
+        { text: 'Continue Test', style: 'cancel' },
+        {
+          text: 'Quit',
+          style: 'destructive',
+          onPress: () => {
+            if (timerRef.current) clearInterval(timerRef.current);
+            router.back();
+          },
+        },
+      ]
+    );
+  };
+
+  if (isLoading || !currentQuestion) {
+    return (
+      <View style={styles.loadingContainer}>
+        <Text style={styles.loadingText}>Preparing your test...</Text>
+      </View>
+    );
+  }
+
+  const getOptionStyle = (index: number) => {
+    if (!showExplanation) {
+      return index === selectedAnswer ? styles.optionSelected : styles.option;
+    }
+    if (index === currentQuestion.correctAnswer) {
+      return styles.optionCorrect;
+    }
+    if (index === selectedAnswer && index !== currentQuestion.correctAnswer) {
+      return styles.optionIncorrect;
+    }
+    return styles.option;
+  };
+
+  const getOptionTextStyle = (index: number) => {
+    if (!showExplanation) {
+      return index === selectedAnswer
+        ? styles.optionTextSelected
+        : styles.optionText;
+    }
+    if (index === currentQuestion.correctAnswer) {
+      return styles.optionTextCorrect;
+    }
+    if (index === selectedAnswer && index !== currentQuestion.correctAnswer) {
+      return styles.optionTextIncorrect;
+    }
+    return styles.optionText;
+  };
+
+  return (
+    <View style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        <View style={styles.headerTop}>
+          <TouchableOpacity onPress={handleQuit} style={styles.quitButton}>
+            <Ionicons name="close" size={24} color={Colors.darkGray} />
+          </TouchableOpacity>
+          <Text style={styles.questionNumber}>
+            {currentIndex + 1} / {questions.length}
+          </Text>
+          {showTimer && (
+            <Text style={styles.timer}>{formatTime(timeElapsed)}</Text>
+          )}
+        </View>
+        {/* Progress bar */}
+        <View style={styles.progressBar}>
+          <View style={[styles.progressFill, { width: `${progress}%` }]} />
+        </View>
+        {currentQuestion.isValuesQuestion && (
+          <View style={styles.valuesBadge}>
+            <Ionicons name="heart" size={14} color={Colors.error} />
+            <Text style={styles.valuesBadgeText}>
+              Australian Values Question — Must answer correctly
+            </Text>
+          </View>
+        )}
+      </View>
+
+      {/* Question */}
+      <ScrollView
+        ref={scrollRef}
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
+        <Text style={styles.questionText}>{currentQuestion.question}</Text>
+
+        {/* Options */}
+        <View style={styles.optionsContainer}>
+          {currentQuestion.options.map((option, index) => (
+            <TouchableOpacity
+              key={index}
+              style={getOptionStyle(index)}
+              onPress={() => handleSelectAnswer(index)}
+              disabled={showExplanation}
+              activeOpacity={0.7}
+            >
+              <View style={styles.optionLetter}>
+                <Text style={styles.optionLetterText}>
+                  {String.fromCharCode(65 + index)}
+                </Text>
+              </View>
+              <Text style={getOptionTextStyle(index)}>{option}</Text>
+              {showExplanation && index === currentQuestion.correctAnswer && (
+                <Ionicons
+                  name="checkmark-circle"
+                  size={24}
+                  color={Colors.correctBorder}
+                />
+              )}
+              {showExplanation &&
+                index === selectedAnswer &&
+                index !== currentQuestion.correctAnswer && (
+                  <Ionicons
+                    name="close-circle"
+                    size={24}
+                    color={Colors.incorrectBorder}
+                  />
+                )}
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        {/* Explanation */}
+        {showExplanation && (
+          <View style={styles.explanationCard}>
+            <View style={styles.explanationHeader}>
+              <Ionicons
+                name={
+                  selectedAnswer === currentQuestion.correctAnswer
+                    ? 'checkmark-circle'
+                    : 'information-circle'
+                }
+                size={22}
+                color={
+                  selectedAnswer === currentQuestion.correctAnswer
+                    ? Colors.success
+                    : Colors.info
+                }
+              />
+              <Text
+                style={[
+                  styles.explanationTitle,
+                  {
+                    color:
+                      selectedAnswer === currentQuestion.correctAnswer
+                        ? Colors.success
+                        : Colors.info,
+                  },
+                ]}
+              >
+                {selectedAnswer === currentQuestion.correctAnswer
+                  ? 'Correct!'
+                  : 'Incorrect'}
+              </Text>
+            </View>
+            <Text style={styles.explanationText}>
+              {currentQuestion.explanation}
+            </Text>
+            <Text style={styles.sourceText}>
+              📖 Source: {currentQuestion.source}
+            </Text>
+          </View>
+        )}
+
+        <View style={{ height: 100 }} />
+      </ScrollView>
+
+      {/* Bottom Button */}
+      {showExplanation && (
+        <View style={styles.bottomBar}>
+          <TouchableOpacity
+            style={styles.nextButton}
+            onPress={handleNext}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.nextButtonText}>
+              {isLastQuestion ? 'See Results' : 'Next Question'}
+            </Text>
+            <Ionicons
+              name={isLastQuestion ? 'trophy' : 'arrow-forward'}
+              size={20}
+              color={Colors.white}
+            />
+          </TouchableOpacity>
+        </View>
+      )}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: Colors.offWhite,
+  },
+  loadingContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.offWhite,
+  },
+  loadingText: {
+    fontSize: Fonts.sizes.lg,
+    color: Colors.gray,
+  },
+  header: {
+    backgroundColor: Colors.white,
+    paddingHorizontal: Spacing.lg,
+    paddingTop: Spacing.sm,
+    paddingBottom: Spacing.md,
+    ...Shadows.small,
+  },
+  headerTop: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: Spacing.sm,
+  },
+  quitButton: {
+    padding: Spacing.xs,
+  },
+  questionNumber: {
+    fontSize: Fonts.sizes.md,
+    fontWeight: 'bold',
+    color: Colors.charcoal,
+  },
+  timer: {
+    fontSize: Fonts.sizes.md,
+    color: Colors.blue,
+    fontWeight: '600',
+    fontVariant: ['tabular-nums'],
+  },
+  progressBar: {
+    height: 6,
+    backgroundColor: Colors.lightGray,
+    borderRadius: 3,
+    overflow: 'hidden',
+  },
+  progressFill: {
+    height: 6,
+    backgroundColor: Colors.blue,
+    borderRadius: 3,
+  },
+  valuesBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: Spacing.sm,
+    backgroundColor: '#FFF3F3',
+    paddingHorizontal: Spacing.sm,
+    paddingVertical: 4,
+    borderRadius: BorderRadius.sm,
+    gap: 6,
+  },
+  valuesBadgeText: {
+    fontSize: Fonts.sizes.xs,
+    color: Colors.error,
+    fontWeight: '600',
+  },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    padding: Spacing.lg,
+  },
+  questionText: {
+    fontSize: Fonts.sizes.xl,
+    fontWeight: '700',
+    color: Colors.charcoal,
+    lineHeight: 30,
+    marginBottom: Spacing.lg,
+  },
+  optionsContainer: {
+    gap: Spacing.md,
+  },
+  option: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: Spacing.lg,
+    backgroundColor: Colors.white,
+    borderRadius: BorderRadius.lg,
+    borderWidth: 2,
+    borderColor: Colors.lightGray,
+    ...Shadows.small,
+  },
+  optionSelected: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: Spacing.lg,
+    backgroundColor: Colors.selectedAnswer,
+    borderRadius: BorderRadius.lg,
+    borderWidth: 2,
+    borderColor: Colors.selectedBorder,
+  },
+  optionCorrect: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: Spacing.lg,
+    backgroundColor: Colors.correctAnswer,
+    borderRadius: BorderRadius.lg,
+    borderWidth: 2,
+    borderColor: Colors.correctBorder,
+  },
+  optionIncorrect: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: Spacing.lg,
+    backgroundColor: Colors.incorrectAnswer,
+    borderRadius: BorderRadius.lg,
+    borderWidth: 2,
+    borderColor: Colors.incorrectBorder,
+  },
+  optionLetter: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: Colors.lightGray,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: Spacing.md,
+  },
+  optionLetterText: {
+    fontSize: Fonts.sizes.sm,
+    fontWeight: 'bold',
+    color: Colors.darkGray,
+  },
+  optionText: {
+    flex: 1,
+    fontSize: Fonts.sizes.md,
+    color: Colors.charcoal,
+    lineHeight: 22,
+  },
+  optionTextSelected: {
+    flex: 1,
+    fontSize: Fonts.sizes.md,
+    color: Colors.blue,
+    fontWeight: '600',
+    lineHeight: 22,
+  },
+  optionTextCorrect: {
+    flex: 1,
+    fontSize: Fonts.sizes.md,
+    color: Colors.correctBorder,
+    fontWeight: '600',
+    lineHeight: 22,
+  },
+  optionTextIncorrect: {
+    flex: 1,
+    fontSize: Fonts.sizes.md,
+    color: Colors.incorrectBorder,
+    fontWeight: '600',
+    lineHeight: 22,
+  },
+  explanationCard: {
+    marginTop: Spacing.lg,
+    padding: Spacing.lg,
+    backgroundColor: Colors.white,
+    borderRadius: BorderRadius.lg,
+    ...Shadows.medium,
+  },
+  explanationHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.sm,
+    marginBottom: Spacing.sm,
+  },
+  explanationTitle: {
+    fontSize: Fonts.sizes.lg,
+    fontWeight: 'bold',
+  },
+  explanationText: {
+    fontSize: Fonts.sizes.md,
+    color: Colors.darkGray,
+    lineHeight: 24,
+    marginBottom: Spacing.sm,
+  },
+  sourceText: {
+    fontSize: Fonts.sizes.xs,
+    color: Colors.gray,
+    fontStyle: 'italic',
+  },
+  bottomBar: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: Spacing.lg,
+    paddingBottom: Platform.OS === 'ios' ? 36 : Spacing.lg,
+    backgroundColor: Colors.white,
+    ...Shadows.large,
+  },
+  nextButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.blue,
+    paddingVertical: Spacing.md,
+    borderRadius: BorderRadius.lg,
+    gap: Spacing.sm,
+  },
+  nextButtonText: {
+    fontSize: Fonts.sizes.lg,
+    fontWeight: 'bold',
+    color: Colors.white,
+  },
+});
