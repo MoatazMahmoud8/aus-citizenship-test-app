@@ -36,3 +36,24 @@ android/
 # Credentials
 google-services.json
 GoogleService-Info.plist
+
+# Non-source files
+aap/
+Bill/
+logo/
+screenshots/
+website/
+archive-output/
+inspect-output/
+test-archive/
+*.txt
+*.jpg
+*.jpeg
+*.pdf
+*.png
+!assets/*.png
+.github/
+scripts/check-build.js
+scripts/fetch-build-logs.js
+README.md
+Gemini_Generated_Image*
