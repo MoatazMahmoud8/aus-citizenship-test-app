@@ -1,0 +1,15 @@
+node_modules/
+.expo/
+dist/
+build/
+*.aab
+*.apk
+*.ipa
+aap/
+website/
+screenshots/
+logo/
+Bill/
+.git/
+AppData/
+AppData/**

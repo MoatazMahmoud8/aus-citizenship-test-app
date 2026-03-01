@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+npm-debug.*
+
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Native builds
+ios/
+android/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+
+# macOS
+.DS_Store
+*.pem
+
+# Environment
+.env
+.env.*
+
+# IDE
+.vscode/
+.idea/
+
+# Build
+*.tsbuildinfo
+
+# Credentials
+google-services.json
+GoogleService-Info.plist
