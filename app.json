@@ -3,7 +3,7 @@
     "name": "ACE - AU Citizenship Exam",
     "slug": "australian-citizenship-test",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "scheme": "citizenship-test",
@@ -32,7 +32,8 @@
       },
       "package": "xyz.jsmglobal.ace",
       "versionCode": 29,
-      "permissions": []
+      "permissions": [],
+      "enableOnBackInvokedCallback": true
     },
     "web": {
       "favicon": "./assets/favicon.png",
