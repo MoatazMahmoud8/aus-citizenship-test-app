@@ -73,16 +73,6 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="az400"
-        options={{
-          title: 'AZ-400',
-          headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="git-network-outline" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="settings"
         options={{
           title: 'Settings',
