@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -17,6 +17,11 @@ import {
   getGradeText,
   getMotivationalMessage,
 } from '../../utils/helpers';
+import RatingPrompt from '../components/RatingPrompt';
+import {
+  incrementPassedQuizzes,
+  shouldShowRatingPrompt,
+} from '../../utils/ratingPrompt';
 
 export default function ResultScreen() {
   const router = useRouter();
@@ -30,6 +35,8 @@ export default function ResultScreen() {
     scorePercent: string;
   }>();
 
+  const [showRatingPrompt, setShowRatingPrompt] = useState(false);
+
   const totalQuestions = parseInt(params.totalQuestions || '0', 10);
   const correctAnswers = parseInt(params.correctAnswers || '0', 10);
   const valuesCorrect = parseInt(params.valuesCorrect || '0', 10);
@@ -42,6 +49,19 @@ export default function ResultScreen() {
   const emoji = getGradeEmoji(scorePercent);
   const gradeText = getGradeText(scorePercent);
   const message = getMotivationalMessage(scorePercent);
+
+  // Check and show rating prompt after passing
+  useEffect(() => {
+    const checkRatingPrompt = async () => {
+      if (passed) {
+        await incrementPassedQuizzes();
+        const shouldShow = await shouldShowRatingPrompt();
+        setShowRatingPrompt(shouldShow);
+      }
+    };
+
+    checkRatingPrompt();
+  }, [passed]);
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -216,6 +236,11 @@ export default function ResultScreen() {
 
       <View style={{ height: 48 }} />
     </ScrollView>
+
+    <RatingPrompt
+      visible={showRatingPrompt}
+      onDismiss={() => setShowRatingPrompt(false)}
+    />
   );
 }
 
