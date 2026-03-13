@@ -32,8 +32,7 @@
       },
       "package": "xyz.jsmglobal.ace",
       "versionCode": 29,
-      "permissions": [],
-      "enableOnBackInvokedCallback": true
+      "permissions": []
     },
     "web": {
       "favicon": "./assets/favicon.png",

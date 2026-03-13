@@ -64,6 +64,7 @@ export default function ResultScreen() {
   }, [passed]);
 
   return (
+    <>
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {/* Result Header */}
       <View
@@ -241,6 +242,7 @@ export default function ResultScreen() {
       visible={showRatingPrompt}
       onDismiss={() => setShowRatingPrompt(false)}
     />
+    </>
   );
 }
 
