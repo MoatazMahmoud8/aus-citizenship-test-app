@@ -307,5 +307,5 @@ If a build fails with "Unknown error":
 
 ## Contact
 **JSM GLOBAL PTY LTD**  
-Email: JSMglobalAU@gmail.com  
+Email: support@jsmglobal.xyz  
 ABN: 80 676 507 607

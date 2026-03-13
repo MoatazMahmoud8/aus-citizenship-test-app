@@ -200,6 +200,22 @@ export default function SettingsScreen() {
         </View>
       </View>
 
+      {/* Contact Us */}
+      <Text style={styles.sectionTitle}>Support</Text>
+      <View style={styles.settingsGroup}>
+        <TouchableOpacity
+          style={styles.linkRow}
+          onPress={() => Linking.openURL('mailto:support@jsmglobal.xyz')}
+        >
+          <Ionicons name="mail" size={22} color={Colors.blue} />
+          <View style={styles.linkContent}>
+            <Text style={styles.linkTitle}>Contact Us</Text>
+            <Text style={styles.linkSubtitle}>support@jsmglobal.xyz</Text>
+          </View>
+          <Ionicons name="open-outline" size={18} color={Colors.gray} />
+        </TouchableOpacity>
+      </View>
+
       <View style={{ height: 48 }} />
     </ScrollView>
   );
