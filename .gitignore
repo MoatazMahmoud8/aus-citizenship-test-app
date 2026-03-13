@@ -55,9 +55,12 @@ test-archive/
 # .github/ — keep workflows tracked
 README.md
 Gemini_Generated_Image*
+CHAT_HISTORY_*.md
+constants/index.ts
 
 # Debug scripts (not needed in builds)
 scripts/check-build.js
 scripts/fetch-build-logs.js
 scripts/check-creds.js
 scripts/quick-status.js
+.github/copilot-instructions.md
