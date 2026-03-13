@@ -52,7 +52,7 @@ test-archive/
 *.pdf
 *.png
 !assets/*.png
-.github/
+# .github/ — keep workflows tracked
 README.md
 Gemini_Generated_Image*
 
