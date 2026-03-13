@@ -22,8 +22,12 @@
       "infoPlist": {
         "NSAppTransportSecurity": {
           "NSAllowsArbitraryLoads": false
-        }
-      }
+        },
+        "ITSAppUsesNonExemptEncryption": false,
+        "UIBackgroundModes": []
+      },
+      "requireFullScreen": false,
+      "userInterfaceStyle": "automatic"
     },
     "android": {
       "adaptiveIcon": {
