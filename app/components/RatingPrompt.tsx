@@ -23,9 +23,10 @@ interface RatingPromptProps {
 
 const GOOGLE_PLAY_URL =
   'https://play.google.com/store/apps/details?id=xyz.jsmglobal.ace';
-// iOS App Store URL - update with actual App Store ID when published to iOS
 const APP_STORE_URL =
-  'https://apps.apple.com/app/ace-au-citizenship-exam/id0000000000';
+  'https://apps.apple.com/app/ace-au-citizenship-exam/id6743394564';
+
+const STORE_NAME = Platform.OS === 'ios' ? 'App Store' : 'Google Play';
 
 export default function RatingPrompt({ visible, onDismiss }: RatingPromptProps) {
   const [isLoading, setIsLoading] = useState(false);
@@ -98,7 +99,7 @@ export default function RatingPrompt({ visible, onDismiss }: RatingPromptProps) 
 
           {/* Message */}
           <Text style={styles.message}>
-            Help us by rating the app on Google Play. Your feedback helps us improve!
+            Help us by rating the app on the {STORE_NAME}. Your feedback helps us improve!
           </Text>
 
           {/* Buttons */}
