@@ -38,7 +38,8 @@ jobs:
             const sha = '${{ steps.info.outputs.sha_short }}';
             const message = `${{ steps.info.outputs.message }}`;
             const author = '${{ steps.info.outputs.author }}';
-            const runUrl = `https://github.com/${{ github.repository }}/actions/workflows/eas-build.yml`;
+            const androidUrl = `https://github.com/${{ github.repository }}/actions/workflows/eas-build.yml`;
+            const iosUrl = `https://github.com/${{ github.repository }}/actions/workflows/eas-build-ios.yml`;
 
             await github.rest.issues.create({
               owner: context.repo.owner,
@@ -53,11 +54,10 @@ jobs:
                 '',
                 '### 👇 Ready to build?',
                 '',
-                `Click the button below to trigger an EAS build:`,
+                `**🤖 Android:** [Run Android Build](${androidUrl})`,
+                `**🍎 iOS:** [Run iOS Build](${iosUrl})`,
                 '',
-                `**➡️ [Run EAS Build workflow](${runUrl})**`,
-                '',
-                '> Select platform (android / ios / all) and profile (production / preview), then click **Run workflow**.',
+                '> Select profile (production / preview / development), then click **Run workflow**.',
                 '',
                 '_Close this issue once you\'ve decided._',
               ].join('\n'),

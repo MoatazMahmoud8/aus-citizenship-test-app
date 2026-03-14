@@ -1,4 +1,4 @@
-name: EAS Build — Android
+name: EAS Build — iOS
 
 on:
   # Manual trigger — click "Run workflow" on GitHub Actions tab
@@ -15,8 +15,8 @@ on:
           - development
 
 jobs:
-  build-android:
-    name: Android (${{ github.event.inputs.profile }})
+  build-ios:
+    name: iOS (${{ github.event.inputs.profile }})
     runs-on: ubuntu-latest
 
     steps:
@@ -38,5 +38,5 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build Android on EAS
-        run: eas build --platform android --profile ${{ github.event.inputs.profile }} --non-interactive
+      - name: Build iOS on EAS
+        run: eas build --platform ios --profile ${{ github.event.inputs.profile }} --non-interactive
