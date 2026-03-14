@@ -208,6 +208,76 @@ npx eas credentials --platform android
 
 ---
 
+### Issue 6: Wrong Relative Import Paths in `app/components/`
+
+**Severity:** CRITICAL  
+**Status:** Resolved (March 2026)
+
+**Symptoms:**
+- Metro bundler fails with `Unable to resolve module ../constants/theme` or `../utils/ratingPrompt`
+- Error points to files inside `app/components/` trying to import from root-level `constants/` or `utils/` folders
+- Build log shows the resolved path as `app/constants/...` or `app/utils/...` (wrong — those folders don't exist)
+
+**Root Cause:**
+Files in `app/components/` are **2 levels deep** from the project root. Using `../` only goes up 1 level (to `app/`), not to the root. This is a common mistake when moving or creating files in nested directories.
+
+**Import depth reference:**
+| File location | To reach root `constants/` or `utils/` | Correct prefix |
+|---|---|---|
+| `app/_layout.tsx` | 1 level up | `../` |
+| `app/(tabs)/*.tsx` | 2 levels up | `../../` |
+| `app/quiz/*.tsx` | 2 levels up | `../../` |
+| `app/study/*.tsx` | 2 levels up | `../../` |
+| `app/components/*.tsx` | 2 levels up | `../../` |
+
+**Fix:**
+Change `../constants/` and `../utils/` to `../../constants/` and `../../utils/` in any file inside `app/components/`:
+
+```tsx
+// ❌ WRONG (resolves to app/constants/ — doesn't exist)
+import { Colors } from '../constants/theme';
+import { fn } from '../utils/ratingPrompt';
+
+// ✅ CORRECT (resolves to root constants/ and utils/)
+import { Colors } from '../../constants/theme';
+import { fn } from '../../utils/ratingPrompt';
+```
+
+**Prevention:**
+Always check the file's depth from root before writing imports. Files at `app/X/Y.tsx` need `../../` to reach root-level folders.
+
+---
+
+### Issue 7: `package-lock.json` Out of Sync with `package.json`
+
+**Severity:** CRITICAL  
+**Status:** Resolved (March 2026)
+
+**Symptoms:**
+- EAS build fails at `npm ci` step with:
+  ```
+  npm ci can only install packages when your package.json and package-lock.json are in sync
+  Missing: @types/babel__generator@7.27.0 from lock file
+  ```
+
+**Root Cause:**
+The `package-lock.json` was generated on a different Node.js version or dependencies were updated in `package.json` without running `npm install` to regenerate the lock file.
+
+**Fix:**
+```bash
+rm -f package-lock.json
+rm -rf node_modules
+npm install
+git add package-lock.json
+git commit -m "Regenerate package-lock.json"
+git push origin master
+```
+
+**Prevention:**
+Always run `npm install` after modifying `package.json`, and commit the updated `package-lock.json`.
+
+---
+
 ## Credential Reference
 
 Run `node scripts/build.js --creds` to view all credentials.

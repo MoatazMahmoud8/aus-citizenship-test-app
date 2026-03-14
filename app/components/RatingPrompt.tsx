@@ -14,7 +14,7 @@ import {
   shouldShowRatingPrompt,
   markRatingPromptShown,
   dismissRatingPrompt,
-} from '../utils/ratingPrompt';
+} from '../../utils/ratingPrompt';
 
 interface RatingPromptProps {
   visible: boolean;
