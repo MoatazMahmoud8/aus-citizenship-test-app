@@ -9,7 +9,7 @@ import {
   Platform,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Colors, Fonts, Spacing, BorderRadius, Shadows } from '../constants/theme';
+import { Colors, Fonts, Spacing, BorderRadius, Shadows } from '../../constants/theme';
 import {
   shouldShowRatingPrompt,
   markRatingPromptShown,
