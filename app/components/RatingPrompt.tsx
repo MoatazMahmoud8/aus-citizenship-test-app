@@ -99,7 +99,9 @@ export default function RatingPrompt({ visible, onDismiss }: RatingPromptProps) 
 
           {/* Message */}
           <Text style={styles.message}>
-            Help us by rating the app on the {STORE_NAME}. Your feedback helps us improve!
+            If you enjoy using ACE, please take a moment to rate us 5 stars on the {STORE_NAME} and leave a positive comment! ⭐⭐⭐⭐⭐
+            
+            Your great review helps us reach more learners and keep improving the app. Thank you for your support!
           </Text>
 
           {/* Buttons */}
