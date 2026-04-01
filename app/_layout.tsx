@@ -1,10 +1,18 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import * as NavigationBar from 'expo-navigation-bar';
 import * as SplashScreen from 'expo-splash-screen';
+import { Platform } from 'react-native';
 import { Colors } from '../constants/theme';
 
 // Hide splash immediately — no need to keep it around
 SplashScreen.hideAsync();
+
+// Set navigation bar colors using the modern API (avoids deprecated Android 15 APIs)
+if (Platform.OS === 'android') {
+  NavigationBar.setBackgroundColorAsync('#FFFFFF');
+  NavigationBar.setButtonStyleAsync('dark');
+}
 
 export default function RootLayout() {
 
