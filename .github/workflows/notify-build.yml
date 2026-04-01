@@ -15,6 +15,10 @@ on:
       - 'app.json'
       - 'eas.json'
 
+permissions:
+  issues: write
+  contents: read
+
 jobs:
   notify:
     name: Create build prompt
