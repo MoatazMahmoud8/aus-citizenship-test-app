@@ -3,7 +3,7 @@ name: Notify — Ready to Build
 on:
   push:
     branches:
-      - master
+      - dev
     paths:
       # Only notify when actual app code changes (not docs/chat history)
       - 'app/**'
@@ -48,7 +48,7 @@ jobs:
               body: [
                 `**Commit:** \`${sha}\` — ${message}`,
                 `**Author:** ${author}`,
-                `**Branch:** master`,
+                `**Branch:** dev`,
                 '',
                 '---',
                 '',
