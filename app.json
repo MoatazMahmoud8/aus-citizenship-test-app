@@ -29,6 +29,15 @@
       "requireFullScreen": false,
       "userInterfaceStyle": "automatic"
     },
+    "androidStatusBar": {
+      "barStyle": "light-content",
+      "backgroundColor": "#00000000",
+      "translucent": true
+    },
+    "androidNavigationBar": {
+      "barStyle": "dark-content",
+      "backgroundColor": "#FFFFFF"
+    },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
@@ -36,7 +45,8 @@
       },
       "package": "xyz.jsmglobal.ace",
       "versionCode": 29,
-      "permissions": []
+      "permissions": [],
+      "edgeToEdgeEnabled": true
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -45,7 +55,15 @@
     "plugins": [
       "expo-router",
       "expo-font",
-      "expo-asset"
+      "expo-asset",
+      [
+        "expo-navigation-bar",
+        {
+          "position": "absolute",
+          "visibility": "visible",
+          "behavior": "overlay-swipe"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
