@@ -169,13 +169,17 @@ export default function HomeScreen() {
   }, []);
 
   const loadProgress = useCallback(async () => {
-    const p = await getProgress();
-    setProgress({
-      totalQuizzesTaken: p.totalQuizzesTaken,
-      averageScore: p.averageScore,
-      bestScore: p.bestScore,
-      currentStreak: p.currentStreak,
-    });
+    try {
+      const p = await getProgress();
+      setProgress({
+        totalQuizzesTaken: p.totalQuizzesTaken,
+        averageScore: p.averageScore,
+        bestScore: p.bestScore,
+        currentStreak: p.currentStreak,
+      });
+    } catch (error) {
+      console.error('Error loading progress:', error);
+    }
   }, []);
 
   const totalQuestions = useMemo(() => getTotalQuestionCount(), []);

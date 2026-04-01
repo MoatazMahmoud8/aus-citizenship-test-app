@@ -68,6 +68,7 @@ export default function QuizScreen() {
   }, []);
 
   const initQuiz = async () => {
+    try {
     const settings = await getSettings();
     setShowTimer(settings.showTimer);
     setHapticEnabled(settings.hapticEnabled);
@@ -92,6 +93,14 @@ export default function QuizScreen() {
       quizQuestions = generateQuiz();
     }
 
+    if (!quizQuestions || quizQuestions.length === 0) {
+      Alert.alert('Error', 'No questions available. Please try again.', [
+        { text: 'Go Back', onPress: () => router.back() },
+      ]);
+      setIsLoading(false);
+      return;
+    }
+
     setQuestions(quizQuestions);
     setIsLoading(false);
     setQuestionStartTime(Date.now());
@@ -100,6 +109,13 @@ export default function QuizScreen() {
     timerRef.current = setInterval(() => {
       setTimeElapsed((prev) => prev + 1);
     }, 1000);
+    } catch (error) {
+      console.error('Error initializing quiz:', error);
+      Alert.alert('Error', 'Failed to load quiz. Please try again.', [
+        { text: 'Go Back', onPress: () => router.back() },
+      ]);
+      setIsLoading(false);
+    }
   };
 
   const currentQuestion = questions[currentIndex];
@@ -151,6 +167,7 @@ export default function QuizScreen() {
   }, [isLastQuestion, answers]);
 
   const finishQuiz = async () => {
+    try {
     if (timerRef.current) clearInterval(timerRef.current);
 
     const updatedAnswers = [...answers];
@@ -187,8 +204,12 @@ export default function QuizScreen() {
     };
 
     // Save results
-    await saveQuizResult(result);
-    await updateProgressAfterQuiz(result);
+    try {
+      await saveQuizResult(result);
+      await updateProgressAfterQuiz(result);
+    } catch (saveError) {
+      console.error('Error saving quiz results:', saveError);
+    }
 
     // Update category scores
     const categoryGroups: Record<string, { correct: number; total: number }> = {};
@@ -205,11 +226,15 @@ export default function QuizScreen() {
       }
     }
     for (const [cat, scores] of Object.entries(categoryGroups)) {
-      await updateCategoryScore(
-        cat as QuestionCategory,
-        scores.correct,
-        scores.total
-      );
+      try {
+        await updateCategoryScore(
+          cat as QuestionCategory,
+          scores.correct,
+          scores.total
+        );
+      } catch (catError) {
+        console.error('Error updating category score:', catError);
+      }
     }
 
     // Navigate to results
@@ -226,6 +251,12 @@ export default function QuizScreen() {
         scorePercent: Math.round(scorePercent).toString(),
       },
     });
+    } catch (error) {
+      console.error('Error finishing quiz:', error);
+      Alert.alert('Error', 'Something went wrong. Returning to home.', [
+        { text: 'OK', onPress: () => router.back() },
+      ]);
+    }
   };
 
   const handleQuit = () => {

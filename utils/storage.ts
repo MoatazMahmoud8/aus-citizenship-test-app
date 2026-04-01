@@ -86,15 +86,23 @@ export async function updateCategoryScore(
   correct: number,
   total: number
 ): Promise<void> {
-  const progress = await getProgress();
-  const catScore = progress.categoryScores[category];
-  catScore.totalAttempted += total;
-  catScore.totalCorrect += correct;
-  catScore.accuracy =
-    catScore.totalAttempted > 0
-      ? (catScore.totalCorrect / catScore.totalAttempted) * 100
-      : 0;
-  await saveProgress(progress);
+  try {
+    const progress = await getProgress();
+    const catScore = progress.categoryScores[category];
+    if (!catScore) {
+      console.warn(`Category '${category}' not found in progress, skipping.`);
+      return;
+    }
+    catScore.totalAttempted += total;
+    catScore.totalCorrect += correct;
+    catScore.accuracy =
+      catScore.totalAttempted > 0
+        ? (catScore.totalCorrect / catScore.totalAttempted) * 100
+        : 0;
+    await saveProgress(progress);
+  } catch (error) {
+    console.error('Error updating category score:', error);
+  }
 }
 
 // ============= Quiz History =============

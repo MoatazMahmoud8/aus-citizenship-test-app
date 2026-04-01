@@ -7,25 +7,36 @@ let _getExamByIdFn: ((id: number) => Exam | undefined) | null = null;
 
 function loadQuestions(): Question[] {
   if (!_allQuestions) {
-    const valuesQuestions = require('./questions-values').default;
-    const australiaQuestions = require('./questions-australia').default;
-    const democraticQuestions = require('./questions-democratic').default;
-    const governmentQuestions = require('./questions-government').default;
-    _allQuestions = [
-      ...valuesQuestions,
-      ...australiaQuestions,
-      ...democraticQuestions,
-      ...governmentQuestions,
-    ];
+    try {
+      const valuesQuestions = require('./questions-values').default || [];
+      const australiaQuestions = require('./questions-australia').default || [];
+      const democraticQuestions = require('./questions-democratic').default || [];
+      const governmentQuestions = require('./questions-government').default || [];
+      _allQuestions = [
+        ...valuesQuestions,
+        ...australiaQuestions,
+        ...democraticQuestions,
+        ...governmentQuestions,
+      ];
+    } catch (error) {
+      console.error('Error loading questions:', error);
+      _allQuestions = [];
+    }
   }
   return _allQuestions;
 }
 
 function loadExams() {
   if (!_exams) {
-    const examModule = require('./exams');
-    _exams = examModule.exams;
-    _getExamByIdFn = examModule.getExamById;
+    try {
+      const examModule = require('./exams');
+      _exams = examModule.exams || [];
+      _getExamByIdFn = examModule.getExamById || (() => undefined);
+    } catch (error) {
+      console.error('Error loading exams:', error);
+      _exams = [];
+      _getExamByIdFn = () => undefined;
+    }
   }
 }
 
