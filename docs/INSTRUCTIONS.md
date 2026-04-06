@@ -32,6 +32,7 @@ Before pushing any update, verify the following:
 
 ### 3. **Homepage Updates**
 - [ ] Homepage displays current month update (e.g., "April 2026 Update")
+- [ ] **"Questions last updated"** text in `app/(tabs)/index.tsx` is set to the current month (search for `lastUpdatedDate`)
 - [ ] Update date is visible to users
 - [ ] All links are working correctly
 
