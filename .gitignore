@@ -64,3 +64,6 @@ scripts/fetch-build-logs.js
 scripts/check-creds.js
 scripts/quick-status.js
 .github/copilot-instructions.md
+
+# AAB build artifacts
+aab/
