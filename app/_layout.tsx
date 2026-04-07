@@ -1,24 +1,17 @@
+import React, { useEffect } from 'react';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import * as NavigationBar from 'expo-navigation-bar';
 import * as SplashScreen from 'expo-splash-screen';
-import { Platform, useEffect } from 'react-native';
+import { Platform } from 'react-native';
 import { Colors } from '../constants/theme';
 
-// Hide splash immediately — no need to keep it around
-SplashScreen.hideAsync();
+// Prevent auto-hide so we control when splash is dismissed
+SplashScreen.preventAutoHideAsync().catch(() => {});
 
 export default function RootLayout() {
   useEffect(() => {
-    // Set navigation bar colors using the modern API (avoids deprecated Android 15 APIs)
-    if (Platform.OS === 'android') {
-      NavigationBar.setBackgroundColorAsync('#FFFFFF').catch((err) => {
-        console.warn('Failed to set navigation bar background color:', err);
-      });
-      NavigationBar.setButtonStyleAsync('dark').catch((err) => {
-        console.warn('Failed to set navigation bar button style:', err);
-      });
-    }
+    // Hide splash once layout is mounted
+    SplashScreen.hideAsync().catch(() => {});
   }, []);
 
   return (
