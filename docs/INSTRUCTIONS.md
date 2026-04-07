@@ -46,13 +46,24 @@ Before pushing any update, verify the following:
 - [ ] No deprecation warnings in Google Play Console
 - [ ] In-app rating prompt is working correctly (shows after 2 passed quizzes)
 
-### 5. **Testing**
+### 5. **Code Review (CRITICAL)**
+- [ ] All React hooks (`useEffect`, `useState`, `useCallback`, etc.) are imported from `'react'`, **NEVER from `'react-native'`**
+- [ ] No async calls at module level (outside components) — use `useEffect` instead
+- [ ] All async/await calls have `.catch()` or try/catch error handling
+- [ ] `SplashScreen.preventAutoHideAsync()` is called at module level, `hideAsync()` inside `useEffect`
+- [ ] No new native plugins added to `app.json` without testing on a real device first
+- [ ] `app.json` plugins list matches the last working build (currently: expo-router, expo-font, expo-asset)
+- [ ] No `edgeToEdgeEnabled` or `expo-navigation-bar` plugin in `app.json` (caused crash in v45-v47)
+- [ ] Before building: `git status` is clean (no untracked AAB files — delete `aab/` folder before building)
+
+### 6. **Testing**
 - [ ] Manual testing completed on Android
 - [ ] Manual testing completed on iOS (Testflight/beta)
 - [ ] No critical bugs or errors
 - [ ] Performance testing completed
+- [ ] **Install the AAB/APK on a real phone and verify the app opens without crashing**
 
-### 6. **Documentation**
+### 7. **Documentation**
 - [ ] CHANGELOG.md is updated with new changes
 - [ ] Version number is incremented
 - [ ] Release notes are written
@@ -120,7 +131,27 @@ git push origin gh-pages
 |---------|------|---------|
 | 1.0.0 | April 1, 2026 | Initial Release - 150 Questions |
 | 1.0.1 | April 1, 2026 | Crash fix + In-app rating prompt |
-| | | |
+| 1.0.1 | April 7, 2026 | Fix critical startup crash (useEffect wrong import) — v48 |
+
+---
+
+## Known Crash Causes (Lessons Learned)
+
+### April 7, 2026 — App crash on startup (v45, v46, v47 rejected by Google Play)
+**Root Cause**: `useEffect` was imported from `'react-native'` instead of `'react'` in `app/_layout.tsx`. This caused an immediate crash because `useEffect` does not exist as an export of `react-native`.
+
+**Additional factors**:
+- `SplashScreen.hideAsync()` was called at module level (before component mounted)
+- `expo-navigation-bar` plugin and `edgeToEdgeEnabled: true` were added to `app.json` — these native config changes were NOT present in the last working build (v42) and may have contributed to crashes on some devices
+
+**How it happened**: When fixing Android 15 deprecated APIs, `useEffect` was added to the import from `react-native` (which already had `Platform`), rather than importing it separately from `react`.
+
+**Prevention rules**:
+1. **ALWAYS** import React hooks from `'react'`: `import React, { useEffect, useState } from 'react'`
+2. **NEVER** import hooks from `'react-native'` — only import components/APIs from there: `import { Platform, View, Text } from 'react-native'`
+3. **NEVER** add new native plugins to `app.json` without testing on a real device
+4. **ALWAYS** compare `app.json` with the last working build before submitting
+5. **ALWAYS** test the built AAB on a real phone before uploading to Google Play
 
 ---
 
@@ -129,8 +160,9 @@ git push origin gh-pages
 - Monthly cadence ensures regular feature improvements and bug fixes
 - Keep version numbers consistent across mobile apps and website
 - Document all changes in CHANGELOG.md
+- **Delete the `aab/` folder before running `eas build`** to avoid dirty git errors
 
 ---
 
-**Last Updated**: April 1, 2026
+**Last Updated**: April 7, 2026
 **Next Review**: May 1, 2026
