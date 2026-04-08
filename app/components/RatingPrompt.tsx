@@ -8,7 +8,6 @@ import {
   Linking,
   Platform,
 } from 'react-native';
-import * as StoreReview from 'expo-store-review';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors, Fonts, Spacing, BorderRadius, Shadows } from '../../constants/theme';
 import {
@@ -35,31 +34,18 @@ export default function RatingPrompt({ visible, onDismiss }: RatingPromptProps) 
   const handleRate = async () => {
     setIsLoading(true);
     try {
-      // Try native in-app review first (smoother UX, no app switch)
-      const isAvailable = await StoreReview.isAvailableAsync();
-      if (isAvailable) {
-        await StoreReview.requestReview();
-        await markRatingPromptShown();
-        onDismiss();
-        return;
-      }
-
-      // Fallback: open store URL in browser
       const url = Platform.OS === 'ios' ? APP_STORE_URL : GOOGLE_PLAY_URL;
       const supported = await Linking.canOpenURL(url);
+
       if (supported) {
         await Linking.openURL(url);
         await markRatingPromptShown();
         onDismiss();
+      } else {
+        console.log('Cannot open:', url);
       }
     } catch (error) {
-      // Final fallback on any error
-      try {
-        const url = Platform.OS === 'ios' ? APP_STORE_URL : GOOGLE_PLAY_URL;
-        await Linking.openURL(url);
-      } catch (_) {}
-      await markRatingPromptShown();
-      onDismiss();
+      console.error('Error opening store:', error);
     } finally {
       setIsLoading(false);
     }
@@ -109,11 +95,11 @@ export default function RatingPrompt({ visible, onDismiss }: RatingPromptProps) 
           </View>
 
           {/* Title */}
-          <Text style={styles.title}>Enjoying ACE? 🇦🇺</Text>
+          <Text style={styles.title}>Love ACE?</Text>
 
           {/* Message */}
           <Text style={styles.message}>
-            You're doing amazing! 🎉 Your hard work is paying off.{"\n\n"}If ACE has helped you prepare for your citizenship test, we'd love your support! A quick 5-star rating on the {STORE_NAME} helps other future Aussies find us too. ⭐⭐⭐⭐⭐{"\n\n"}It only takes a few seconds and means the world to us! 💛
+            Help us by rating the app on the {STORE_NAME}. Your feedback helps us improve!
           </Text>
 
           {/* Buttons */}
