@@ -2,23 +2,11 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import { Colors } from '../constants/theme';
-import { ErrorUtils } from 'react-native';
 
-// Catch ALL unhandled JS errors so the app never crashes
-const originalHandler = ErrorUtils.getGlobalHandler();
-ErrorUtils.setGlobalHandler((error, isFatal) => {
-  // Log but don't crash — keep the app alive
-  console.warn('Caught unhandled error:', error);
-  if (!isFatal && originalHandler) {
-    originalHandler(error, isFatal);
-  }
-});
-
-// Hide splash immediately — no need to keep it around
+// Hide splash immediately
 SplashScreen.hideAsync();
 
 export default function RootLayout() {
-
   return (
     <>
       <StatusBar style="light" />

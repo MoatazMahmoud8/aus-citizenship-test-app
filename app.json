@@ -36,7 +36,8 @@
       },
       "package": "xyz.jsmglobal.ace",
       "versionCode": 30,
-      "permissions": []
+      "permissions": [],
+      "jsEngine": "jsc"
     },
     "web": {
       "favicon": "./assets/favicon.png",
