@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JSM Global - Australian Citizenship Test App</title>
+  <meta name="description" content="JSM Global - Australian study apps for driving tests and citizenship exams. Free practice questions, study guides, and progress tracking." />
+  <title>JSM Global | Australian Study Apps</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -25,36 +26,57 @@
     .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 600; transition: color .2s; }
     .nav-links a:hover { color: var(--gold); }
     @media (max-width: 640px) {
-      nav { padding: 16px 20px; flex-direction: column; gap: 20px; }
-      .nav-links { flex-direction: column; gap: 15px; }
+      nav { padding: 16px 20px; flex-direction: column; gap: 16px; }
+      .nav-links { flex-direction: column; gap: 12px; }
     }
 
     .hero {
       background: linear-gradient(135deg, #0d1433 0%, #112244 50%, #0a1a0f 100%);
-      padding: 120px 40px 100px;
+      padding: 100px 40px 80px;
       text-align: center;
       border-bottom: 1px solid rgba(255,215,0,.15);
     }
     .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,132,61,.1); border: 1px solid rgba(0,132,61,.3); color: var(--green); font-size: 12px; font-weight: 700; padding: 6px 16px; border-radius: 100px; margin-bottom: 20px; letter-spacing: .5px; text-transform: uppercase; }
     .hero-title { font-size: clamp(32px, 6vw, 56px); font-weight: 900; letter-spacing: -1px; margin-bottom: 16px; background: linear-gradient(135deg, var(--gold) 0%, #ffed4e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero-subtitle { font-size: 18px; color: var(--muted); margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto; }
-    .hero-cta { display: inline-flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-    .btn { padding: 12px 28px; border-radius: 8px; font-weight: 600; font-size: 14px; text-decoration: none; transition: all .2s; border: none; cursor: pointer; }
+    .hero-subtitle { font-size: 18px; color: var(--muted); margin-bottom: 32px; max-width: 640px; margin-left: auto; margin-right: auto; }
+
+    .btn { padding: 12px 28px; border-radius: 8px; font-weight: 600; font-size: 14px; text-decoration: none; transition: all .2s; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
     .btn-primary { background: var(--gold); color: var(--dark); }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,215,0,.2); }
+    .btn-green { background: var(--green); color: #fff; }
+    .btn-green:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,132,61,.3); }
     .btn-secondary { border: 1px solid rgba(255,215,0,.3); color: var(--gold); background: transparent; }
     .btn-secondary:hover { background: rgba(255,215,0,.05); }
+    .btn-privacy { border: 1px solid rgba(255,255,255,.15); color: var(--muted); background: transparent; font-size: 13px; padding: 8px 20px; }
+    .btn-privacy:hover { color: var(--gold); border-color: rgba(255,215,0,.3); }
 
-    .features { max-width: 1000px; margin: 80px auto; padding: 0 40px; }
-    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 40px; }
-    .feature-card { background: var(--card); padding: 32px; border-radius: 12px; border: 1px solid rgba(255,255,255,.05); transition: all .2s; }
-    .feature-card:hover { border-color: rgba(255,215,0,.2); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(255,215,0,.05); }
-    .feature-icon { font-size: 32px; margin-bottom: 16px; }
-    .feature-title { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
-    .feature-desc { color: var(--muted); font-size: 14px; line-height: 1.6; }
+    /* ── Apps Section ── */
+    .apps { max-width: 1000px; margin: 80px auto; padding: 0 40px; }
+    .apps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 48px; }
+    @media (max-width: 768px) { .apps-grid { grid-template-columns: 1fr; } }
+
+    .app-card {
+      background: var(--card); border-radius: 16px; padding: 40px 32px;
+      border: 1px solid rgba(255,255,255,.06);
+      transition: transform .3s, border-color .3s;
+      position: relative; overflow: hidden;
+    }
+    .app-card:hover { border-color: rgba(255,215,0,.2); transform: translateY(-4px); }
+    .app-emoji { font-size: 48px; margin-bottom: 16px; }
+    .app-name { font-size: 24px; font-weight: 900; margin-bottom: 4px; }
+    .app-tagline { font-size: 14px; color: var(--muted); margin-bottom: 20px; }
+    .app-features { list-style: none; margin-bottom: 28px; }
+    .app-features li { font-size: 14px; color: var(--text); padding: 6px 0; display: flex; align-items: center; gap: 10px; }
+    .app-features li::before { content: '✓'; color: var(--green); font-weight: 700; font-size: 14px; }
+    .app-actions { display: flex; flex-direction: column; gap: 10px; }
+    .app-actions-row { display: flex; gap: 10px; flex-wrap: wrap; }
 
     .section-title { font-size: 32px; font-weight: 900; text-align: center; margin-bottom: 12px; letter-spacing: -0.5px; }
-    .section-subtitle { text-align: center; color: var(--muted); font-size: 16px; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .section-subtitle { text-align: center; color: var(--muted); font-size: 16px; max-width: 600px; margin: 0 auto; }
+
+    /* ── Disclaimer ── */
+    .disclaimer { max-width: 700px; margin: 0 auto 60px; padding: 20px 32px; background: rgba(255,215,0,.04); border: 1px solid rgba(255,215,0,.12); border-radius: 10px; text-align: center; }
+    .disclaimer p { font-size: 13px; color: var(--muted); line-height: 1.6; }
 
     footer { border-top: 1px solid rgba(255,255,255,.06); padding: 40px; text-align: center; color: var(--muted); font-size: 13px; }
     .footer-copy { margin-bottom: 20px; }
@@ -62,7 +84,11 @@
     .footer-links a { color: var(--muted); text-decoration: none; transition: color .2s; }
     .footer-links a:hover { color: var(--gold); }
 
-    @media (max-width: 640px) { .hero { padding: 60px 24px 80px; } .features { padding: 0 24px; margin: 60px auto; } }
+    @media (max-width: 640px) {
+      .hero { padding: 60px 24px 60px; }
+      .apps { padding: 0 24px; margin: 60px auto; }
+      .app-card { padding: 28px 24px; }
+    }
   </style>
 </head>
 <body>
@@ -72,72 +98,88 @@
     <div class="nav-logo-text">JSM Global</div>
   </div>
   <div class="nav-links">
-    <a href="#features">Features</a>
-    <a href="privacy.html">Privacy Policy</a>
-    <a href="mailto:support@jsmglobal.xyz">Contact</a>
+    <a href="#our-apps">Our Apps</a>
+    <a href="ace-privacy.html">ACE Privacy</a>
+    <a href="dkt-privacy.html">DKT Privacy</a>
+    <a href="mailto:JSMglobalAU@gmail.com">Contact</a>
   </div>
 </nav>
 
+<!-- ── Hero ── -->
 <div class="hero">
-  <div class="hero-badge">✓ Australian Citizenship</div>
-  <div style="display: inline-block; background: rgba(0,132,61,.15); border: 1px solid rgba(0,132,61,.3); color: var(--green); font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 100px; margin-bottom: 16px; letter-spacing: .5px; text-transform: uppercase;">📅 April 2026 Update</div>
-  <h1 class="hero-title">Master Your Citizenship Test</h1>
-  <p class="hero-subtitle">Comprehensive study guide and practice exam for the Australian Citizenship Test. Get prepared with confidence.</p>
-  <div class="hero-cta">
-    <a href="https://play.google.com/store/apps/details?id=xyz.jsmglobal.ace" class="btn btn-primary">📱 Android App</a>
-    <a href="#" class="btn btn-secondary" style="opacity: 0.6; cursor: not-allowed;">🍎 iPhone - Coming Soon</a>
+  <div class="hero-badge">📅 April 2026 Update</div>
+  <h1 class="hero-title">Australian Study Apps</h1>
+  <p class="hero-subtitle">Free, high-quality apps to help you ace your Australian Citizenship Test and Driving Knowledge Test. Built in Australia for Australians.</p>
+</div>
+
+<!-- ── Our Apps ── -->
+<div class="apps" id="our-apps">
+  <h2 class="section-title">Our Apps</h2>
+  <p class="section-subtitle">Two comprehensive study tools — free, offline-ready, and regularly updated.</p>
+
+  <div class="apps-grid">
+    <!-- ── ACE Citizenship App ── -->
+    <div class="app-card">
+      <div class="app-emoji">🦘</div>
+      <div class="app-name">ACE</div>
+      <div class="app-tagline">Australian Citizenship Test Practice</div>
+      <ul class="app-features">
+        <li>200+ practice questions</li>
+        <li>Mock exams with real test format</li>
+        <li>Study guide from "Our Common Bond"</li>
+        <li>Values focus mode (5 mandatory Q's)</li>
+        <li>Progress tracking &amp; analytics</li>
+        <li>Works offline — no internet needed</li>
+      </ul>
+      <div class="app-actions">
+        <div class="app-actions-row">
+          <a href="https://play.google.com/store/apps/details?id=xyz.jsmglobal.ace" class="btn btn-primary">📱 Google Play</a>
+          <a href="#" class="btn btn-secondary" style="opacity:.5; cursor:not-allowed;">🍎 iOS Soon</a>
+        </div>
+        <div class="app-actions-row">
+          <a href="ace-privacy.html" class="btn btn-privacy">🔒 Privacy Policy</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Aussie DKT App ── -->
+    <div class="app-card">
+      <div class="app-emoji">🚗</div>
+      <div class="app-name">Aussie DKT</div>
+      <div class="app-tagline">Driving Knowledge Test Practice</div>
+      <ul class="app-features">
+        <li>All 8 states &amp; territories</li>
+        <li>600+ DKT practice questions</li>
+        <li>Full practice tests &amp; quick quizzes</li>
+        <li>Study materials for each state</li>
+        <li>Fee &amp; booking info for test centres</li>
+        <li>Track your scores and progress</li>
+      </ul>
+      <div class="app-actions">
+        <div class="app-actions-row">
+          <a href="https://play.google.com/store/apps/details?id=com.moatazmahm.australiandrivingtest" class="btn btn-green">📱 Google Play</a>
+          <a href="#" class="btn btn-secondary" style="opacity:.5; cursor:not-allowed;">🍎 iOS Soon</a>
+        </div>
+        <div class="app-actions-row">
+          <a href="dkt-privacy.html" class="btn btn-privacy">🔒 Privacy Policy</a>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="features">
-  <h2 class="section-title" id="features">Why Choose Us?</h2>
-  <p class="section-subtitle">Everything you need to prepare for the Australian Citizenship test.</p>
-
-  <div class="features-grid">
-    <div class="feature-card">
-      <div class="feature-icon">📚</div>
-      <h3 class="feature-title">Complete Study Material</h3>
-      <p class="feature-desc">Access comprehensive study guides covering all topics required for the citizenship test.</p>
-    </div>
-
-    <div class="feature-card">
-      <div class="feature-icon">📝</div>
-      <h3 class="feature-title">Practice Questions</h3>
-      <p class="feature-desc">Thousands of practice questions to help you master the material and build confidence.</p>
-    </div>
-
-    <div class="feature-card">
-      <div class="feature-icon">⏱️</div>
-      <h3 class="feature-title">Mock Exams</h3>
-      <p class="feature-desc">Take full-length mock exams that simulate the actual test conditions and time limits.</p>
-    </div>
-
-    <div class="feature-card">
-      <div class="feature-icon">📊</div>
-      <h3 class="feature-title">Progress Tracking</h3>
-      <p class="feature-desc">Monitor your progress with detailed analytics and performance reports.</p>
-    </div>
-
-    <div class="feature-card">
-      <div class="feature-icon">📱</div>
-      <h3 class="feature-title">Mobile Ready</h3>
-      <p class="feature-desc">Study on the go with our responsive mobile app available on iOS and Android.</p>
-    </div>
-
-    <div class="feature-card">
-      <div class="feature-icon">✅</div>
-      <h3 class="feature-title">Expert Verified</h3>
-      <p class="feature-desc">All content is verified by citizenship test experts and regularly updated.</p>
-    </div>
-  </div>
+<!-- ── Disclaimer ── -->
+<div class="disclaimer">
+  <p>⚠️ These apps are <strong>independent, unofficial</strong> study tools. They are NOT endorsed by, affiliated with, or approved by any Australian government agency, road authority, or official testing body. Always verify information with your state's official authority.</p>
 </div>
 
 <footer>
   <div class="footer-copy">© 2026 JSM GLOBAL PTY LTD · Registered in Australia · ABN: 42 692 719 789</div>
   <div class="footer-links">
     <a href="index.html">Home</a>
-    <a href="privacy.html">Privacy Policy</a>
-    <a href="mailto:support@jsmglobal.xyz">Contact</a>
+    <a href="ace-privacy.html">ACE Privacy Policy</a>
+    <a href="dkt-privacy.html">DKT Privacy Policy</a>
+    <a href="mailto:JSMglobalAU@gmail.com">Contact</a>
   </div>
 </footer>
 
