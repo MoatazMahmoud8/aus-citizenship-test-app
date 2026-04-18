@@ -1,8 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const RATING_KEY = 'ace_rating_prompt';
-const RATING_SHOW_AFTER_QUIZZES = 2; // Show after 2 passed quizzes
-const RATING_MINDAYS_BETWEEN_PROMPTS = 5; // Show at most once every 5 days
+const RATING_SHOW_AFTER_QUIZZES = 3; // Show after 3 passed quizzes
+const RATING_MINDAYS_BETWEEN_PROMPTS = 7; // Show at most once every 7 days
 
 export interface RatingState {
   passedQuizzesCount: number;

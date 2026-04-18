@@ -169,17 +169,13 @@ export default function HomeScreen() {
   }, []);
 
   const loadProgress = useCallback(async () => {
-    try {
-      const p = await getProgress();
-      setProgress({
-        totalQuizzesTaken: p.totalQuizzesTaken,
-        averageScore: p.averageScore,
-        bestScore: p.bestScore,
-        currentStreak: p.currentStreak,
-      });
-    } catch (error) {
-      console.error('Error loading progress:', error);
-    }
+    const p = await getProgress();
+    setProgress({
+      totalQuizzesTaken: p.totalQuizzesTaken,
+      averageScore: p.averageScore,
+      bestScore: p.bestScore,
+      currentStreak: p.currentStreak,
+    });
   }, []);
 
   const totalQuestions = useMemo(() => getTotalQuestionCount(), []);
@@ -187,12 +183,6 @@ export default function HomeScreen() {
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      {/* ===== APRIL 2026 UPDATE BADGE ===== */}
-      <View style={styles.updateBadge}>
-        <Ionicons name="checkmark-circle" size={16} color={Colors.white} />
-        <Text style={styles.updateBadgeText}>April 2026 Update</Text>
-      </View>
-
       {/* ===== HERO WITH AUSTRALIAN FLAG ===== */}
       <View style={[styles.heroWrap, { paddingTop: insets.top }]}>
         {/* Dark blue background behind everything */}
@@ -437,7 +427,7 @@ export default function HomeScreen() {
       <View style={styles.lastUpdated}>
         <View style={styles.lastUpdatedInner}>
           <Ionicons name="checkmark-circle" size={18} color="#00843D" />
-          <Text style={styles.lastUpdatedText}>Questions last updated: <Text style={styles.lastUpdatedDate}>April 2026</Text></Text>
+          <Text style={styles.lastUpdatedText}>Questions last updated: <Text style={styles.lastUpdatedDate}>February 2026</Text></Text>
         </View>
       </View>
 
@@ -472,21 +462,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F0F2F5',
-  },
-
-  // ===== UPDATE BADGE =====
-  updateBadge: {
-    backgroundColor: Colors.success,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 10,
-    gap: 8,
-  },
-  updateBadgeText: {
-    fontSize: Fonts.sizes.sm,
-    fontWeight: Fonts.weights.bold as any,
-    color: Colors.white,
   },
 
   // ===== HERO =====

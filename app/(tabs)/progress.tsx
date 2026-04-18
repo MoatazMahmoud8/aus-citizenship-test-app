@@ -22,13 +22,9 @@ export default function ProgressScreen() {
   }, []);
 
   const loadData = async () => {
-    try {
-      const [p, h] = await Promise.all([getProgress(), getQuizHistory()]);
-      setProgress(p);
-      setHistory(h);
-    } catch (error) {
-      console.error('Error loading progress data:', error);
-    }
+    const [p, h] = await Promise.all([getProgress(), getQuizHistory()]);
+    setProgress(p);
+    setHistory(h);
   };
 
   const onRefresh = async () => {
