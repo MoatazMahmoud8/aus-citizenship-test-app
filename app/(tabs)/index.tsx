@@ -427,7 +427,7 @@ export default function HomeScreen() {
       <View style={styles.lastUpdated}>
         <View style={styles.lastUpdatedInner}>
           <Ionicons name="checkmark-circle" size={18} color="#00843D" />
-          <Text style={styles.lastUpdatedText}>Questions last updated: <Text style={styles.lastUpdatedDate}>February 2026</Text></Text>
+          <Text style={styles.lastUpdatedText}>Questions last updated: <Text style={styles.lastUpdatedDate}>May 2026</Text></Text>
         </View>
       </View>
 
