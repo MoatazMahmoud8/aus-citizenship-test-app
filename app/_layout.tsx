@@ -1,12 +1,23 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
+import { useState, useEffect } from 'react';
 import { Colors } from '../constants/theme';
+import AnimatedSplash from '../components/AnimatedSplash';
 
-// Hide splash immediately
-SplashScreen.hideAsync();
+SplashScreen.preventAutoHideAsync().catch(() => {});
 
 export default function RootLayout() {
+  const [splashDone, setSplashDone] = useState(false);
+
+  useEffect(() => {
+    SplashScreen.hideAsync().catch(() => {});
+  }, []);
+
+  if (!splashDone) {
+    return <AnimatedSplash onFinish={() => setSplashDone(true)} />;
+  }
+
   return (
     <>
       <StatusBar style="light" />
