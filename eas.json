@@ -11,6 +11,9 @@
     },
     "preview": {
       "distribution": "store",
+      "android": {
+        "credentialsSource": "remote"
+      },
       "ios": {
         "simulator": false
       }
