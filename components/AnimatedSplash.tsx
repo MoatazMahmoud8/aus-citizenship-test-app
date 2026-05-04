@@ -189,7 +189,7 @@ export default function AnimatedSplash({ onFinish }: AnimatedSplashProps) {
           },
         ]}
       >
-        <Text style={styles.badgeText}>🦘 Official Study Guide</Text>
+        <Text style={styles.badgeText}>🦘 Exam Preparation</Text>
       </Animated.View>
     </Animated.View>
   );
