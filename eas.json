@@ -28,7 +28,7 @@
       "credentialsSource": "remote",
       "node": "22.15.0",
       "ios": {
-        "image": "macos-sonoma-14.6-xcode-16.1"
+        "image": "macos-sequoia-15.6-xcode-26.2"
       }
     }
   },
