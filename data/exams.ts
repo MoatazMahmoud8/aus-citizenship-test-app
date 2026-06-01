@@ -2,6 +2,22 @@ import { Exam } from '../constants/types';
 
 export const exams: Exam[] = [
   // ============================================================
+  // 🔥 LAST-MINUTE EXAM — questions reported by recent passers
+  // Sorted hottest-first. Auto-curated from recallCount in the
+  // question bank (see bot repo `scripts/sync_to_app.py`).
+  // ============================================================
+  {
+    id: 999,
+    title: '🔥 Last-Minute Exam — Frequently Asked',
+    description:
+      'The night-before drill. Every question here has been reported by recent test-takers as one that actually appeared on the exam. Hottest questions first.',
+    questionIds: [308, 9, 33, 131, 143, 144, 147, 165, 199, 208, 218, 303, 333, 346, 347, 354, 356, 378, 566, 591, 698, 9001, 9002, 9003, 9004, 9005, 9006, 9007, 4, 6, 13, 14, 21, 22, 25, 26, 34, 35, 36, 40, 44, 47, 50, 52, 57, 103, 132, 157, 164, 175, 180, 190, 193, 196, 219, 223, 326, 337, 339, 342, 350, 352, 355, 357, 361, 514, 515, 561, 562, 567, 570, 571, 592, 597, 610, 615, 636, 673, 687, 9008, 9009, 9010, 9011, 9012, 9013, 9014, 9015, 9016, 9017, 9018, 9019, 9020, 9021, 9022, 9023],
+    valuesQuestionIds: [9, 33, 4, 6, 13],
+    totalQuestions: 95,
+    difficulty: 'Hard',
+  },
+
+  // ============================================================
   // EASY EXAMS (1-8)
   // ============================================================
   {

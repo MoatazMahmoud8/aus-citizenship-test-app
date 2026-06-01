@@ -30,6 +30,7 @@ export const australiaQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'Aboriginal and Torres Strait Islander peoples are Australia\'s first inhabitants, with the oldest continuous cultures in the world.',
     source: 'Our Common Bond - Australia and Its People',
+    recallCount: 1,
   },
   {
     id: 104,
@@ -310,6 +311,7 @@ export const australiaQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'In 1901, the separate colonies united into a federation of states called the Commonwealth of Australia under a new Constitution.',
     source: 'Our Common Bond - Australia and Its People',
+    recallCount: 2,
   },
   {
     id: 132,
@@ -320,6 +322,7 @@ export const australiaQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'Under the new Australian Constitution in 1901, Australia\'s national democratic institutions were established to govern the new federation.',
     source: 'Our Common Bond - Australia and Its People',
+    recallCount: 1,
   },
   {
     id: 133,
@@ -430,6 +433,7 @@ export const australiaQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'Canberra is Australia\'s capital city, located in the Australian Capital Territory between Sydney and Melbourne.',
     source: 'Our Common Bond - Australia and Its People',
+    recallCount: 2,
   },
   {
     id: 144,
@@ -440,6 +444,7 @@ export const australiaQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'Darwin is the capital of the Northern Territory, located on Australia\'s northern coast.',
     source: 'Our Common Bond - Australia and Its People',
+    recallCount: 2,
   },
   {
     id: 145,
@@ -470,6 +475,7 @@ export const australiaQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'Sydney is Australia\'s largest city, located in New South Wales. It is known for its iconic Harbour Bridge and Opera House.',
     source: 'Our Common Bond - Australia and Its People',
+    recallCount: 2,
   },
   {
     id: 148,
@@ -570,6 +576,7 @@ export const australiaQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'Western Australia is Australia\'s largest state, covering about one-third of the Australian continent.',
     source: 'Our Common Bond - Australia and Its People',
+    recallCount: 1,
   },
   {
     id: 158,
@@ -640,6 +647,7 @@ export const australiaQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'The Australian Capital Territory (ACT) is situated between Sydney and Melbourne, chosen as a compromise location for the national capital.',
     source: 'Our Common Bond - Australia and Its People',
+    recallCount: 1,
   },
   {
     id: 165,
@@ -650,6 +658,7 @@ export const australiaQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'Parliament House and the High Court of Australia are located in Canberra, the nation\'s capital city in the Australian Capital Territory.',
     source: 'Our Common Bond - Australia and Its People',
+    recallCount: 2,
   },
   {
     id: 166,
@@ -750,6 +759,7 @@ export const australiaQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'Australia Day represents the anniversary of the arrival of the First Fleet from Great Britain on 26 January 1788.',
     source: 'Our Common Bond - Australia and Its People',
+    recallCount: 1,
   },
   {
     id: 176,
@@ -800,6 +810,7 @@ export const australiaQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'Anzac Day is held on 25 April each year, commemorating the landing at Gallipoli in 1915.',
     source: 'Our Common Bond - Australia and Its People',
+    recallCount: 1,
   },
   {
     id: 181,
@@ -900,6 +911,7 @@ export const australiaQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'The Union Jack on the Australian National Flag represents our history of British settlement and the laws and institutions inherited as a result.',
     source: 'Our Common Bond - Australia and Its People',
+    recallCount: 1,
   },
   {
     id: 191,
@@ -930,6 +942,7 @@ export const australiaQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'The seven points of the Commonwealth Star represent each of the six states and one for the territories of Australia.',
     source: 'Our Common Bond - Australia and Its People',
+    recallCount: 1,
   },
   {
     id: 194,
@@ -960,6 +973,7 @@ export const australiaQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'The Australian Aboriginal Flag features the colours black, red, and yellow.',
     source: 'Our Common Bond - Australia and Its People',
+    recallCount: 1,
   },
   {
     id: 197,
@@ -990,6 +1004,7 @@ export const australiaQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'The yellow circle in the centre of the Australian Aboriginal Flag represents the sun, the giver of life.',
     source: 'Our Common Bond - Australia and Its People',
+    recallCount: 2,
   },
   {
     id: 200,
@@ -1080,6 +1095,7 @@ export const australiaQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'The Commonwealth Coat of Arms is the official symbol of the Commonwealth of Australia, used to identify Commonwealth authority and property.',
     source: 'Our Common Bond - Australia and Its People',
+    recallCount: 2,
   },
   {
     id: 209,
@@ -1180,6 +1196,7 @@ export const australiaQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'Each of the states and territories of Australia has its own floral emblem, in addition to the national flower, the golden wattle.',
     source: 'Our Common Bond - Australia and Its People',
+    recallCount: 2,
   },
   {
     id: 219,
@@ -1190,6 +1207,7 @@ export const australiaQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'Australia\'s national colours are green and gold, derived from the colours of the golden wattle.',
     source: 'Our Common Bond - Australia and Its People',
+    recallCount: 1,
   },
   {
     id: 220,
@@ -1230,6 +1248,7 @@ export const australiaQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'Australia\'s national anthem is "Advance Australia Fair", sung on occasions of national importance.',
     source: 'Our Common Bond - Australia and Its People',
+    recallCount: 1,
   },
   {
     id: 224,
@@ -1251,6 +1270,95 @@ export const australiaQuestions: Question[] = [
     explanation: 'The first sentence of Australia\'s national anthem is "Australians all let us rejoice", from "Advance Australia Fair".',
     source: 'Our Common Bond - Australia and Its People',
   },
+  {
+    id: 9001,
+    question: 'What is the capital city of South Australia?',
+    options: ['Perth', 'Adelaide', 'Hobart'],
+    correctAnswer: 1,
+    category: 'australia_and_its_people',
+    isValuesQuestion: false,
+    explanation: 'Adelaide is the capital city of South Australia.',
+    source: 'Our Common Bond - Australia and Its People',
+    recallCount: 2,
+  },
+  {
+    id: 9007,
+    question: 'What is the capital city of Western Australia?',
+    options: ['Perth', 'Adelaide', 'Brisbane'],
+    correctAnswer: 0,
+    category: 'australia_and_its_people',
+    isValuesQuestion: false,
+    explanation: 'Perth is the capital city of Western Australia.',
+    source: 'Our Common Bond - Australia and Its People',
+    recallCount: 2,
+  },
+  {
+    id: 9008,
+    question: 'Which is the smallest state of Australia?',
+    options: ['Victoria', 'Tasmania', 'South Australia'],
+    correctAnswer: 1,
+    category: 'australia_and_its_people',
+    isValuesQuestion: false,
+    explanation: 'Tasmania is the smallest state of Australia and is separated from the mainland by Bass Strait.',
+    source: 'Our Common Bond - Australia and Its People',
+    recallCount: 1,
+  },
+  {
+    id: 9013,
+    question: 'Where is the Sydney Opera House located?',
+    options: ['Victoria', 'New South Wales', 'Queensland'],
+    correctAnswer: 1,
+    category: 'australia_and_its_people',
+    isValuesQuestion: false,
+    explanation: 'The Sydney Opera House is located in Sydney, the capital of New South Wales.',
+    source: 'Our Common Bond - Australia and Its People',
+    recallCount: 1,
+  },
+  {
+    id: 9014,
+    question: 'In which state or territory is Uluru located?',
+    options: ['Western Australia', 'South Australia', 'Northern Territory'],
+    correctAnswer: 2,
+    category: 'australia_and_its_people',
+    isValuesQuestion: false,
+    explanation: 'Uluru is a large sandstone rock formation in the Northern Territory, sacred to the Anangu people.',
+    source: 'Our Common Bond - Australia and Its People',
+    recallCount: 1,
+  },
+  {
+    id: 9015,
+    question: 'What is the capital city of Victoria?',
+    options: ['Melbourne', 'Geelong', 'Ballarat'],
+    correctAnswer: 0,
+    category: 'australia_and_its_people',
+    isValuesQuestion: false,
+    explanation: 'Melbourne is the capital city of Victoria and Australia\'s second-largest city.',
+    source: 'Our Common Bond - Australia and Its People',
+    recallCount: 1,
+  },
+  {
+    id: 9016,
+    question: 'Who can give an Acknowledgement of Country in Australia?',
+    options: ['Only Aboriginal and Torres Strait Islander people', 'Only the Prime Minister', 'Any person (Indigenous or non-Indigenous)'],
+    correctAnswer: 2,
+    category: 'australia_and_its_people',
+    isValuesQuestion: false,
+    explanation: 'An Acknowledgement of Country can be given by any person, Indigenous or non-Indigenous, to show respect for the Traditional Owners of the land.',
+    source: 'Our Common Bond - Australia and Its People',
+    recallCount: 1,
+  },
+  {
+    id: 9017,
+    question: 'When is an Acknowledgement of Country usually performed?',
+    options: ['Only on Australia Day', 'At the start of a meeting, event or ceremony', 'Only at citizenship ceremonies'],
+    correctAnswer: 1,
+    category: 'australia_and_its_people',
+    isValuesQuestion: false,
+    explanation: 'An Acknowledgement of Country is usually given at the start of a meeting, event or ceremony to recognise the Traditional Owners of the land.',
+    source: 'Our Common Bond - Australia and Its People',
+    recallCount: 1,
+  },
+
 ];
 
 export default australiaQuestions;

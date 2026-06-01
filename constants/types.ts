@@ -7,6 +7,7 @@ export interface Question {
   isValuesQuestion: boolean;
   explanation: string;
   source: string; // Reference to Our Common Bond section
+  recallCount?: number; // # of times reported by recent test-takers (0/undefined = not yet seen in the wild)
 }
 
 export type QuestionCategory =

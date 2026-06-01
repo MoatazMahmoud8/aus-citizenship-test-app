@@ -40,6 +40,7 @@ export const valuesQuestions: Question[] = [
     isValuesQuestion: true,
     explanation: 'The Rule of Law means everyone must follow Australian laws regardless of their background or culture.',
     source: 'Our Common Bond - Australian Values',
+    recallCount: 1,
   },
   {
     id: 5,
@@ -60,6 +61,7 @@ export const valuesQuestions: Question[] = [
     isValuesQuestion: true,
     explanation: 'Everybody in Australia must obey the law, regardless of who they are.',
     source: 'Our Common Bond - Australian Values',
+    recallCount: 1,
   },
   {
     id: 7,
@@ -90,6 +92,7 @@ export const valuesQuestions: Question[] = [
     isValuesQuestion: true,
     explanation: 'Australia\'s system of government is a parliamentary democracy, where citizens vote for representatives.',
     source: 'Our Common Bond - Australian Values',
+    recallCount: 2,
   },
   {
     id: 10,
@@ -130,6 +133,7 @@ export const valuesQuestions: Question[] = [
     isValuesQuestion: true,
     explanation: 'Government power comes from the people because Australian citizens vote for their parliamentary representatives.',
     source: 'Our Common Bond - Australian Values',
+    recallCount: 1,
   },
   {
     id: 14,
@@ -140,6 +144,7 @@ export const valuesQuestions: Question[] = [
     isValuesQuestion: true,
     explanation: 'Compulsory voting demonstrates the importance of every citizen participating in the democratic process.',
     source: 'Our Common Bond - Australian Values',
+    recallCount: 1,
   },
   {
     id: 15,
@@ -210,6 +215,7 @@ export const valuesQuestions: Question[] = [
     isValuesQuestion: true,
     explanation: 'Australians have the right to peacefully protest against government actions as part of their democratic freedoms.',
     source: 'Our Common Bond - Australian Values',
+    recallCount: 1,
   },
   {
     id: 22,
@@ -220,6 +226,7 @@ export const valuesQuestions: Question[] = [
     isValuesQuestion: true,
     explanation: 'Tolerance of peaceful public protest is an essential part of democracy and a key Australian value.',
     source: 'Our Common Bond - Australian Values',
+    recallCount: 1,
   },
   {
     id: 23,
@@ -250,6 +257,7 @@ export const valuesQuestions: Question[] = [
     isValuesQuestion: true,
     explanation: 'Freedom of speech and expression allow people to express ideas freely, as long as it is within the law.',
     source: 'Our Common Bond - Australian Values',
+    recallCount: 1,
   },
   {
     id: 26,
@@ -260,6 +268,7 @@ export const valuesQuestions: Question[] = [
     isValuesQuestion: true,
     explanation: 'Freedom of speech and expression allows you to both say and write what you think on any topic.',
     source: 'Our Common Bond - Australian Values',
+    recallCount: 1,
   },
   {
     id: 27,
@@ -330,6 +339,7 @@ export const valuesQuestions: Question[] = [
     isValuesQuestion: true,
     explanation: 'Australia has no official national religion. It is a secular country with freedom of religion.',
     source: 'Our Common Bond - Australian Values',
+    recallCount: 2,
   },
   {
     id: 34,
@@ -340,6 +350,7 @@ export const valuesQuestions: Question[] = [
     isValuesQuestion: true,
     explanation: 'The Australian government treats all citizens equally regardless of their religion or beliefs.',
     source: 'Our Common Bond - Australian Values',
+    recallCount: 1,
   },
   {
     id: 35,
@@ -350,6 +361,7 @@ export const valuesQuestions: Question[] = [
     isValuesQuestion: true,
     explanation: 'Forced marriage is illegal in Australia. People have the right to choose who they marry.',
     source: 'Our Common Bond - Australian Values',
+    recallCount: 1,
   },
   {
     id: 36,
@@ -360,6 +372,7 @@ export const valuesQuestions: Question[] = [
     isValuesQuestion: true,
     explanation: 'Australian law always takes precedence. Everyone must follow Australian laws even if they differ from religious laws.',
     source: 'Our Common Bond - Australian Values',
+    recallCount: 1,
   },
   {
     id: 37,
@@ -400,6 +413,7 @@ export const valuesQuestions: Question[] = [
     isValuesQuestion: true,
     explanation: 'Australian society values the equal rights of all people and has laws to protect against discrimination.',
     source: 'Our Common Bond - Australian Values',
+    recallCount: 1,
   },
   {
     id: 41,
@@ -440,6 +454,7 @@ export const valuesQuestions: Question[] = [
     isValuesQuestion: true,
     explanation: 'Both men and women have equal rights to vote and stand for Parliament in Australia.',
     source: 'Our Common Bond - Australian Values',
+    recallCount: 1,
   },
   {
     id: 45,
@@ -470,6 +485,7 @@ export const valuesQuestions: Question[] = [
     isValuesQuestion: true,
     explanation: 'Gender equality means men and women should have equal opportunity to pursue their goals and interests.',
     source: 'Our Common Bond - Australian Values',
+    recallCount: 1,
   },
   {
     id: 48,
@@ -500,6 +516,7 @@ export const valuesQuestions: Question[] = [
     isValuesQuestion: true,
     explanation: 'Either a husband or a wife has the right to apply for divorce, reflecting gender equality in Australia.',
     source: 'Our Common Bond - Australian Values',
+    recallCount: 1,
   },
   {
     id: 51,
@@ -520,6 +537,7 @@ export const valuesQuestions: Question[] = [
     isValuesQuestion: true,
     explanation: 'A "fair go" means everyone gets an equal opportunity to succeed, regardless of their background.',
     source: 'Our Common Bond - Australian Values',
+    recallCount: 1,
   },
   {
     id: 53,
@@ -570,6 +588,7 @@ export const valuesQuestions: Question[] = [
     isValuesQuestion: true,
     explanation: 'New migrants can become leaders through their hard work and enterprise, reflecting the Australian "fair go".',
     source: 'Our Common Bond - Australian Values',
+    recallCount: 1,
   },
   {
     id: 58,
@@ -941,6 +960,51 @@ export const valuesQuestions: Question[] = [
     explanation: 'Citizenship is our common bond, uniting all Australians regardless of background.',
     source: 'Our Common Bond - Australian Values',
   },
+  {
+    id: 9002,
+    question: 'In Australia, can two women legally marry each other?',
+    options: ['No, marriage is only between a man and a woman', 'Yes, same-sex marriage has been legal in Australia since 2017', 'Only in some states'],
+    correctAnswer: 1,
+    category: 'australian_values',
+    isValuesQuestion: true,
+    explanation: 'Since the Marriage Amendment (Definition and Religious Freedoms) Act 2017, two people of any sex or gender can legally marry in Australia.',
+    source: 'Our Common Bond - Australian Values',
+    recallCount: 2,
+  },
+  {
+    id: 9003,
+    question: 'What does diversity in Australian society mean?',
+    options: ['It is illegal and not accepted', 'It is tolerated but discouraged', 'It is celebrated as one of Australia\'s greatest strengths'],
+    correctAnswer: 2,
+    category: 'australian_values',
+    isValuesQuestion: true,
+    explanation: 'Australia is one of the most culturally diverse countries in the world, and this diversity is celebrated as one of its greatest strengths.',
+    source: 'Our Common Bond - Australian Values',
+    recallCount: 2,
+  },
+  {
+    id: 9012,
+    question: 'Is polygamy legal in Australia?',
+    options: ['Yes, if all parties agree', 'No, polygamy is against the law in Australia', 'Only for certain religions'],
+    correctAnswer: 1,
+    category: 'australian_values',
+    isValuesQuestion: true,
+    explanation: 'Polygamy is against the law in Australia. A person can only be married to one other person at a time.',
+    source: 'Our Common Bond - Australian Values',
+    recallCount: 1,
+  },
+  {
+    id: 9022,
+    question: 'In Australia, discrimination is against the law if it is based on which of the following?',
+    options: ['Only on race', 'Only on religion', 'Race, sex, gender, age, religion, disability and similar grounds'],
+    correctAnswer: 2,
+    category: 'australian_values',
+    isValuesQuestion: true,
+    explanation: 'It is against the law to discriminate against a person because of their race, country of birth, sex, gender, age, religion, disability or sexuality.',
+    source: 'Our Common Bond - Australian Values',
+    recallCount: 1,
+  },
+
 ];
 
 export default valuesQuestions;

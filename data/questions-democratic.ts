@@ -42,6 +42,7 @@ export const democraticQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'A parliamentary democracy is a system where citizens elect representatives to parliament to make laws and decisions on their behalf.',
     source: 'Our Common Bond - Democratic Beliefs',
+    recallCount: 2,
   },
   {
     id: 304,
@@ -112,6 +113,7 @@ export const democraticQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'The Rule of Law means that no person, group, or religious rule is above the law. Everyone must follow Australian law.',
     source: 'Our Common Bond - Democratic Beliefs',
+    recallCount: 3,
   },
   {
     id: 309,
@@ -364,6 +366,7 @@ export const democraticQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'The government and the law treat all citizens equally, regardless of their religion or beliefs.',
     source: 'Our Common Bond - Democratic Beliefs',
+    recallCount: 1,
   },
   {
     id: 327,
@@ -462,6 +465,7 @@ export const democraticQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'A \'fair go\' means that achievement in life should be based on talents, work, and effort, not on wealth or background.',
     source: 'Our Common Bond - Democratic Beliefs',
+    recallCount: 2,
   },
   {
     id: 334,
@@ -518,6 +522,7 @@ export const democraticQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'After becoming an Australian citizen, a person has the privilege to apply for an Australian passport and re-enter Australia freely.',
     source: 'Our Common Bond - Democratic Beliefs',
+    recallCount: 1,
   },
   {
     id: 338,
@@ -546,6 +551,7 @@ export const democraticQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'Defending Australia should the need arise is a responsibility of Australian citizenship.',
     source: 'Our Common Bond - Democratic Beliefs',
+    recallCount: 1,
   },
   {
     id: 340,
@@ -588,6 +594,7 @@ export const democraticQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'Only Australian citizens can ask for consular assistance from an Australian official while overseas.',
     source: 'Our Common Bond - Democratic Beliefs',
+    recallCount: 1,
   },
   {
     id: 343,
@@ -644,6 +651,7 @@ export const democraticQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'All Australian citizens and other people in Australia must obey Australian laws.',
     source: 'Our Common Bond - Democratic Beliefs',
+    recallCount: 2,
   },
   {
     id: 347,
@@ -658,6 +666,7 @@ export const democraticQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'Voting is compulsory for Australian citizens aged 18 years or over in federal and state or territory elections.',
     source: 'Our Common Bond - Democratic Beliefs',
+    recallCount: 2,
   },
   {
     id: 348,
@@ -700,6 +709,7 @@ export const democraticQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'A referendum is a vote to change the Australian Constitution. It requires a majority of voters in a majority of states to pass.',
     source: 'Our Common Bond - Democratic Beliefs',
+    recallCount: 1,
   },
   {
     id: 351,
@@ -728,6 +738,7 @@ export const democraticQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'Service in the Australian Defence Force is voluntary. However, all citizens share the responsibility to defend Australia if needed.',
     source: 'Our Common Bond - Democratic Beliefs',
+    recallCount: 1,
   },
   {
     id: 353,
@@ -756,6 +767,7 @@ export const democraticQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'Australian citizens aged 18 years or over have the responsibility to serve on a jury if called to do so.',
     source: 'Our Common Bond - Democratic Beliefs',
+    recallCount: 2,
   },
   {
     id: 355,
@@ -770,6 +782,7 @@ export const democraticQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'A jury is a group of ordinary Australian men and women who listen to evidence in a court case and decide if a person is guilty or not guilty.',
     source: 'Our Common Bond - Democratic Beliefs',
+    recallCount: 1,
   },
   {
     id: 356,
@@ -784,6 +797,7 @@ export const democraticQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'Australian citizens who are on the electoral roll can be called to serve on a jury.',
     source: 'Our Common Bond - Democratic Beliefs',
+    recallCount: 2,
   },
   {
     id: 357,
@@ -798,6 +812,7 @@ export const democraticQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'The purpose of jury service is to ensure that the court system is open and fair for all people.',
     source: 'Our Common Bond - Democratic Beliefs',
+    recallCount: 1,
   },
   {
     id: 358,
@@ -854,6 +869,7 @@ export const democraticQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'Any Australian citizen who is aged 18 years or over can seek election to parliament at the federal, state, or territory level.',
     source: 'Our Common Bond - Democratic Beliefs',
+    recallCount: 1,
   },
   {
     id: 362,
@@ -1092,6 +1108,7 @@ export const democraticQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'In Australia, federal, state and territory governments, and local councils all collect taxes to pay for services.',
     source: 'Our Common Bond - Democratic Beliefs',
+    recallCount: 2,
   },
 ];
 
