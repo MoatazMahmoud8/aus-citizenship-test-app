@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -9,11 +9,17 @@ import {
   Platform,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Colors, Fonts, Spacing, BorderRadius, Shadows } from '../../constants/theme';
 import {
-  shouldShowRatingPrompt,
+  Colors,
+  Fonts,
+  Spacing,
+  BorderRadius,
+  Shadows,
+} from '../../constants/theme';
+import {
   markRatingPromptShown,
   dismissRatingPrompt,
+  markRated,
 } from '../../utils/ratingPrompt';
 
 interface RatingPromptProps {
@@ -25,109 +31,170 @@ const GOOGLE_PLAY_URL =
   'https://play.google.com/store/apps/details?id=xyz.jsmglobal.ace';
 const APP_STORE_URL =
   'https://apps.apple.com/app/ace-au-citizenship-exam/id6743394564';
-
+const FEEDBACK_EMAIL = 'support@jsmglobal.xyz';
 const STORE_NAME = Platform.OS === 'ios' ? 'App Store' : 'Google Play';
 
+type Step = 'ask' | 'happy' | 'sad';
+
 export default function RatingPrompt({ visible, onDismiss }: RatingPromptProps) {
-  const [isLoading, setIsLoading] = useState(false);
+  const [step, setStep] = useState<Step>('ask');
+  const [busy, setBusy] = useState(false);
+
+  // Reset whenever the modal is re-opened so we always start at step 1.
+  useEffect(() => {
+    if (visible) setStep('ask');
+  }, [visible]);
+
+  const close = async (saveShown = true) => {
+    if (saveShown) await markRatingPromptShown();
+    onDismiss();
+  };
+
+  const handleEnjoyingYes = () => setStep('happy');
+  const handleEnjoyingNo = () => setStep('sad');
 
   const handleRate = async () => {
-    setIsLoading(true);
+    setBusy(true);
     try {
       const url = Platform.OS === 'ios' ? APP_STORE_URL : GOOGLE_PLAY_URL;
-      const supported = await Linking.canOpenURL(url);
-
-      if (supported) {
+      if (await Linking.canOpenURL(url)) {
         await Linking.openURL(url);
-        await markRatingPromptShown();
-        onDismiss();
-      } else {
-        console.log('Cannot open:', url);
       }
+      await markRated();
+      onDismiss();
     } catch (error) {
       console.error('Error opening store:', error);
+      onDismiss();
     } finally {
-      setIsLoading(false);
+      setBusy(false);
     }
   };
 
-  const handleDismiss = async () => {
+  const handleSendFeedback = async () => {
+    setBusy(true);
     try {
+      const subject = encodeURIComponent('ACE app feedback');
+      const body = encodeURIComponent(
+        "Hi! Here's what could be improved in the ACE app:\n\n",
+      );
+      const url = `mailto:${FEEDBACK_EMAIL}?subject=${subject}&body=${body}`;
+      if (await Linking.canOpenURL(url)) {
+        await Linking.openURL(url);
+      }
       await dismissRatingPrompt();
       onDismiss();
     } catch (error) {
-      console.error('Error dismissing prompt:', error);
+      console.error('Error opening mail:', error);
       onDismiss();
+    } finally {
+      setBusy(false);
     }
   };
 
-  const handleLater = async () => {
-    try {
-      await markRatingPromptShown();
-      onDismiss();
-    } catch (error) {
-      console.error('Error marking as shown:', error);
-      onDismiss();
-    }
+  const handleNeverAsk = async () => {
+    await dismissRatingPrompt();
+    onDismiss();
   };
+
+  // ---- Per-step content ----
+  const content = (() => {
+    if (step === 'ask') {
+      return {
+        icon: '👋',
+        title: 'Enjoying ACE?',
+        message:
+          'Quick question — how is the Australian Citizenship Exam app working for you?',
+        primary: { label: '😍 Yes, love it!', onPress: handleEnjoyingYes },
+        secondary: { label: '😐 Could be better', onPress: handleEnjoyingNo },
+      };
+    }
+    if (step === 'happy') {
+      return {
+        icon: '⭐',
+        title: 'Awesome!',
+        message: `Would you mind taking 10 seconds to leave us a 5-star rating on the ${STORE_NAME}? It really helps other learners discover the app.`,
+        primary: {
+          label: busy ? 'Opening…' : `Rate on ${STORE_NAME}`,
+          onPress: handleRate,
+          icon: 'star' as const,
+        },
+        secondary: { label: 'Maybe later', onPress: () => close(true) },
+      };
+    }
+    // sad
+    return {
+      icon: '💬',
+      title: 'Sorry to hear that',
+      message:
+        "We'd love to hear what we can improve. Send us a quick note and we'll do our best to fix it.",
+      primary: {
+        label: busy ? 'Opening…' : 'Send feedback',
+        onPress: handleSendFeedback,
+        icon: 'mail' as const,
+      },
+      secondary: { label: 'No thanks', onPress: handleNeverAsk },
+    };
+  })();
 
   return (
     <Modal
       visible={visible}
-      transparent={true}
+      transparent
       animationType="fade"
-      onRequestClose={onDismiss}
+      onRequestClose={() => close(true)}
     >
       <View style={styles.overlay}>
-        <View style={[styles.card, Shadows.default]}>
-          {/* Close Button */}
+          <View style={[styles.card, Shadows.large]}>
           <TouchableOpacity
             style={styles.closeButton}
-            onPress={handleDismiss}
-            disabled={isLoading}
+            onPress={() => close(true)}
+            disabled={busy}
+            accessibilityLabel="Close"
           >
             <Ionicons name="close" size={24} color={Colors.gray} />
           </TouchableOpacity>
 
-          {/* Icon */}
           <View style={styles.iconContainer}>
-            <Text style={styles.icon}>⭐</Text>
+            <Text style={styles.icon}>{content.icon}</Text>
           </View>
 
-          {/* Title */}
-          <Text style={styles.title}>Love ACE?</Text>
+          <Text style={styles.title}>{content.title}</Text>
+          <Text style={styles.message}>{content.message}</Text>
 
-          {/* Message */}
-          <Text style={styles.message}>
-            Help us by rating the app on the {STORE_NAME}. Your feedback helps us improve!
-          </Text>
-
-          {/* Buttons */}
           <View style={styles.buttonContainer}>
             <TouchableOpacity
-              style={[styles.button, styles.laterButton]}
-              onPress={handleLater}
-              disabled={isLoading}
+              style={[styles.button, styles.secondaryButton]}
+              onPress={content.secondary.onPress}
+              disabled={busy}
             >
-              <Text style={styles.laterButtonText}>Later</Text>
+              <Text style={styles.secondaryButtonText}>
+                {content.secondary.label}
+              </Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={[styles.button, styles.rateButton]}
-              onPress={handleRate}
-              disabled={isLoading}
+              style={[styles.button, styles.primaryButton]}
+              onPress={content.primary.onPress}
+              disabled={busy}
             >
-              <Ionicons name="star" size={18} color={Colors.white} />
-              <Text style={styles.rateButtonText}>
-                {isLoading ? 'Opening...' : 'Rate Now'}
+              {'icon' in content.primary && content.primary.icon ? (
+                <Ionicons
+                  name={content.primary.icon}
+                  size={18}
+                  color={Colors.white}
+                />
+              ) : null}
+              <Text style={styles.primaryButtonText}>
+                {content.primary.label}
               </Text>
             </TouchableOpacity>
           </View>
 
-          {/* Dismiss hint */}
-          <Text style={styles.hint}>
-            You can dismiss this and never see it again by tapping the X button.
-          </Text>
+          {step === 'ask' && (
+            <Text style={styles.hint}>
+              Tap the X to dismiss. We won't ask again for a while.
+            </Text>
+          )}
         </View>
       </View>
     </Modal>
@@ -146,7 +213,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     borderRadius: BorderRadius.lg,
     padding: Spacing.lg,
-    maxWidth: 340,
+    maxWidth: 360,
     width: '100%',
   },
   closeButton: {
@@ -166,13 +233,13 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: Fonts.sizes.xl,
-    fontWeight: Fonts.weights.bold as any,
+    fontWeight: '700',
     color: Colors.blue,
     textAlign: 'center',
     marginBottom: Spacing.sm,
   },
   message: {
-    fontSize: Fonts.sizes.base,
+    fontSize: Fonts.sizes.md,
     color: Colors.darkGray,
     textAlign: 'center',
     lineHeight: 22,
@@ -186,27 +253,30 @@ const styles = StyleSheet.create({
   button: {
     flex: 1,
     paddingVertical: Spacing.md,
+    paddingHorizontal: Spacing.sm,
     borderRadius: BorderRadius.md,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
     gap: Spacing.sm,
   },
-  laterButton: {
+  secondaryButton: {
     backgroundColor: Colors.lightGray,
   },
-  laterButtonText: {
-    fontSize: Fonts.sizes.base,
-    fontWeight: Fonts.weights.semibold as any,
+  secondaryButtonText: {
+    fontSize: Fonts.sizes.md,
+    fontWeight: '600',
     color: Colors.darkGray,
+    textAlign: 'center',
   },
-  rateButton: {
+  primaryButton: {
     backgroundColor: Colors.gold,
   },
-  rateButtonText: {
-    fontSize: Fonts.sizes.base,
-    fontWeight: Fonts.weights.semibold as any,
+  primaryButtonText: {
+    fontSize: Fonts.sizes.md,
+    fontWeight: '600',
     color: Colors.white,
+    textAlign: 'center',
   },
   hint: {
     fontSize: Fonts.sizes.sm,

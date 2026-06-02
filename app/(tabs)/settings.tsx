@@ -8,13 +8,23 @@ import {
   Switch,
   Alert,
   Linking,
+  Platform,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors, Fonts, Spacing, BorderRadius, Shadows } from '../../constants/theme';
 import { getSettings, saveSettings, resetAllData, AppSettings, DEFAULT_SETTINGS } from '../../utils/storage';
+import RatingPrompt from '../components/RatingPrompt';
+
+const GOOGLE_PLAY_URL =
+  'https://play.google.com/store/apps/details?id=xyz.jsmglobal.ace';
+const APP_STORE_URL =
+  'https://apps.apple.com/app/ace-au-citizenship-exam/id6743394564';
+const SHARE_TEXT =
+  'I\'m using ACE to study for the Australian Citizenship Test — check it out!';
 
 export default function SettingsScreen() {
   const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
+  const [showRating, setShowRating] = useState(false);
 
   useEffect(() => {
     loadSettings();
@@ -53,7 +63,25 @@ export default function SettingsScreen() {
     Linking.openURL('https://immi.homeaffairs.gov.au/citizenship/test-and-interview/our-common-bond');
   };
 
+  const handleRateApp = () => {
+    const url = Platform.OS === 'ios' ? APP_STORE_URL : GOOGLE_PLAY_URL;
+    Linking.openURL(url).catch(() =>
+      Alert.alert('Could not open store', url)
+    );
+  };
+
+  const handleShareApp = async () => {
+    try {
+      const { Share } = await import('react-native');
+      const url = Platform.OS === 'ios' ? APP_STORE_URL : GOOGLE_PLAY_URL;
+      await Share.share({ message: `${SHARE_TEXT}\n${url}`, url });
+    } catch (error) {
+      console.error('Share failed', error);
+    }
+  };
+
   return (
+    <>
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {/* Quiz Settings */}
       <Text style={styles.sectionTitle}>Quiz Settings</Text>
@@ -168,6 +196,32 @@ export default function SettingsScreen() {
         </TouchableOpacity>
       </View>
 
+      {/* Support Us */}
+      <Text style={styles.sectionTitle}>Support Us</Text>
+      <View style={styles.settingsGroup}>
+        <TouchableOpacity style={styles.linkRow} onPress={() => setShowRating(true)}>
+          <Ionicons name="star" size={22} color={Colors.gold} />
+          <View style={styles.linkContent}>
+            <Text style={styles.linkTitle}>Rate ACE</Text>
+            <Text style={styles.linkSubtitle}>
+              Leave us a quick review on the {Platform.OS === 'ios' ? 'App Store' : 'Play Store'}
+            </Text>
+          </View>
+          <Ionicons name="chevron-forward" size={18} color={Colors.gray} />
+        </TouchableOpacity>
+        <View style={styles.divider} />
+        <TouchableOpacity style={styles.linkRow} onPress={handleShareApp}>
+          <Ionicons name="share-social" size={22} color={Colors.blue} />
+          <View style={styles.linkContent}>
+            <Text style={styles.linkTitle}>Share with a friend</Text>
+            <Text style={styles.linkSubtitle}>
+              Help others passing the citizenship test
+            </Text>
+          </View>
+          <Ionicons name="chevron-forward" size={18} color={Colors.gray} />
+        </TouchableOpacity>
+      </View>
+
       {/* About */}
       <Text style={styles.sectionTitle}>About</Text>
       <View style={styles.settingsGroup}>
@@ -218,6 +272,8 @@ export default function SettingsScreen() {
 
       <View style={{ height: 48 }} />
     </ScrollView>
+    <RatingPrompt visible={showRating} onDismiss={() => setShowRating(false)} />
+    </>
   );
 }
 
