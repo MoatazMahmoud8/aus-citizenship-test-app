@@ -5,9 +5,14 @@ import { useState, useEffect } from 'react';
 import { Colors } from '../constants/theme';
 import AnimatedSplash from '../components/AnimatedSplash';
 import ErrorBoundary from '../components/ErrorBoundary';
-import { initSentry, Sentry } from '../utils/sentry';
+import * as Sentry from '@sentry/react-native';
 
-initSentry();
+// Sentry crash reporting — configured by @sentry/wizard
+Sentry.init({
+  dsn: 'https://bcea9a1f04d519835e56e0bec8c78bcd@o4511495972126720.ingest.de.sentry.io/4511495998275664',
+  sendDefaultPii: true,
+  enableLogs: false,
+});
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
