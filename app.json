@@ -31,7 +31,7 @@
         "backgroundColor": "#002B7F"
       },
       "package": "xyz.jsmglobal.ace",
-      "versionCode": 78,
+      "versionCode": 79,
       "permissions": []
     },
     "web": {
@@ -42,8 +42,14 @@
       "expo-router",
       "expo-font",
       "expo-asset",
-      "@sentry/react-native/expo",
-      "@sentry/react-native"
+      [
+        "@sentry/react-native/expo",
+        {
+          "url": "https://sentry.io/",
+          "project": "react-native",
+          "organization": "jsm-global-pty-ltd"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
@@ -53,7 +59,7 @@
         "projectId": "9fdaa0fe-9fc3-402d-88fa-85c17d00445d"
       },
       "router": {},
-      "sentryDsn": ""
+      "sentryDsn": "https://bcea9a1f04d519835e56e0bec8c78bcd@o4511495972126720.ingest.de.sentry.io/4511495998275664"
     },
     "owner": "moataz.alsbak"
   }
