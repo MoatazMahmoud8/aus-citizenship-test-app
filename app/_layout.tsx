@@ -4,10 +4,14 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useState, useEffect } from 'react';
 import { Colors } from '../constants/theme';
 import AnimatedSplash from '../components/AnimatedSplash';
+import ErrorBoundary from '../components/ErrorBoundary';
+import { initSentry, Sentry } from '../utils/sentry';
+
+initSentry();
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
-export default function RootLayout() {
+function RootLayout() {
   const [splashDone, setSplashDone] = useState(false);
 
   useEffect(() => {
@@ -19,7 +23,7 @@ export default function RootLayout() {
   }
 
   return (
-    <>
+    <ErrorBoundary>
       <StatusBar style="light" />
       <Stack
         screenOptions={{
@@ -64,6 +68,8 @@ export default function RootLayout() {
           }}
         />
       </Stack>
-    </>
+    </ErrorBoundary>
   );
 }
+
+export default Sentry.wrap(RootLayout);

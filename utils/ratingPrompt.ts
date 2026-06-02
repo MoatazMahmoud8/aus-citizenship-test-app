@@ -22,7 +22,13 @@ export async function getRatingState(): Promise<RatingState> {
   try {
     const data = await AsyncStorage.getItem(RATING_KEY);
     if (!data) return { ...DEFAULT_STATE };
-    return { ...DEFAULT_STATE, ...JSON.parse(data) };
+    try {
+      return { ...DEFAULT_STATE, ...JSON.parse(data) };
+    } catch (parseError) {
+      console.warn('Corrupted rating state, resetting:', parseError);
+      await AsyncStorage.removeItem(RATING_KEY);
+      return { ...DEFAULT_STATE };
+    }
   } catch (error) {
     console.error('Error reading rating state:', error);
     return { ...DEFAULT_STATE };
@@ -42,11 +48,13 @@ export async function shouldShowRatingPrompt(): Promise<boolean> {
   if (state.dismissed || state.rated) return false;
   if (state.passedQuizzesCount < RATING_SHOW_AFTER_QUIZZES) return false;
   if (state.lastShownDate) {
-    const daysSinceShown = Math.floor(
-      (Date.now() - new Date(state.lastShownDate).getTime()) /
-        (1000 * 60 * 60 * 24)
-    );
-    if (daysSinceShown < RATING_MINDAYS_BETWEEN_PROMPTS) return false;
+    const lastDate = new Date(state.lastShownDate);
+    if (!isNaN(lastDate.getTime())) {
+      const daysSinceShown = Math.floor(
+        (Date.now() - lastDate.getTime()) / (1000 * 60 * 60 * 24)
+      );
+      if (daysSinceShown < RATING_MINDAYS_BETWEEN_PROMPTS) return false;
+    }
   }
   return true;
 }

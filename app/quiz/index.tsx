@@ -109,6 +109,7 @@ export default function QuizScreen() {
   const handleSelectAnswer = useCallback(
     (optionIndex: number) => {
       if (showExplanation) return; // Already answered
+      if (!currentQuestion) return; // Guard against undefined question
 
       setSelectedAnswer(optionIndex);
       setShowExplanation(true);
@@ -153,6 +154,12 @@ export default function QuizScreen() {
   const finishQuiz = async () => {
     if (timerRef.current) clearInterval(timerRef.current);
 
+    if (!questions.length) {
+      Alert.alert('Quiz Error', 'No questions loaded. Please try again.');
+      router.back();
+      return;
+    }
+
     const updatedAnswers = [...answers];
     const totalCorrect = updatedAnswers.filter((a) => a.isCorrect).length;
 
@@ -165,7 +172,7 @@ export default function QuizScreen() {
     );
     const valuesCorrect = valuesAnswers.filter((a) => a.isCorrect).length;
 
-    const scorePercent = (totalCorrect / questions.length) * 100;
+    const scorePercent = questions.length > 0 ? (totalCorrect / questions.length) * 100 : 0;
     const valuesAllCorrect = valuesCorrect === valuesQuestionIds.length;
     const overallPass = scorePercent >= QUIZ_CONFIG.PASS_MARK_PERCENT;
     const passed =
@@ -186,30 +193,35 @@ export default function QuizScreen() {
       category: params.category as QuestionCategory | undefined || 'all',
     };
 
-    // Save results
-    await saveQuizResult(result);
-    await updateProgressAfterQuiz(result);
+    try {
+      // Save results
+      await saveQuizResult(result);
+      await updateProgressAfterQuiz(result);
 
-    // Update category scores
-    const categoryGroups: Record<string, { correct: number; total: number }> = {};
-    for (const answer of updatedAnswers) {
-      const question = questions.find((q) => q.id === answer.questionId);
-      if (question) {
-        if (!categoryGroups[question.category]) {
-          categoryGroups[question.category] = { correct: 0, total: 0 };
-        }
-        categoryGroups[question.category].total += 1;
-        if (answer.isCorrect) {
-          categoryGroups[question.category].correct += 1;
+      // Update category scores
+      const categoryGroups: Record<string, { correct: number; total: number }> = {};
+      for (const answer of updatedAnswers) {
+        const question = questions.find((q) => q.id === answer.questionId);
+        if (question) {
+          if (!categoryGroups[question.category]) {
+            categoryGroups[question.category] = { correct: 0, total: 0 };
+          }
+          categoryGroups[question.category].total += 1;
+          if (answer.isCorrect) {
+            categoryGroups[question.category].correct += 1;
+          }
         }
       }
-    }
-    for (const [cat, scores] of Object.entries(categoryGroups)) {
-      await updateCategoryScore(
-        cat as QuestionCategory,
-        scores.correct,
-        scores.total
-      );
+      for (const [cat, scores] of Object.entries(categoryGroups)) {
+        await updateCategoryScore(
+          cat as QuestionCategory,
+          scores.correct,
+          scores.total
+        );
+      }
+    } catch (error) {
+      console.error('Error saving quiz results:', error);
+      // Continue to results screen even if save fails
     }
 
     // Navigate to results

@@ -41,7 +41,9 @@
     "plugins": [
       "expo-router",
       "expo-font",
-      "expo-asset"
+      "expo-asset",
+      "@sentry/react-native/expo",
+      "@sentry/react-native"
     ],
     "experiments": {
       "typedRoutes": true
@@ -50,7 +52,8 @@
       "eas": {
         "projectId": "9fdaa0fe-9fc3-402d-88fa-85c17d00445d"
       },
-      "router": {}
+      "router": {},
+      "sentryDsn": ""
     },
     "owner": "moataz.alsbak"
   }

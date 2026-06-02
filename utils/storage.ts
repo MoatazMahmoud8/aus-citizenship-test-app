@@ -19,7 +19,14 @@ const STORAGE_KEYS = {
 export async function getProgress(): Promise<UserProgress> {
   try {
     const data = await AsyncStorage.getItem(STORAGE_KEYS.PROGRESS);
-    return data ? JSON.parse(data) : DEFAULT_PROGRESS;
+    if (!data) return DEFAULT_PROGRESS;
+    try {
+      return JSON.parse(data);
+    } catch (parseError) {
+      console.warn('Corrupted progress data, resetting:', parseError);
+      await AsyncStorage.removeItem(STORAGE_KEYS.PROGRESS);
+      return DEFAULT_PROGRESS;
+    }
   } catch {
     return DEFAULT_PROGRESS;
   }
