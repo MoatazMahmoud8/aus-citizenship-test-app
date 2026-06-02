@@ -5,14 +5,13 @@ import { useState, useEffect } from 'react';
 import { Colors } from '../constants/theme';
 import AnimatedSplash from '../components/AnimatedSplash';
 import ErrorBoundary from '../components/ErrorBoundary';
-import * as Sentry from '@sentry/react-native';
-
-// Sentry crash reporting — configured by @sentry/wizard
-Sentry.init({
-  dsn: 'https://bcea9a1f04d519835e56e0bec8c78bcd@o4511495972126720.ingest.de.sentry.io/4511495998275664',
-  sendDefaultPii: true,
-  enableLogs: false,
-});
+// TODO: Re-enable Sentry after debugging Android build
+// import * as Sentry from '@sentry/react-native';
+// Sentry.init({
+//   dsn: 'https://bcea9a1f04d519835e56e0bec8c78bcd@o4511495972126720.ingest.de.sentry.io/4511495998275664',
+//   sendDefaultPii: true,
+//   enableLogs: false,
+// });
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
@@ -77,4 +76,4 @@ function RootLayout() {
   );
 }
 
-export default Sentry.wrap(RootLayout);
+export default RootLayout;

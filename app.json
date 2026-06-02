@@ -41,15 +41,7 @@
     "plugins": [
       "expo-router",
       "expo-font",
-      "expo-asset",
-      [
-        "@sentry/react-native/expo",
-        {
-          "url": "https://sentry.io/",
-          "project": "react-native",
-          "organization": "jsm-global-pty-ltd"
-        }
-      ]
+      "expo-asset"
     ],
     "experiments": {
       "typedRoutes": true
