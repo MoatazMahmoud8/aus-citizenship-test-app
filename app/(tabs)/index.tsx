@@ -253,27 +253,6 @@ export default function HomeScreen() {
         </LinearGradient>
       </TouchableOpacity>
 
-      {/* ===== ENHANCED WELCOME BANNER ===== */}
-      <View style={styles.welcomeCard}>
-        <LinearGradient
-          colors={['#1A472A', '#00843D', '#005A2A']}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={styles.welcomeBannerGradient}
-        >
-          <View style={styles.welcomeHeader}>
-            <Text style={styles.welcomeEmoji}>🎯</Text>
-            <View style={{ flex: 1 }}>
-              <Text style={styles.welcomeTitle}>Welcome, Future Citizen!</Text>
-              <Text style={styles.welcomeDesc}>
-                Prepare for your Australian Citizenship Test with {totalQuestions} real exam-style questions.
-              </Text>
-              <Text style={styles.welcomeUpdateDate}>Questions last updated: June 2026</Text>
-            </View>
-          </View>
-        </LinearGradient>
-      </View>
-
       {/* ===== TEST FORMAT INFO ===== */}
       <View style={styles.infoCard}>
         <View style={styles.infoHeader}>
@@ -600,48 +579,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: 'rgba(255,255,255,0.8)',
     marginTop: 2,
-  },
-
-  // ===== WELCOME CARD =====
-  welcomeCard: {
-    marginHorizontal: Spacing.lg,
-    marginTop: 20,
-    borderRadius: 16,
-    overflow: 'hidden',
-    ...Shadows.medium,
-  },
-  welcomeBannerGradient: {
-    padding: 20,
-    borderRadius: 16,
-  },
-  welcomeHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 14,
-  },
-  welcomeEmoji: {
-    fontSize: 52,
-    lineHeight: 52,
-  },
-  welcomeTitle: {
-    fontSize: 18,
-    fontWeight: '800',
-    color: '#FFD700',
-    marginBottom: 4,
-    letterSpacing: 0.3,
-  },
-  welcomeDesc: {
-    fontSize: 13,
-    color: '#FFF9E6',
-    lineHeight: 18,
-    fontWeight: '500',
-  },
-  welcomeUpdateDate: {
-    fontSize: 11,
-    color: '#FFE680',
-    marginTop: 8,
-    fontWeight: '600',
-    letterSpacing: 0.2,
   },
 
   // ===== INFO CARD =====
