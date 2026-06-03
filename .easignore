@@ -1,0 +1,40 @@
+# Native build artifacts that should not be included in EAS builds
+# These are generated during native compilation and can be rebuilt
+
+# Android native artifacts
+android/app/build/
+android/.gradle/
+android/local.properties
+
+# iOS native artifacts
+ios/Pods/
+ios/.xcworkspace/xcuserdata/
+ios/build/
+
+# Xcode build outputs
+.xcode.env
+.xcode.env.local
+
+# Temporary build files
+*.o
+*.a
+*.so
+*.dylib
+
+# Node modules (optional - EAS will reinstall)
+# node_modules/
+
+# Expo cache
+.expo/
+dist/
+
+# IDE artifacts
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# System files
+.DS_Store
+Thumbs.db
