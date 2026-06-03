@@ -253,17 +253,24 @@ export default function HomeScreen() {
         </LinearGradient>
       </TouchableOpacity>
 
-      {/* ===== WELCOME CARD ===== */}
+      {/* ===== ENHANCED WELCOME BANNER ===== */}
       <View style={styles.welcomeCard}>
-        <View style={styles.welcomeHeader}>
-          <Text style={styles.welcomeEmoji}>🎯</Text>
-          <View style={{ flex: 1 }}>
-            <Text style={styles.welcomeTitle}>Welcome, Future Citizen!</Text>
-            <Text style={styles.welcomeDesc}>
-              Prepare for your Australian Citizenship Test with {totalQuestions} real exam-style questions.
-            </Text>
+        <LinearGradient
+          colors={['#1A472A', '#00843D', '#005A2A']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={styles.welcomeBannerGradient}
+        >
+          <View style={styles.welcomeHeader}>
+            <Text style={styles.welcomeEmoji}>🎯</Text>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.welcomeTitle}>Welcome, Future Citizen!</Text>
+              <Text style={styles.welcomeDesc}>
+                Prepare for your Australian Citizenship Test with {totalQuestions} real exam-style questions.
+              </Text>
+            </View>
           </View>
-        </View>
+        </LinearGradient>
       </View>
 
       {/* ===== TEST FORMAT INFO ===== */}
@@ -423,11 +430,47 @@ export default function HomeScreen() {
         </LinearGradient>
       </View>
 
+      {/* ===== LAST MINUTE STUDY - MOST REPEATED QUESTIONS ===== */}
+      <View style={styles.sectionHeader}>
+        <View style={[styles.infoIconCircle, { backgroundColor: '#FFE8CC' }]}>
+          <Ionicons name="flash" size={18} color="#E85D2A" />
+        </View>
+        <Text style={styles.sectionTitle}>Last Minute Study</Text>
+      </View>
+
+      <View style={styles.lastMinuteCard}>
+        <View style={styles.lastMinuteHeader}>
+          <Text style={styles.lastMinuteEmoji}>⚡</Text>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.lastMinuteTitle}>Most Repeated Exam Questions</Text>
+            <Text style={styles.lastMinuteDesc}>
+              Review the questions that appear most frequently in the Australian Citizenship Test.
+            </Text>
+          </View>
+        </View>
+        <TouchableOpacity
+          style={styles.lastMinuteButton}
+          onPress={() => router.push('/practice')}
+          activeOpacity={0.7}
+        >
+          <LinearGradient
+            colors={['#E85D2A', '#C94A1F']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.lastMinuteButtonGradient}
+          >
+            <Ionicons name="fire" size={18} color="#FFF" />
+            <Text style={styles.lastMinuteButtonText}>Start Review</Text>
+            <Ionicons name="chevron-forward" size={16} color="rgba(255,255,255,0.7)" />
+          </LinearGradient>
+        </TouchableOpacity>
+      </View>
+
       {/* ===== LAST UPDATED ===== */}
       <View style={styles.lastUpdated}>
         <View style={styles.lastUpdatedInner}>
           <Ionicons name="checkmark-circle" size={18} color="#00843D" />
-          <Text style={styles.lastUpdatedText}>Questions last updated: <Text style={styles.lastUpdatedDate}>May 2026</Text></Text>
+          <Text style={styles.lastUpdatedText}>Questions last updated: <Text style={styles.lastUpdatedDate}>June 2026</Text></Text>
         </View>
       </View>
 
@@ -592,10 +635,13 @@ const styles = StyleSheet.create({
   welcomeCard: {
     marginHorizontal: Spacing.lg,
     marginTop: 20,
-    padding: 18,
-    backgroundColor: Colors.white,
     borderRadius: 16,
+    overflow: 'hidden',
     ...Shadows.medium,
+  },
+  welcomeBannerGradient: {
+    padding: 20,
+    borderRadius: 16,
   },
   welcomeHeader: {
     flexDirection: 'row',
@@ -603,18 +649,20 @@ const styles = StyleSheet.create({
     gap: 14,
   },
   welcomeEmoji: {
-    fontSize: 36,
+    fontSize: 40,
   },
   welcomeTitle: {
-    fontSize: 17,
-    fontWeight: '700',
-    color: Colors.charcoal,
-    marginBottom: 3,
+    fontSize: 18,
+    fontWeight: '800',
+    color: Colors.white,
+    marginBottom: 4,
+    letterSpacing: 0.3,
   },
   welcomeDesc: {
     fontSize: 13,
-    color: Colors.darkGray,
+    color: 'rgba(255,255,255,0.9)',
     lineHeight: 18,
+    fontWeight: '500',
   },
 
   // ===== INFO CARD =====
@@ -859,5 +907,54 @@ const styles = StyleSheet.create({
     color: '#00843D',
     fontWeight: '600',
     flex: 1,
+  },
+
+  // ===== LAST MINUTE STUDY =====
+  lastMinuteCard: {
+    marginHorizontal: Spacing.lg,
+    marginBottom: Spacing.lg,
+    padding: 18,
+    backgroundColor: Colors.white,
+    borderRadius: 16,
+    borderLeftWidth: 4,
+    borderLeftColor: '#E85D2A',
+    ...Shadows.medium,
+  },
+  lastMinuteHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 14,
+    marginBottom: 14,
+  },
+  lastMinuteEmoji: {
+    fontSize: 32,
+  },
+  lastMinuteTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: Colors.charcoal,
+    marginBottom: 2,
+  },
+  lastMinuteDesc: {
+    fontSize: 12,
+    color: Colors.gray,
+    lineHeight: 17,
+  },
+  lastMinuteButton: {
+    borderRadius: 12,
+    overflow: 'hidden',
+  },
+  lastMinuteButtonGradient: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    gap: 8,
+  },
+  lastMinuteButtonText: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: Colors.white,
   },
 });

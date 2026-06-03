@@ -48,6 +48,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.25.0",
+    "@babel/plugin-transform-classes": "^7.25.0",
     "@babel/plugin-transform-class-properties": "^7.25.0",
     "@babel/plugin-transform-logical-assignment-operators": "^7.25.0",
     "@babel/plugin-transform-private-methods": "^7.25.0",
