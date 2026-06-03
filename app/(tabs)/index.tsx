@@ -620,7 +620,8 @@ const styles = StyleSheet.create({
     gap: 14,
   },
   welcomeEmoji: {
-    fontSize: 40,
+    fontSize: 52,
+    lineHeight: 52,
   },
   welcomeTitle: {
     fontSize: 18,
