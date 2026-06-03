@@ -2,6 +2,20 @@ import { Exam } from '../constants/types';
 
 export const exams: Exam[] = [
   // ============================================================
+  // ⚡ QUICK EXAM — Top 15 Most Frequently Asked Questions
+  // Perfect for people who don't have much time!
+  // ============================================================
+  {
+    id: 1000,
+    title: '⚡ Quick Exam — Most Repeated',
+    description: 'No time? This is for you! 15 of the most frequently asked questions from recent exams. ~7 minutes.',
+    questionIds: [308, 9, 33, 131, 143, 144, 147, 165, 199, 208, 218, 303, 333, 346, 347],
+    valuesQuestionIds: [9, 33],
+    totalQuestions: 15,
+    difficulty: 'Hard',
+  },
+
+  // ============================================================
   // 🔥 LAST-MINUTE EXAM — questions reported by recent passers
   // Sorted hottest-first. Auto-curated from recallCount in the
   // question bank (see bot repo `scripts/sync_to_app.py`).

@@ -228,7 +228,35 @@ export default function HomeScreen() {
         </View>
       </View>
 
-      {/* ===== START PRACTICE TEST BUTTON ===== */}
+      {/* ===== QUICK EXAM (FOR TIME-PRESSED USERS) ===== */}
+      <TouchableOpacity
+        style={styles.startButton}
+        onPress={() => router.push({
+          pathname: '/quiz',
+          params: { examId: '1000' }
+        })}
+        activeOpacity={0.85}
+      >
+        <LinearGradient
+          colors={['#E85D2A', '#C94A1F', '#A83D1A']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={styles.startButtonGradient}
+        >
+          <View style={styles.startButtonIcon}>
+            <Text style={{ fontSize: 20 }}>⚡</Text>
+          </View>
+          <View style={styles.startButtonText}>
+            <Text style={styles.startButtonTitle}>Quick Exam</Text>
+            <Text style={styles.startButtonSubtitle}>
+              15 most repeated questions · ~7 minutes
+            </Text>
+          </View>
+          <Ionicons name="chevron-forward" size={22} color="rgba(255,255,255,0.7)" />
+        </LinearGradient>
+      </TouchableOpacity>
+
+      {/* ===== FULL PRACTICE TEST BUTTON ===== */}
       <TouchableOpacity
         style={styles.startButton}
         onPress={() => router.push('/quiz')}
@@ -244,7 +272,7 @@ export default function HomeScreen() {
             <Ionicons name="play" size={22} color={Colors.white} />
           </View>
           <View style={styles.startButtonText}>
-            <Text style={styles.startButtonTitle}>Start Practice Test</Text>
+            <Text style={styles.startButtonTitle}>Full Practice Test</Text>
             <Text style={styles.startButtonSubtitle}>
               {QUIZ_CONFIG.TOTAL_QUESTIONS} questions · {QUIZ_CONFIG.PASS_MARK_PERCENT}% to pass
             </Text>
@@ -408,42 +436,6 @@ export default function HomeScreen() {
             <Text style={styles.bankInfoLabel}>Real exam-style practice questions</Text>
           </View>
         </LinearGradient>
-      </View>
-
-      {/* ===== LAST MINUTE STUDY - MOST REPEATED QUESTIONS ===== */}
-      <View style={styles.sectionHeader}>
-        <View style={[styles.infoIconCircle, { backgroundColor: '#FFE8CC' }]}>
-          <Ionicons name="flash" size={18} color="#E85D2A" />
-        </View>
-        <Text style={styles.sectionTitle}>Last Minute Study</Text>
-      </View>
-
-      <View style={styles.lastMinuteCard}>
-        <View style={styles.lastMinuteHeader}>
-          <Text style={styles.lastMinuteEmoji}>⚡</Text>
-          <View style={{ flex: 1 }}>
-            <Text style={styles.lastMinuteTitle}>Most Repeated Exam Questions</Text>
-            <Text style={styles.lastMinuteDesc}>
-              Review the questions that appear most frequently in the Australian Citizenship Test.
-            </Text>
-          </View>
-        </View>
-        <TouchableOpacity
-          style={styles.lastMinuteButton}
-          onPress={() => router.push('/practice')}
-          activeOpacity={0.7}
-        >
-          <LinearGradient
-            colors={['#E85D2A', '#C94A1F']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={styles.lastMinuteButtonGradient}
-          >
-            <Text style={styles.lastMinuteButtonFireEmoji}>🔥</Text>
-            <Text style={styles.lastMinuteButtonText}>Start Review</Text>
-            <Ionicons name="chevron-forward" size={16} color="rgba(255,255,255,0.7)" />
-          </LinearGradient>
-        </TouchableOpacity>
       </View>
 
       <View style={{ height: 32 }} />
@@ -757,57 +749,5 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: 'rgba(255,255,255,0.85)',
     marginTop: 1,
-  },
-
-  // ===== LAST MINUTE STUDY =====
-  lastMinuteCard: {
-    marginHorizontal: Spacing.lg,
-    marginBottom: Spacing.lg,
-    padding: 18,
-    backgroundColor: Colors.white,
-    borderRadius: 16,
-    borderLeftWidth: 4,
-    borderLeftColor: '#E85D2A',
-    ...Shadows.medium,
-  },
-  lastMinuteHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 14,
-    marginBottom: 14,
-  },
-  lastMinuteEmoji: {
-    fontSize: 32,
-  },
-  lastMinuteTitle: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: Colors.charcoal,
-    marginBottom: 2,
-  },
-  lastMinuteDesc: {
-    fontSize: 12,
-    color: Colors.gray,
-    lineHeight: 17,
-  },
-  lastMinuteButton: {
-    borderRadius: 12,
-    overflow: 'hidden',
-  },
-  lastMinuteButtonGradient: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    gap: 8,
-  },
-  lastMinuteButtonFireEmoji: {
-    fontSize: 18,
-  },
-  lastMinuteButtonText: {
-    fontSize: 15,
-    fontWeight: '700',
-    color: Colors.white,
   },
 });
