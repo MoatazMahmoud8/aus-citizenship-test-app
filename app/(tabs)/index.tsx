@@ -256,24 +256,6 @@ export default function HomeScreen() {
         </LinearGradient>
       </TouchableOpacity>
 
-      {/* ===== FULL PRACTICE TEST BUTTON ===== */}
-      <TouchableOpacity
-        style={styles.fullTestButton}
-        onPress={() => router.push('/quiz')}
-        activeOpacity={0.7}
-      >
-        <View style={styles.fullTestButtonIcon}>
-          <Ionicons name="play" size={18} color={Colors.blue} />
-        </View>
-        <View style={styles.fullTestButtonText}>
-          <Text style={styles.fullTestButtonTitle}>Full Practice Test</Text>
-          <Text style={styles.fullTestButtonSubtitle}>
-            {QUIZ_CONFIG.TOTAL_QUESTIONS} questions · {QUIZ_CONFIG.PASS_MARK_PERCENT}% to pass
-          </Text>
-        </View>
-        <Ionicons name="chevron-forward" size={18} color={Colors.blue} />
-      </TouchableOpacity>
-
       {/* ===== TEST FORMAT INFO ===== */}
       <View style={styles.infoCard}>
         <View style={styles.infoHeader}>
@@ -563,43 +545,6 @@ const styles = StyleSheet.create({
   startButtonSubtitle: {
     fontSize: 13,
     color: 'rgba(255,255,255,0.8)',
-    marginTop: 2,
-  },
-
-  // ===== FULL TEST BUTTON (PLAIN STYLE) =====
-  fullTestButton: {
-    marginHorizontal: Spacing.lg,
-    marginTop: 12,
-    marginBottom: Spacing.lg,
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    backgroundColor: Colors.white,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: '#E0E0E0',
-  },
-  fullTestButtonIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: Colors.lightBlue,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  fullTestButtonText: {
-    flex: 1,
-    marginLeft: 12,
-  },
-  fullTestButtonTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: Colors.blue,
-  },
-  fullTestButtonSubtitle: {
-    fontSize: 12,
-    color: Colors.gray,
     marginTop: 2,
   },
 
