@@ -1,15 +1,11 @@
 module.exports = function (api) {
   api.cache(true);
   return {
-    presets: ['babel-preset-expo'],
+    // hermes-v0 profile transforms private class fields (#x syntax) which
+    // hermesc in RN 0.81.5 cannot compile. hermes-stable skips this transform
+    // (assuming Hermes runtime supports it), but the hermesc compiler doesn't.
+    presets: [['babel-preset-expo', { unstable_transformProfile: 'hermes-v0' }]],
     plugins: [
-      // Transform ES6+ syntax for Hermes V1 (React Native 0.81.5) compatibility
-      // Hermes V1 doesn't support ES6 class syntax or ES2022+ features
-      ['@babel/plugin-transform-classes', { loose: true }],
-      ['@babel/plugin-transform-class-properties', { loose: true }],
-      ['@babel/plugin-transform-private-methods', { loose: true }],
-      ['@babel/plugin-transform-private-property-in-object', { loose: true }],
-      ['@babel/plugin-transform-logical-assignment-operators'],
       'react-native-reanimated/plugin',
     ],
   };
