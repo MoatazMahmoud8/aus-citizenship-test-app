@@ -268,6 +268,7 @@ export default function HomeScreen() {
               <Text style={styles.welcomeDesc}>
                 Prepare for your Australian Citizenship Test with {totalQuestions} real exam-style questions.
               </Text>
+              <Text style={styles.welcomeUpdateDate}>Questions last updated: June 2026</Text>
             </View>
           </View>
         </LinearGradient>
@@ -466,36 +467,6 @@ export default function HomeScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* ===== LAST UPDATED ===== */}
-      <View style={styles.lastUpdated}>
-        <View style={styles.lastUpdatedInner}>
-          <Ionicons name="checkmark-circle" size={18} color="#00843D" />
-          <Text style={styles.lastUpdatedText}>Questions last updated: <Text style={styles.lastUpdatedDate}>June 2026</Text></Text>
-        </View>
-      </View>
-
-      {/* ===== DISCLAIMER ===== */}
-      <View style={styles.disclaimer}>
-        <View style={styles.disclaimerHeader}>
-          <Ionicons name="information-circle" size={18} color="#8B6914" />
-          <Text style={styles.disclaimerTitle}>⚠️ Unofficial Study Aid — Not a Government App</Text>
-        </View>
-        <Text style={styles.disclaimerText}>
-          This app is an independent study tool and is NOT affiliated with,
-          endorsed by, or connected to the Australian Government or the
-          Department of Home Affairs. Content is based on the publicly available
-          "Australian Citizenship: Our Common Bond" booklet.
-        </Text>
-        <TouchableOpacity
-          style={styles.disclaimerLink}
-          onPress={() => Linking.openURL('https://immi.homeaffairs.gov.au/citizenship/test-and-interview/our-common-bond')}
-        >
-          <Ionicons name="globe-outline" size={14} color="#00843D" />
-          <Text style={styles.disclaimerLinkText}>Official source: immi.homeaffairs.gov.au</Text>
-          <Ionicons name="open-outline" size={13} color="#00843D" />
-        </TouchableOpacity>
-      </View>
-
       <View style={{ height: 32 }} />
     </ScrollView>
   );
@@ -663,6 +634,13 @@ const styles = StyleSheet.create({
     color: 'rgba(255,255,255,0.9)',
     lineHeight: 18,
     fontWeight: '500',
+  },
+  welcomeUpdateDate: {
+    fontSize: 11,
+    color: 'rgba(255,255,255,0.75)',
+    marginTop: 8,
+    fontWeight: '600',
+    letterSpacing: 0.2,
   },
 
   // ===== INFO CARD =====
@@ -841,72 +819,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: 'rgba(255,255,255,0.85)',
     marginTop: 1,
-  },
-
-  // ===== LAST UPDATED =====
-  lastUpdated: {
-    marginHorizontal: Spacing.lg,
-    marginBottom: 16,
-  },
-  lastUpdatedInner: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    backgroundColor: '#E8F5EC',
-    paddingVertical: 10,
-    paddingHorizontal: 14,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#B8DFCA',
-  },
-  lastUpdatedText: {
-    fontSize: 13,
-    color: '#2D6B45',
-  },
-  lastUpdatedDate: {
-    fontWeight: '700',
-    color: '#00843D',
-  },
-
-  // ===== DISCLAIMER =====
-  disclaimer: {
-    marginHorizontal: Spacing.lg,
-    padding: 16,
-    backgroundColor: '#FFF8E0',
-    borderRadius: 14,
-    borderWidth: 1,
-    borderColor: '#F0DFA0',
-  },
-  disclaimerHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    marginBottom: 8,
-  },
-  disclaimerTitle: {
-    fontSize: 13,
-    fontWeight: '700',
-    color: '#8B6914',
-  },
-  disclaimerText: {
-    fontSize: 12,
-    color: '#6B5A10',
-    lineHeight: 18,
-  },
-  disclaimerLink: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 5,
-    marginTop: 10,
-    paddingTop: 8,
-    borderTopWidth: 1,
-    borderTopColor: '#F0DFA0',
-  },
-  disclaimerLinkText: {
-    fontSize: 12,
-    color: '#00843D',
-    fontWeight: '600',
-    flex: 1,
   },
 
   // ===== LAST MINUTE STUDY =====
