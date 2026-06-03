@@ -459,7 +459,7 @@ export default function HomeScreen() {
             end={{ x: 1, y: 1 }}
             style={styles.lastMinuteButtonGradient}
           >
-            <Ionicons name="fire" size={18} color="#FFF" />
+            <Text style={styles.lastMinuteButtonFireEmoji}>🔥</Text>
             <Text style={styles.lastMinuteButtonText}>Start Review</Text>
             <Ionicons name="chevron-forward" size={16} color="rgba(255,255,255,0.7)" />
           </LinearGradient>
@@ -951,6 +951,9 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 16,
     gap: 8,
+  },
+  lastMinuteButtonFireEmoji: {
+    fontSize: 18,
   },
   lastMinuteButtonText: {
     fontSize: 15,
