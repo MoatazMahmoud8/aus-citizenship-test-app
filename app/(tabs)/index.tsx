@@ -626,19 +626,19 @@ const styles = StyleSheet.create({
   welcomeTitle: {
     fontSize: 18,
     fontWeight: '800',
-    color: Colors.white,
+    color: '#FFD700',
     marginBottom: 4,
     letterSpacing: 0.3,
   },
   welcomeDesc: {
     fontSize: 13,
-    color: 'rgba(255,255,255,0.9)',
+    color: '#FFF9E6',
     lineHeight: 18,
     fontWeight: '500',
   },
   welcomeUpdateDate: {
     fontSize: 11,
-    color: 'rgba(255,255,255,0.75)',
+    color: '#FFE680',
     marginTop: 8,
     fontWeight: '600',
     letterSpacing: 0.2,
