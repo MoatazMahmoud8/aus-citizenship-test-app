@@ -41,7 +41,16 @@
     "plugins": [
       "expo-router",
       "expo-font",
-      "expo-asset"
+      "expo-asset",
+      [
+        "@sentry/react-native/expo",
+        {
+          "organization": "moataz-alsbak",
+          "project": "australian-citizenship-test",
+          "url": "https://sentry.io/",
+          "authToken": ""
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
