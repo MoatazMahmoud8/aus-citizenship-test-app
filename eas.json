@@ -27,6 +27,7 @@
       "autoIncrement": true,
       "credentialsSource": "remote",
       "node": "22.15.0",
+      "prebuildCommand": "npx expo prebuild --clean",
       "ios": {
         "image": "macos-sequoia-15.6-xcode-26.2"
       }
