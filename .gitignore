@@ -9,8 +9,7 @@ web-build/
 expo-env.d.ts
 
 # Native builds
-ios/
-android/
+# ios/ and android/ are committed so EAS Build can use them directly
 *.jks
 *.p8
 *.p12
