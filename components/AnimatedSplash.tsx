@@ -73,6 +73,10 @@ export default function AnimatedSplash({ onFinish }: AnimatedSplashProps) {
   const badgeOpacity = useRef(new Animated.Value(0)).current;
   const badgeScale = useRef(new Animated.Value(0.8)).current;
 
+  // Welcome section
+  const welcomeOpacity = useRef(new Animated.Value(0)).current;
+  const welcomeTranslate = useRef(new Animated.Value(30)).current;
+
   // Gold line
   const lineWidth = useRef(new Animated.Value(0)).current;
 
@@ -104,9 +108,14 @@ export default function AnimatedSplash({ onFinish }: AnimatedSplashProps) {
         Animated.timing(badgeOpacity, { toValue: 1, duration: 300, useNativeDriver: true }),
         Animated.spring(badgeScale, { toValue: 1, tension: 80, friction: 6, useNativeDriver: true }),
       ]),
-      // 6. Hold for a moment
+      // 6. Welcome section
+      Animated.parallel([
+        Animated.timing(welcomeOpacity, { toValue: 1, duration: 400, useNativeDriver: true }),
+        Animated.spring(welcomeTranslate, { toValue: 0, tension: 80, friction: 8, useNativeDriver: true }),
+      ]),
+      // 7. Hold for a moment
       Animated.delay(600),
-      // 7. Fade out
+      // 8. Fade out
       Animated.timing(screenOpacity, { toValue: 0, duration: 400, useNativeDriver: true }),
     ]).start(() => onFinish());
   }, []);
@@ -190,6 +199,23 @@ export default function AnimatedSplash({ onFinish }: AnimatedSplashProps) {
         ]}
       >
         <Text style={styles.badgeText}>🦘 Exam Preparation</Text>
+      </Animated.View>
+
+      {/* Welcome Section */}
+      <Animated.View
+        style={[
+          styles.welcomeSection,
+          {
+            opacity: welcomeOpacity,
+            transform: [{ translateY: welcomeTranslate }],
+          },
+        ]}
+      >
+        <Text style={styles.welcomeTitle}>Welcome, Future Citizen!</Text>
+        <Text style={styles.welcomeDescription}>
+          Prepare for your Australian Citizenship Test with 519 real exam-style questions.
+        </Text>
+        <Text style={styles.welcomeDate}>Questions last updated: June 2026</Text>
       </Animated.View>
     </Animated.View>
   );
@@ -278,5 +304,31 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '500',
     letterSpacing: 1,
+  },
+  welcomeSection: {
+    marginTop: 40,
+    paddingHorizontal: 40,
+    alignItems: 'center',
+  },
+  welcomeTitle: {
+    fontSize: 20,
+    fontWeight: '800',
+    color: '#FFD700',
+    marginBottom: 8,
+    letterSpacing: 0.3,
+  },
+  welcomeDescription: {
+    fontSize: 13,
+    color: '#FFF9E6',
+    textAlign: 'center',
+    lineHeight: 18,
+    fontWeight: '500',
+    marginBottom: 12,
+  },
+  welcomeDate: {
+    fontSize: 11,
+    color: '#FFE680',
+    fontWeight: '600',
+    letterSpacing: 0.2,
   },
 });
