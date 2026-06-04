@@ -210,20 +210,37 @@ fi
 # ----------------------------------------------------------------
 section "Sentry config"
 
-if [[ -f "android/sentry.properties" ]]; then
-  if grep -q "auth.token" android/sentry.properties; then
-    fail "android/sentry.properties contains 'auth.token' — this hardcodes the token. Remove it and rely on the SENTRY_AUTH_TOKEN env var instead."
+EXPECTED_SENTRY_ORG="jsm-global-pty-ltd"
+EXPECTED_SENTRY_PROJECT="react-native"
+
+check_sentry_properties() {
+  local file="$1"
+  if grep -q "auth.token" "$file"; then
+    fail "$file contains 'auth.token' — hardcoded token detected. Remove it and rely on SENTRY_AUTH_TOKEN env var."
   else
-    ok "android/sentry.properties does not hardcode auth.token"
+    ok "$file does not hardcode auth.token"
   fi
+  local org project
+  org=$(grep "^defaults.org=" "$file" | cut -d= -f2)
+  project=$(grep "^defaults.project=" "$file" | cut -d= -f2)
+  if [[ "$org" == "$EXPECTED_SENTRY_ORG" ]]; then
+    ok "$file org: $org"
+  else
+    fail "$file has wrong org '$org' (expected '$EXPECTED_SENTRY_ORG')"
+  fi
+  if [[ "$project" == "$EXPECTED_SENTRY_PROJECT" ]]; then
+    ok "$file project: $project"
+  else
+    fail "$file has wrong project '$project' (expected '$EXPECTED_SENTRY_PROJECT')"
+  fi
+}
+
+if [[ -f "android/sentry.properties" ]]; then
+  check_sentry_properties "android/sentry.properties"
 fi
 
 if [[ -f "ios/sentry.properties" ]]; then
-  if grep -q "auth.token" ios/sentry.properties; then
-    fail "ios/sentry.properties contains 'auth.token' — hardcoded token detected. Remove it."
-  else
-    ok "ios/sentry.properties does not hardcode auth.token"
-  fi
+  check_sentry_properties "ios/sentry.properties"
 fi
 
 # ----------------------------------------------------------------
