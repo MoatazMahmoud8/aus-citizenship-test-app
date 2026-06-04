@@ -53,6 +53,7 @@ test-archive/
 !assets/*.png
 !android/**/*.png
 !android/**/*.webp
+!ios/**/*.png
 # .github/ — keep workflows tracked
 README.md
 Gemini_Generated_Image*

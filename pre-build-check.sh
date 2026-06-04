@@ -122,6 +122,11 @@ if [[ "$PLATFORM" == "android" || "$PLATFORM" == "both" ]]; then
     else
       ok ".gitignore has '!android/**/*.webp' exception"
     fi
+    if ! grep -q '!ios/\*\*/\*\.png' .gitignore 2>/dev/null; then
+      fail ".gitignore is missing '!ios/**/*.png' exception — iOS icons will be excluded"
+    else
+      ok ".gitignore has '!ios/**/*.png' exception"
+    fi
   fi
 fi
 
