@@ -13,7 +13,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "xyz.jsmglobal.ace",
-      "buildNumber": "25",
+      "buildNumber": "26",
       "deploymentTarget": "15.1",
       "infoPlist": {
         "NSAppTransportSecurity": {
