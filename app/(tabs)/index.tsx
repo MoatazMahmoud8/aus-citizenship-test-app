@@ -302,56 +302,48 @@ export default function HomeScreen() {
         </View>
       )}
 
-      {/* ===== QUICK ACTIONS ===== */}
-      <View style={styles.quickActionsSection}>
-        <Text style={styles.quickActionsTitle}>More Options</Text>
-        
-        {/* Full Practice Test - Primary CTA */}
-        <TouchableOpacity
-          style={styles.actionCardLarge}
+      {/* ===== OFFICIAL SIMULATION CARD ===== */}
+      <View style={styles.simulationCardSection}>
+        <TouchableOpacity 
+          style={styles.simulationCard}
           onPress={() => router.push('/quiz?mode=full')}
           activeOpacity={0.85}
         >
-          <View style={styles.actionCardLargeContent}>
-            <View style={styles.actionCardLargeIcon}>
-              <Ionicons name="document-text" size={48} color="#0052CC" />
+          <View style={styles.simulationCardContent}>
+            <View style={styles.simulationCardLeft}>
+              <View style={styles.simulationCardIcon}>
+                <Ionicons name="document-text" size={40} color="#DC3545" />
+              </View>
+              <View style={styles.simulationCardText}>
+                <Text style={styles.simulationCardTitle}>Official Simulation</Text>
+                <Text style={styles.simulationCardSubtitle}>20 random questions under real exam conditions (45-minute timer)</Text>
+              </View>
             </View>
-            <View style={styles.actionCardLargeText}>
-              <Text style={styles.actionCardLargeTitle}>Full Practice Test</Text>
-              <Text style={styles.actionCardLargeSubtitle}>20 questions • 45 minutes</Text>
-              <Text style={styles.actionCardLargeDesc}>Complete exam experience</Text>
-            </View>
-            <Ionicons name="arrow-forward" size={24} color="#0052CC" style={styles.actionCardLargeArrow} />
+            <Ionicons name="arrow-forward" size={24} color="#DC3545" />
           </View>
         </TouchableOpacity>
+      </View>
 
-        {/* Quick Actions Grid */}
-        <View style={styles.actionCardGrid}>
-          {/* Quick Exam */}
-          <TouchableOpacity
-            style={[styles.actionCardSmall, { borderTopColor: '#FF6B35' }]}
-            onPress={() => router.push({
-              pathname: '/quiz',
-              params: { examId: '-1' }
-            })}
-            activeOpacity={0.85}
-          >
-            <Text style={styles.actionCardSmallIcon}>⚡</Text>
-            <Text style={styles.actionCardSmallTitle}>Quick Exam</Text>
-            <Text style={styles.actionCardSmallSubtitle}>15 questions</Text>
-          </TouchableOpacity>
-
-          {/* Study by Topic */}
-          <TouchableOpacity
-            style={[styles.actionCardSmall, { borderTopColor: '#00843D' }]}
-            onPress={() => router.push('/study')}
-            activeOpacity={0.85}
-          >
-            <Ionicons name="library" size={36} color="#00843D" />
-            <Text style={styles.actionCardSmallTitle}>Study Topics</Text>
-            <Text style={styles.actionCardSmallSubtitle}>Learn material</Text>
-          </TouchableOpacity>
-        </View>
+      {/* ===== STUDY & REVIEW SECTION ===== */}
+      <View style={styles.studyReviewSection}>
+        <Text style={styles.studyReviewTitle}>Study & Review</Text>
+        
+        <TouchableOpacity
+          style={styles.studyCard}
+          onPress={() => router.push('/study')}
+          activeOpacity={0.85}
+        >
+          <View style={styles.studyCardContent}>
+            <View style={styles.studyCardIconBg}>
+              <Ionicons name="library" size={32} color="#00843D" />
+            </View>
+            <View style={styles.studyCardText}>
+              <Text style={styles.studyCardTitle}>Study by Topic</Text>
+              <Text style={styles.studyCardSubtitle}>Learn material, review concepts</Text>
+            </View>
+            <Ionicons name="chevron-forward" size={20} color={Colors.gray} />
+          </View>
+        </TouchableOpacity>
       </View>
 
       {/* ===== TEST FORMAT INFO ===== */}
@@ -589,97 +581,98 @@ const styles = StyleSheet.create({
     color: Colors.white,
   },
 
-  // ===== QUICK ACTIONS =====
-  quickActionsSection: {
+  // ===== OFFICIAL SIMULATION CARD =====
+  simulationCardSection: {
     paddingHorizontal: Spacing.lg,
-    marginTop: -10,
     marginBottom: Spacing.lg,
   },
-  quickActionsTitle: {
-    fontSize: 22,
-    fontWeight: '800',
-    color: Colors.charcoal,
-    marginBottom: 16,
-  },
-  
-  // Large primary action card
-  actionCardLarge: {
-    marginBottom: 16,
-    borderRadius: 16,
+  simulationCard: {
+    borderRadius: 14,
     overflow: 'hidden',
     backgroundColor: Colors.white,
     ...Shadows.medium,
   },
-  actionCardLargeContent: {
+  simulationCardContent: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 18,
-    paddingVertical: 20,
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingVertical: 16,
   },
-  actionCardLargeIcon: {
-    width: 68,
-    height: 68,
-    borderRadius: 16,
-    backgroundColor: '#E3EFFF',
+  simulationCardLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+    marginRight: 12,
+  },
+  simulationCardIcon: {
+    width: 56,
+    height: 56,
+    borderRadius: 12,
+    backgroundColor: '#FFF0F0',
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 16,
+    marginRight: 12,
   },
-  actionCardLargeText: {
+  simulationCardText: {
     flex: 1,
   },
-  actionCardLargeTitle: {
-    fontSize: 18,
-    fontWeight: '800',
-    color: Colors.charcoal,
-    marginBottom: 4,
-  },
-  actionCardLargeSubtitle: {
-    fontSize: 13,
-    color: Colors.gray,
-    fontWeight: '600',
-    marginBottom: 2,
-  },
-  actionCardLargeDesc: {
-    fontSize: 12,
-    color: Colors.darkGray,
-    fontStyle: 'italic',
-  },
-  actionCardLargeArrow: {
-    marginLeft: 8,
-  },
-
-  // Small action cards grid
-  actionCardGrid: {
-    flexDirection: 'row',
-    gap: 12,
-  },
-  actionCardSmall: {
-    flex: 1,
-    backgroundColor: Colors.white,
-    borderRadius: 14,
-    borderTopWidth: 4,
-    paddingVertical: 18,
-    paddingHorizontal: 14,
-    alignItems: 'center',
-    ...Shadows.small,
-  },
-  actionCardSmallIcon: {
-    fontSize: 40,
-    marginBottom: 10,
-  },
-  actionCardSmallTitle: {
+  simulationCardTitle: {
     fontSize: 15,
     fontWeight: '700',
     color: Colors.charcoal,
-    textAlign: 'center',
-    marginBottom: 4,
+    marginBottom: 3,
   },
-  actionCardSmallSubtitle: {
-    fontSize: 11,
+  simulationCardSubtitle: {
+    fontSize: 12,
     color: Colors.gray,
-    textAlign: 'center',
-    fontWeight: '500',
+    lineHeight: 16,
+  },
+
+  // ===== STUDY & REVIEW SECTION =====
+  studyReviewSection: {
+    paddingHorizontal: Spacing.lg,
+    marginBottom: Spacing.lg,
+  },
+  studyReviewTitle: {
+    fontSize: 18,
+    fontWeight: '800',
+    color: Colors.charcoal,
+    marginBottom: 12,
+  },
+  studyCard: {
+    borderRadius: 14,
+    overflow: 'hidden',
+    backgroundColor: Colors.white,
+    ...Shadows.small,
+  },
+  studyCardContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+  },
+  studyCardIconBg: {
+    width: 50,
+    height: 50,
+    borderRadius: 12,
+    backgroundColor: '#E8F5E9',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
+  studyCardText: {
+    flex: 1,
+  },
+  studyCardTitle: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: Colors.charcoal,
+    marginBottom: 2,
+  },
+  studyCardSubtitle: {
+    fontSize: 12,
+    color: Colors.gray,
   },
 
   // ===== INFO CARD =====

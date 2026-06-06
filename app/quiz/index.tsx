@@ -454,6 +454,7 @@ const styles = StyleSheet.create({
     paddingTop: Spacing.sm,
     paddingBottom: Spacing.md,
     ...Shadows.small,
+    zIndex: 100,
   },
   headerTop: {
     flexDirection: 'row',
@@ -463,12 +464,13 @@ const styles = StyleSheet.create({
   },
   quitButton: {
     padding: Spacing.xs,
-    width: 40,
-    height: 40,
+    width: 44,
+    height: 44,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 20,
+    borderRadius: 22,
     backgroundColor: Colors.lightGray,
+    zIndex: 101,
   },
   questionNumber: {
     fontSize: Fonts.sizes.md,
