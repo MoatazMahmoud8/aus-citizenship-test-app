@@ -227,6 +227,83 @@ export default function HomeScreen() {
         </View>
       </View>
 
+      {/* ===== QUICK ACTIONS ===== */}
+      <View style={styles.quickActionsSection}>
+        <Text style={styles.quickActionsTitle}>Quick Start</Text>
+        
+        {/* Full Practice Test */}
+        <TouchableOpacity
+          style={styles.actionCard}
+          onPress={() => router.push('/quiz?mode=full')}
+          activeOpacity={0.8}
+        >
+          <LinearGradient
+            colors={['#002B7F', '#0048CC']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.actionCardGradient}
+          >
+            <View style={styles.actionCardIcon}>
+              <Ionicons name="document-text" size={28} color={Colors.white} />
+            </View>
+            <View style={styles.actionCardContent}>
+              <Text style={styles.actionCardTitle}>Full Practice Test</Text>
+              <Text style={styles.actionCardSubtitle}>20 questions · Timed · Like the real exam</Text>
+            </View>
+            <Ionicons name="arrow-forward-circle" size={28} color="rgba(255,255,255,0.7)" />
+          </LinearGradient>
+        </TouchableOpacity>
+
+        {/* Quick Exam */}
+        <TouchableOpacity
+          style={styles.actionCard}
+          onPress={() => router.push({
+            pathname: '/quiz',
+            params: { examId: '-1' }
+          })}
+          activeOpacity={0.8}
+        >
+          <LinearGradient
+            colors={['#E85D2A', '#C94A1F']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.actionCardGradient}
+          >
+            <View style={styles.actionCardIcon}>
+              <Text style={{ fontSize: 26 }}>⚡</Text>
+            </View>
+            <View style={styles.actionCardContent}>
+              <Text style={styles.actionCardTitle}>Quick Exam — Most Repeated</Text>
+              <Text style={styles.actionCardSubtitle}>15 frequently asked questions · ~7 minutes</Text>
+            </View>
+            <Ionicons name="arrow-forward-circle" size={28} color="rgba(255,255,255,0.7)" />
+          </LinearGradient>
+        </TouchableOpacity>
+
+        {/* Study by Topic */}
+        <TouchableOpacity
+          style={styles.actionCard}
+          onPress={() => router.push('/study')}
+          activeOpacity={0.8}
+        >
+          <LinearGradient
+            colors={['#00843D', '#00A84D']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.actionCardGradient}
+          >
+            <View style={styles.actionCardIcon}>
+              <Ionicons name="book" size={28} color={Colors.white} />
+            </View>
+            <View style={styles.actionCardContent}>
+              <Text style={styles.actionCardTitle}>Study by Topic</Text>
+              <Text style={styles.actionCardSubtitle}>Learn each category · Review material</Text>
+            </View>
+            <Ionicons name="arrow-forward-circle" size={28} color="rgba(255,255,255,0.7)" />
+          </LinearGradient>
+        </TouchableOpacity>
+      </View>
+
       {/* ===== TEST FORMAT INFO ===== */}
       <View style={styles.infoCard}>
         <View style={styles.infoHeader}>
@@ -389,6 +466,54 @@ const styles = StyleSheet.create({
   },
   iconEmoji: {
     fontSize: 18,
+  },
+
+  // ===== QUICK ACTIONS =====
+  quickActionsSection: {
+    paddingHorizontal: Spacing.lg,
+    marginTop: -10,
+    marginBottom: Spacing.md,
+  },
+  quickActionsTitle: {
+    fontSize: 20,
+    fontWeight: '800',
+    color: Colors.charcoal,
+    marginBottom: 14,
+  },
+  actionCard: {
+    marginBottom: 12,
+    borderRadius: 14,
+    overflow: 'hidden',
+    ...Shadows.medium,
+  },
+  actionCardGradient: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+    paddingVertical: 18,
+  },
+  actionCardIcon: {
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  actionCardContent: {
+    flex: 1,
+    marginLeft: 14,
+  },
+  actionCardTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: Colors.white,
+    marginBottom: 3,
+  },
+  actionCardSubtitle: {
+    fontSize: 13,
+    color: 'rgba(255,255,255,0.85)',
+    lineHeight: 18,
   },
 
   // ===== INFO CARD =====
