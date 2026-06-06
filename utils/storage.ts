@@ -55,6 +55,11 @@ export async function updateProgressAfterQuiz(result: QuizResult): Promise<UserP
     progress.bestScore = scorePercent;
   }
 
+  // Track values mastery - if user got all 5 values correct
+  if (result.valuesCorrect === result.valuesTotalQuestions && result.valuesTotalQuestions === 5) {
+    progress.valuesMastered = 5;
+  }
+
   // Update streak
   const today = new Date().toISOString().split('T')[0];
   if (progress.lastPracticeDate) {

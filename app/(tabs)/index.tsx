@@ -348,45 +348,47 @@ export default function HomeScreen() {
 
       {/* ===== TEST FORMAT INFO ===== */}
       {/* ===== LIVE PROGRESS DASHBOARD ===== */}
-      <View style={styles.infoCard}>
-        <View style={styles.infoHeader}>
-          <View style={[styles.infoIconCircle, { backgroundColor: Colors.lightGold }]}>
-            <Ionicons name="stats-chart" size={20} color="#B8860B" />
+      {progress.totalQuizzesTaken > 0 && (
+        <View style={styles.infoCard}>
+          <View style={styles.infoHeader}>
+            <View style={[styles.infoIconCircle, { backgroundColor: Colors.lightGold }]}>
+              <Ionicons name="stats-chart" size={20} color="#B8860B" />
+            </View>
+            <Text style={styles.infoTitle}>Your Progress</Text>
           </View>
-          <Text style={styles.infoTitle}>Your Progress</Text>
-        </View>
 
-        <View style={styles.infoGrid}>
-          <View style={styles.infoGridItem}>
-            <LinearGradient colors={['#002B7F', '#0048CC']} style={styles.infoGridBadge}>
-              <Text style={styles.infoGridNumber}>{progress.totalQuizzesTaken} / 15</Text>
-            </LinearGradient>
-            <Text style={styles.infoGridSubtext}>Completed</Text>
-            <Text style={styles.infoGridLabel}>Mock Tests{'\n'}Done</Text>
-          </View>
-          <View style={styles.infoGridItem}>
-            <LinearGradient colors={['#00843D', '#00A84D']} style={styles.infoGridBadge}>
-              <Text style={styles.infoGridNumber}>{Math.round(progress.averageScore)}%</Text>
-            </LinearGradient>
-            <Text style={styles.infoGridSubtext}>Ready</Text>
-            <Text style={styles.infoGridLabel}>Average{'\n'}Score</Text>
-          </View>
-          <View style={styles.infoGridItem}>
-            <LinearGradient colors={['#DC3545', '#E85565']} style={styles.infoGridBadge}>
-              <Text style={styles.infoGridNumber}>0 / 5</Text>
-            </LinearGradient>
-            <Text style={styles.infoGridSubtext}>Mastered</Text>
-            <Text style={styles.infoGridLabel}>Values{'\n'}Mastered</Text>
-          </View>
-          <View style={styles.infoGridItem}>
-            <LinearGradient colors={['#495057', '#6C757D']} style={styles.infoGridBadge}>
-              <Text style={styles.infoGridNumber}>{progress.currentStreak}</Text>
-            </LinearGradient>
-            <Text style={styles.infoGridSubtext}>Days Streak</Text>
-            <Text style={styles.infoGridLabel}>Day{'\n'}Streak 🔥</Text>
+          <View style={styles.infoGrid}>
+            <View style={styles.infoGridItem}>
+              <LinearGradient colors={['#002B7F', '#0048CC']} style={styles.infoGridBadge}>
+                <Text style={styles.infoGridNumber}>{progress.totalQuizzesTaken} / 15</Text>
+              </LinearGradient>
+              <Text style={styles.infoGridSubtext}>Completed</Text>
+              <Text style={styles.infoGridLabel}>Mock Tests{'\n'}Done</Text>
+            </View>
+            <View style={styles.infoGridItem}>
+              <LinearGradient colors={['#00843D', '#00A84D']} style={styles.infoGridBadge}>
+                <Text style={styles.infoGridNumber}>{Math.round(progress.averageScore)}%</Text>
+              </LinearGradient>
+              <Text style={styles.infoGridSubtext}>Ready</Text>
+              <Text style={styles.infoGridLabel}>Average{'\n'}Score</Text>
+            </View>
+            <View style={styles.infoGridItem}>
+              <LinearGradient colors={['#DC3545', '#E85565']} style={styles.infoGridBadge}>
+                <Text style={styles.infoGridNumber}>{progress.valuesMastered || 0} / 5</Text>
+              </LinearGradient>
+              <Text style={styles.infoGridSubtext}>{(progress.valuesMastered || 0) === 5 ? 'Mastered' : 'In Progress'}</Text>
+              <Text style={styles.infoGridLabel}>Values{'\n'}Mastered</Text>
+            </View>
+            <View style={styles.infoGridItem}>
+              <LinearGradient colors={['#495057', '#6C757D']} style={styles.infoGridBadge}>
+                <Text style={styles.infoGridNumber}>{progress.currentStreak}</Text>
+              </LinearGradient>
+              <Text style={styles.infoGridSubtext}>Days Streak</Text>
+              <Text style={styles.infoGridLabel}>Day{'\n'}Streak 🔥</Text>
+            </View>
           </View>
         </View>
-      </View>
+      )}
 
       {/* ===== VALUES MANDATORY ALERT ===== */}
       <View style={styles.mandatoryAlert}>
