@@ -16,7 +16,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Colors, Fonts, Spacing, BorderRadius, Shadows } from '../../constants/theme';
 import { QUIZ_CONFIG } from '../../constants/types';
 import { getProgress } from '../../utils/storage';
-import { getTotalQuestionCount, getQuestionCountByCategory } from '../../data/questionBank';
+import { getQuestionCountByCategory } from '../../data/questionBank';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const FLAG_HEIGHT = 200;
@@ -178,7 +178,6 @@ export default function HomeScreen() {
     });
   }, []);
 
-  const totalQuestions = useMemo(() => getTotalQuestionCount(), []);
   const categoryCounts = useMemo(() => getQuestionCountByCategory(), []);
 
   return (
@@ -297,22 +296,6 @@ export default function HomeScreen() {
           </View>
         </View>
       )}
-
-      {/* ===== QUESTION BANK INFO ===== */}
-      <View style={styles.bankInfo}>
-        <LinearGradient
-          colors={['#002B7F', '#0048CC']}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          style={styles.bankInfoGradient}
-        >
-          <Text style={styles.bankInfoEmoji}>📚</Text>
-          <View>
-            <Text style={styles.bankInfoNumber}>{totalQuestions}</Text>
-            <Text style={styles.bankInfoLabel}>Real exam-style practice questions</Text>
-          </View>
-        </LinearGradient>
-      </View>
 
       <View style={{ height: 32 }} />
     </ScrollView>
@@ -510,33 +493,5 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: '700',
     color: Colors.charcoal,
-  },
-
-  // ===== BANK INFO =====
-  bankInfo: {
-    marginHorizontal: Spacing.lg,
-    marginTop: 6,
-    marginBottom: Spacing.lg,
-    borderRadius: 14,
-    overflow: 'hidden',
-  },
-  bankInfoGradient: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 18,
-    gap: 14,
-  },
-  bankInfoEmoji: {
-    fontSize: 32,
-  },
-  bankInfoNumber: {
-    fontSize: 24,
-    fontWeight: '800',
-    color: Colors.white,
-  },
-  bankInfoLabel: {
-    fontSize: 13,
-    color: 'rgba(255,255,255,0.85)',
-    marginTop: 1,
   },
 });
