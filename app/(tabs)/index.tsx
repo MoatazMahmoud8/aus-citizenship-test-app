@@ -235,23 +235,20 @@ export default function HomeScreen() {
         <TouchableOpacity
           style={styles.actionCard}
           onPress={() => router.push('/quiz?mode=full')}
-          activeOpacity={0.8}
+          activeOpacity={0.85}
         >
-          <LinearGradient
-            colors={['#002B7F', '#0048CC']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={styles.actionCardGradient}
-          >
-            <View style={styles.actionCardIcon}>
-              <Ionicons name="document-text" size={28} color={Colors.white} />
+          <View style={[styles.actionCardContent2, { backgroundColor: '#0052CC' }]}>
+            <View style={styles.actionCardLeft}>
+              <View style={styles.actionCardIconBg}>
+                <Ionicons name="document-text" size={24} color="#0052CC" />
+              </View>
+              <View style={styles.actionCardText}>
+                <Text style={styles.actionCardTitle2}>Full Practice Test</Text>
+                <Text style={styles.actionCardSubtitle2}>20 questions · 45 minutes</Text>
+              </View>
             </View>
-            <View style={styles.actionCardContent}>
-              <Text style={styles.actionCardTitle}>Full Practice Test</Text>
-              <Text style={styles.actionCardSubtitle}>20 questions · Timed · Like the real exam</Text>
-            </View>
-            <Ionicons name="arrow-forward-circle" size={28} color="rgba(255,255,255,0.7)" />
-          </LinearGradient>
+            <Ionicons name="chevron-forward" size={22} color="#0052CC" />
+          </View>
         </TouchableOpacity>
 
         {/* Quick Exam */}
@@ -261,46 +258,40 @@ export default function HomeScreen() {
             pathname: '/quiz',
             params: { examId: '-1' }
           })}
-          activeOpacity={0.8}
+          activeOpacity={0.85}
         >
-          <LinearGradient
-            colors={['#E85D2A', '#C94A1F']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={styles.actionCardGradient}
-          >
-            <View style={styles.actionCardIcon}>
-              <Text style={{ fontSize: 26 }}>⚡</Text>
+          <View style={[styles.actionCardContent2, { backgroundColor: '#FF6B35' }]}>
+            <View style={styles.actionCardLeft}>
+              <View style={[styles.actionCardIconBg, { backgroundColor: '#FFF3E0' }]}>
+                <Text style={{ fontSize: 20 }}>⚡</Text>
+              </View>
+              <View style={styles.actionCardText}>
+                <Text style={styles.actionCardTitle2}>Quick Exam</Text>
+                <Text style={styles.actionCardSubtitle2}>15 most repeated · ~7 min</Text>
+              </View>
             </View>
-            <View style={styles.actionCardContent}>
-              <Text style={styles.actionCardTitle}>Quick Exam — Most Repeated</Text>
-              <Text style={styles.actionCardSubtitle}>15 frequently asked questions · ~7 minutes</Text>
-            </View>
-            <Ionicons name="arrow-forward-circle" size={28} color="rgba(255,255,255,0.7)" />
-          </LinearGradient>
+            <Ionicons name="chevron-forward" size={22} color="#FF6B35" />
+          </View>
         </TouchableOpacity>
 
         {/* Study by Topic */}
         <TouchableOpacity
           style={styles.actionCard}
           onPress={() => router.push('/study')}
-          activeOpacity={0.8}
+          activeOpacity={0.85}
         >
-          <LinearGradient
-            colors={['#00843D', '#00A84D']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={styles.actionCardGradient}
-          >
-            <View style={styles.actionCardIcon}>
-              <Ionicons name="book" size={28} color={Colors.white} />
+          <View style={[styles.actionCardContent2, { backgroundColor: '#00843D' }]}>
+            <View style={styles.actionCardLeft}>
+              <View style={styles.actionCardIconBg}>
+                <Ionicons name="library" size={24} color="#00843D" />
+              </View>
+              <View style={styles.actionCardText}>
+                <Text style={styles.actionCardTitle2}>Study by Topic</Text>
+                <Text style={styles.actionCardSubtitle2}>Learn material · Review notes</Text>
+              </View>
             </View>
-            <View style={styles.actionCardContent}>
-              <Text style={styles.actionCardTitle}>Study by Topic</Text>
-              <Text style={styles.actionCardSubtitle}>Learn each category · Review material</Text>
-            </View>
-            <Ionicons name="arrow-forward-circle" size={28} color="rgba(255,255,255,0.7)" />
-          </LinearGradient>
+            <Ionicons name="chevron-forward" size={22} color="#00843D" />
+          </View>
         </TouchableOpacity>
       </View>
 
@@ -473,47 +464,53 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.lg,
     marginTop: -10,
     marginBottom: Spacing.md,
+    gap: 10,
   },
   quickActionsTitle: {
     fontSize: 20,
     fontWeight: '800',
     color: Colors.charcoal,
-    marginBottom: 14,
+    marginBottom: 8,
   },
   actionCard: {
-    marginBottom: 12,
-    borderRadius: 14,
+    borderRadius: 12,
     overflow: 'hidden',
-    ...Shadows.medium,
   },
-  actionCardGradient: {
+  actionCardContent2: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 16,
-    paddingVertical: 18,
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    borderRadius: 12,
   },
-  actionCardIcon: {
-    width: 52,
-    height: 52,
-    borderRadius: 26,
-    backgroundColor: 'rgba(255,255,255,0.2)',
+  actionCardLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  actionCardIconBg: {
+    width: 48,
+    height: 48,
+    borderRadius: 10,
+    backgroundColor: 'rgba(255,255,255,0.9)',
     alignItems: 'center',
     justifyContent: 'center',
+    marginRight: 12,
   },
-  actionCardContent: {
+  actionCardText: {
     flex: 1,
-    marginLeft: 14,
   },
-  actionCardTitle: {
-    fontSize: 16,
+  actionCardTitle2: {
+    fontSize: 15,
     fontWeight: '700',
     color: Colors.white,
-    marginBottom: 3,
+    marginBottom: 2,
   },
-  actionCardSubtitle: {
-    fontSize: 13,
+  actionCardSubtitle2: {
+    fontSize: 12,
     color: 'rgba(255,255,255,0.85)',
-    lineHeight: 18,
+    lineHeight: 16,
   },
 
   // ===== INFO CARD =====
