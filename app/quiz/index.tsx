@@ -313,14 +313,6 @@ export default function QuizScreen() {
         <View style={styles.progressBar}>
           <View style={[styles.progressFill, { width: `${progress}%` }]} />
         </View>
-        {currentQuestion.isValuesQuestion && (
-          <View style={styles.valuesBadge}>
-            <Ionicons name="heart" size={14} color={Colors.error} />
-            <Text style={styles.valuesBadgeText}>
-              Australian Values Question — Must answer correctly
-            </Text>
-          </View>
-        )}
       </View>
 
       {/* Question */}

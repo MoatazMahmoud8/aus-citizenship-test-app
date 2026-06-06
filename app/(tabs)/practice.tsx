@@ -32,7 +32,10 @@ export default function PracticeScreen() {
     Hard: '#DC3545',
   };
 
-  const displayedExams = showAllExams ? allExams : allExams.slice(0, 6);
+  // Separate special exams from regular ones
+  const specialExams = allExams.filter(e => e.id < 0);
+  const regularExams = allExams.filter(e => e.id > 0);
+  const displayedExams = showAllExams ? regularExams : regularExams.slice(0, 6);
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -43,49 +46,72 @@ export default function PracticeScreen() {
         </Text>
       </View>
 
-      {/* Full Practice Test */}
-      <TouchableOpacity
-        style={styles.fullTestCard}
-        onPress={() => router.push('/quiz?mode=full')}
-        activeOpacity={0.8}
-      >
-        <View style={styles.fullTestHeader}>
-          <Ionicons name="document-text" size={32} color={Colors.white} />
-          <View style={styles.fullTestContent}>
-            <Text style={styles.fullTestTitle}>Random Practice Test</Text>
-            <Text style={styles.fullTestSubtitle}>
-              Random questions — like the real test
-            </Text>
-          </View>
-        </View>
-        <View style={styles.fullTestDetails}>
-          <View style={styles.fullTestDetail}>
-            <Text style={styles.fullTestDetailValue}>{QUIZ_CONFIG.TOTAL_QUESTIONS}</Text>
-            <Text style={styles.fullTestDetailLabel}>Questions</Text>
-          </View>
-          <View style={styles.fullTestDetail}>
-            <Text style={styles.fullTestDetailValue}>{QUIZ_CONFIG.PASS_MARK_PERCENT}%</Text>
-            <Text style={styles.fullTestDetailLabel}>Pass Mark</Text>
-          </View>
-          <View style={styles.fullTestDetail}>
-            <Text style={styles.fullTestDetailValue}>{QUIZ_CONFIG.VALUES_PASS_REQUIRED}/5</Text>
-            <Text style={styles.fullTestDetailLabel}>Values</Text>
-          </View>
-          <View style={styles.fullTestDetail}>
-            <Text style={styles.fullTestDetailValue}>{QUIZ_CONFIG.TIME_LIMIT_MINUTES}m</Text>
-            <Text style={styles.fullTestDetailLabel}>Timer</Text>
-          </View>
-        </View>
-        <View style={styles.startRow}>
-          <Text style={styles.startRowText}>Start Random Test</Text>
-          <Ionicons name="arrow-forward-circle" size={24} color={Colors.gold} />
-        </View>
-      </TouchableOpacity>
-
-      {/* Practice Exams */}
-      <Text style={styles.sectionTitle}>📝 Practice Exams ({allExams.length})</Text>
+      {/* Most Repeated Questions */}
+      <Text style={styles.sectionTitle}>⚡ Most Repeated Questions</Text>
       <Text style={styles.sectionSubtitle}>
-        Structured exams with fixed question sets — track your progress!
+        Focus on the questions that appear most frequently in real tests
+      </Text>
+      
+      <View style={styles.examGrid}>
+        {specialExams.map((exam) => (
+          <TouchableOpacity
+            key={exam.id}
+            style={[styles.examCard, styles.specialExamCard]}
+            onPress={() => router.push(`/quiz?mode=exam&examId=${exam.id}`)}
+            activeOpacity={0.7}
+          >
+            <View style={styles.examHeader}>
+              <View style={[styles.difficultyBadge, { backgroundColor: `${difficultyColors[exam.difficulty]}20` }]}>
+                <Text style={[styles.difficultyText, { color: difficultyColors[exam.difficulty] }]}>
+                  {exam.difficulty}
+                </Text>
+              </View>
+            </View>
+            <Text style={styles.examTitle}>{exam.title}</Text>
+            <Text style={styles.examDesc} numberOfLines={2}>{exam.description}</Text>
+            <View style={styles.examFooter}>
+              <Text style={styles.examQuestionCount}>{exam.totalQuestions} questions</Text>
+              <Ionicons name="play-circle" size={22} color={Colors.blue} />
+            </View>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      {/* Practice by Section */}
+      <Text style={styles.sectionTitle}>📚 Practice by Section</Text>
+      <Text style={styles.sectionSubtitle}>
+        Master each topic individually before taking full tests
+      </Text>
+
+      {categories.map((cat) => {
+        const info = CATEGORY_INFO[cat];
+        const count = categoryCounts[cat];
+        return (
+          <TouchableOpacity
+            key={cat}
+            style={styles.categoryCard}
+            onPress={() => router.push(`/quiz?mode=category&category=${cat}`)}
+            activeOpacity={0.7}
+          >
+            <View style={[styles.categoryIcon, { backgroundColor: `${info.color}15` }]}>
+              <Ionicons name={info.icon as any} size={28} color={info.color} />
+            </View>
+            <View style={styles.categoryContent}>
+              <Text style={styles.categoryTitle}>{info.label}</Text>
+              <Text style={styles.categoryDesc} numberOfLines={2}>
+                {info.description}
+              </Text>
+              <Text style={styles.categoryCount}>{count} questions available</Text>
+            </View>
+            <Ionicons name="play-circle" size={28} color={info.color} />
+          </TouchableOpacity>
+        );
+      })}
+
+      {/* Mixed Questions Exams */}
+      <Text style={styles.sectionTitle}>🎯 Mixed Questions Exams</Text>
+      <Text style={styles.sectionSubtitle}>
+        Structured practice exams combining all topics — track your progress!
       </Text>
 
       <View style={styles.examGrid}>
@@ -116,71 +142,17 @@ export default function PracticeScreen() {
         ))}
       </View>
 
-      {allExams.length > 6 && (
+      {regularExams.length > 6 && (
         <TouchableOpacity
           style={styles.showMoreButton}
           onPress={() => setShowAllExams(!showAllExams)}
         >
           <Text style={styles.showMoreText}>
-            {showAllExams ? 'Show Less' : `Show All ${allExams.length} Exams`}
+            {showAllExams ? 'Show Less' : `Show All ${regularExams.length} Exams`}
           </Text>
           <Ionicons name={showAllExams ? 'chevron-up' : 'chevron-down'} size={18} color={Colors.blue} />
         </TouchableOpacity>
       )}
-
-      {/* Category Practice */}
-      <Text style={styles.sectionTitle}>📚 Practice by Category</Text>
-
-      {categories.map((cat) => {
-        const info = CATEGORY_INFO[cat];
-        const count = categoryCounts[cat];
-        return (
-          <TouchableOpacity
-            key={cat}
-            style={styles.categoryCard}
-            onPress={() => router.push(`/quiz?mode=category&category=${cat}`)}
-            activeOpacity={0.7}
-          >
-            <View style={[styles.categoryIcon, { backgroundColor: `${info.color}15` }]}>
-              <Ionicons name={info.icon as any} size={28} color={info.color} />
-            </View>
-            <View style={styles.categoryContent}>
-              <Text style={styles.categoryTitle}>{info.label}</Text>
-              <Text style={styles.categoryDesc} numberOfLines={2}>
-                {info.description}
-              </Text>
-              <Text style={styles.categoryCount}>{count} questions available</Text>
-            </View>
-            <Ionicons name="play-circle" size={28} color={info.color} />
-          </TouchableOpacity>
-        );
-      })}
-
-      {/* Quick Practice */}
-      <Text style={styles.sectionTitle}>Quick Practice</Text>
-      <View style={styles.quickGrid}>
-        <TouchableOpacity
-          style={styles.quickCard}
-          onPress={() => router.push('/quiz?mode=quick&count=10')}
-        >
-          <Text style={styles.quickNumber}>10</Text>
-          <Text style={styles.quickLabel}>Quick Quiz</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.quickCard}
-          onPress={() => router.push('/quiz?mode=quick&count=15')}
-        >
-          <Text style={styles.quickNumber}>15</Text>
-          <Text style={styles.quickLabel}>Medium Quiz</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.quickCard}
-          onPress={() => router.push('/quiz?mode=full')}
-        >
-          <Text style={styles.quickNumber}>20</Text>
-          <Text style={styles.quickLabel}>Full Test</Text>
-        </TouchableOpacity>
-      </View>
 
       <View style={{ height: 32 }} />
     </ScrollView>
@@ -352,6 +324,11 @@ const styles = StyleSheet.create({
     borderRadius: BorderRadius.lg,
     padding: Spacing.md,
     ...Shadows.small,
+  },
+  specialExamCard: {
+    borderWidth: 2,
+    borderColor: Colors.gold,
+    backgroundColor: '#FFF9E6',
   },
   examHeader: {
     flexDirection: 'row',

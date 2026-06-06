@@ -233,7 +233,7 @@ export default function HomeScreen() {
         style={styles.startButton}
         onPress={() => router.push({
           pathname: '/quiz',
-          params: { examId: '1000' }
+          params: { examId: '-1' }
         })}
         activeOpacity={0.85}
       >

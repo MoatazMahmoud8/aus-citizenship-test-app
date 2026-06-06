@@ -6,7 +6,7 @@ export const exams: Exam[] = [
   // Perfect for people who don't have much time!
   // ============================================================
   {
-    id: 1000,
+    id: -1,
     title: '⚡ Quick Exam — Most Repeated',
     description: 'No time? This is for you! 15 of the most frequently asked questions from recent exams. ~7 minutes.',
     questionIds: [308, 9, 33, 131, 143, 144, 147, 165, 199, 208, 218, 303, 333, 346, 347],
@@ -21,7 +21,7 @@ export const exams: Exam[] = [
   // question bank (see bot repo `scripts/sync_to_app.py`).
   // ============================================================
   {
-    id: 999,
+    id: -2,
     title: '🔥 Last-Minute Exam — Frequently Asked',
     description:
       'The night-before drill. Every question here has been reported by recent test-takers as one that actually appeared on the exam. Hottest questions first.',
