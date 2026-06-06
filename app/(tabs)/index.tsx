@@ -359,26 +359,30 @@ export default function HomeScreen() {
         <View style={styles.infoGrid}>
           <View style={styles.infoGridItem}>
             <LinearGradient colors={['#002B7F', '#0048CC']} style={styles.infoGridBadge}>
-              <Text style={styles.infoGridNumber}>{progress.totalQuizzesTaken}</Text>
+              <Text style={styles.infoGridNumber}>{progress.totalQuizzesTaken} / 15</Text>
             </LinearGradient>
+            <Text style={styles.infoGridSubtext}>Completed</Text>
             <Text style={styles.infoGridLabel}>Mock Tests{'\n'}Done</Text>
           </View>
           <View style={styles.infoGridItem}>
             <LinearGradient colors={['#00843D', '#00A84D']} style={styles.infoGridBadge}>
               <Text style={styles.infoGridNumber}>{Math.round(progress.averageScore)}%</Text>
             </LinearGradient>
+            <Text style={styles.infoGridSubtext}>Ready</Text>
             <Text style={styles.infoGridLabel}>Average{'\n'}Score</Text>
           </View>
           <View style={styles.infoGridItem}>
             <LinearGradient colors={['#DC3545', '#E85565']} style={styles.infoGridBadge}>
-              <Text style={styles.infoGridNumber}>5/5</Text>
+              <Text style={styles.infoGridNumber}>0 / 5</Text>
             </LinearGradient>
+            <Text style={styles.infoGridSubtext}>Mastered</Text>
             <Text style={styles.infoGridLabel}>Values{'\n'}Mastered</Text>
           </View>
           <View style={styles.infoGridItem}>
             <LinearGradient colors={['#495057', '#6C757D']} style={styles.infoGridBadge}>
               <Text style={styles.infoGridNumber}>{progress.currentStreak}</Text>
             </LinearGradient>
+            <Text style={styles.infoGridSubtext}>Days Streak</Text>
             <Text style={styles.infoGridLabel}>Day{'\n'}Streak 🔥</Text>
           </View>
         </View>
@@ -387,11 +391,11 @@ export default function HomeScreen() {
       {/* ===== VALUES MANDATORY ALERT ===== */}
       <View style={styles.mandatoryAlert}>
         <View style={styles.alertContent}>
-          <Ionicons name="alert-circle" size={20} color="#DC3545" style={{ marginRight: 12 }} />
+          <Ionicons name="alert-circle" size={20} color={Colors.white} style={{ marginRight: 12 }} />
           <View style={{ flex: 1 }}>
-            <Text style={styles.alertTitle}>Mandatory Values Questions</Text>
+            <Text style={styles.alertTitle}>Mandatory Requirement</Text>
             <Text style={styles.alertDescription}>
-              You must get all 5 values questions correct to pass the official exam.
+              You must answer all 5 Australian Values questions correctly, alongside scoring at least 75% overall, to pass the official exam.
             </Text>
           </View>
         </View>
@@ -710,16 +714,22 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 14,
   },
+  infoGridSubtext: {
+    fontSize: 10,
+    color: Colors.gray,
+    marginTop: 2,
+    marginBottom: 2,
+  },
 
   // ===== MANDATORY ALERT =====
   mandatoryAlert: {
     marginHorizontal: Spacing.lg,
     marginBottom: Spacing.lg,
     padding: 16,
-    backgroundColor: '#FFF5F7',
+    backgroundColor: '#A61C2E',
     borderRadius: 12,
     borderLeftWidth: 4,
-    borderLeftColor: '#DC3545',
+    borderLeftColor: '#7D1620',
   },
   alertContent: {
     flexDirection: 'row',
@@ -728,12 +738,12 @@ const styles = StyleSheet.create({
   alertTitle: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#DC3545',
+    color: Colors.white,
     marginBottom: 4,
   },
   alertDescription: {
     fontSize: 13,
-    color: '#721C24',
+    color: Colors.white,
     lineHeight: 18,
   },
 
