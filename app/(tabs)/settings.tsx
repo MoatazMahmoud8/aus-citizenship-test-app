@@ -60,7 +60,14 @@ export default function SettingsScreen() {
   };
 
   const handleOpenOfficialSite = () => {
-    Linking.openURL('https://immi.homeaffairs.gov.au/citizenship/test-and-interview/our-common-bond');
+    Linking.openURL('https://immi.homeaffairs.gov.au/citizenship/test-and-interview/our-common-bond')
+      .catch(() => {
+        Alert.alert(
+          'Could not open link',
+          'Unable to open the official resource. Please check your internet connection or visit the website directly.',
+          [{ text: 'OK' }]
+        );
+      });
   };
 
   const handleRateApp = () => {
@@ -245,7 +252,15 @@ export default function SettingsScreen() {
           </Text>
           <TouchableOpacity
             style={styles.sourceLink}
-            onPress={() => Linking.openURL('https://immi.homeaffairs.gov.au/citizenship/test-and-interview/our-common-bond')}
+            onPress={() => Linking.openURL('https://immi.homeaffairs.gov.au/citizenship/test-and-interview/our-common-bond')
+              .catch(() => {
+                Alert.alert(
+                  'Could not open link',
+                  'Unable to open the official resource. Please check your internet connection or visit the website directly.',
+                  [{ text: 'OK' }]
+                );
+              })
+            }
           >
             <Ionicons name="globe-outline" size={14} color={Colors.blue} />
             <Text style={styles.sourceLinkText}>Official source: immi.homeaffairs.gov.au</Text>
