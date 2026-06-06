@@ -227,9 +227,84 @@ export default function HomeScreen() {
         </View>
       </View>
 
+      {/* ===== SMART RESUME CARD ===== */}
+      {progress.totalQuizzesTaken > 0 ? (
+        <View style={styles.resumeCardSection}>
+          <TouchableOpacity 
+            style={styles.resumeCard}
+            onPress={() => router.push('/quiz?mode=full')}
+            activeOpacity={0.85}
+          >
+            <LinearGradient
+              colors={['#0052CC', '#003BA3']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={styles.resumeCardGradient}
+            >
+              <View style={styles.resumeCardTop}>
+                <Text style={styles.resumeCardGreeting}>Welcome Back! 👋</Text>
+                <Text style={styles.resumeCardTagline}>Ready to pass the test?</Text>
+              </View>
+
+              <View style={styles.resumeCardProgress}>
+                <View style={styles.progressBarContainer}>
+                  <View style={styles.progressBar}>
+                    <View 
+                      style={[
+                        styles.progressBarFill, 
+                        { width: `${Math.round(progress.bestScore)}%` }
+                      ]} 
+                    />
+                  </View>
+                  <Text style={styles.progressText}>
+                    Your best: {Math.round(progress.bestScore)}% • {progress.totalQuizzesTaken} tests taken
+                  </Text>
+                </View>
+              </View>
+
+              <View style={styles.resumeCardCTA}>
+                <Text style={styles.resumeCardCTAText}>Start Full Practice Test</Text>
+                <Ionicons name="arrow-forward" size={20} color={Colors.white} />
+              </View>
+            </LinearGradient>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View style={styles.resumeCardSection}>
+          <TouchableOpacity 
+            style={styles.resumeCard}
+            onPress={() => router.push('/quiz?mode=full')}
+            activeOpacity={0.85}
+          >
+            <LinearGradient
+              colors={['#0052CC', '#003BA3']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={styles.resumeCardGradient}
+            >
+              <View style={styles.resumeCardTop}>
+                <Text style={styles.resumeCardGreeting}>Let's Get Started! 🚀</Text>
+                <Text style={styles.resumeCardTagline}>Take the full citizenship test</Text>
+              </View>
+
+              <View style={styles.resumeCardProgress}>
+                <Text style={styles.resumeCardNewUserText}>
+                  20 questions • 45 minutes • See how ready you are
+                </Text>
+              </View>
+
+              <View style={styles.resumeCardCTA}>
+                <Text style={styles.resumeCardCTAText}>Start First Test</Text>
+                <Ionicons name="arrow-forward" size={20} color={Colors.white} />
+              </View>
+            </LinearGradient>
+          </TouchableOpacity>
+        </View>
+      )}
+
       {/* ===== QUICK ACTIONS ===== */}
       <View style={styles.quickActionsSection}>
-        <Text style={styles.quickActionsTitle}>Get Started</Text>
+        <Text style={styles.quickActionsTitle}>More Options</Text>
         
         {/* Full Practice Test - Primary CTA */}
         <TouchableOpacity
@@ -441,6 +516,77 @@ const styles = StyleSheet.create({
   },
   iconEmoji: {
     fontSize: 18,
+  },
+
+  // ===== SMART RESUME CARD =====
+  resumeCardSection: {
+    paddingHorizontal: Spacing.lg,
+    marginBottom: Spacing.lg,
+  },
+  resumeCard: {
+    borderRadius: 16,
+    overflow: 'hidden',
+    ...Shadows.large,
+  },
+  resumeCardGradient: {
+    paddingHorizontal: 20,
+    paddingVertical: 24,
+  },
+  resumeCardTop: {
+    marginBottom: 16,
+  },
+  resumeCardGreeting: {
+    fontSize: 24,
+    fontWeight: '800',
+    color: Colors.white,
+    marginBottom: 4,
+  },
+  resumeCardTagline: {
+    fontSize: 14,
+    color: 'rgba(255,255,255,0.85)',
+    fontWeight: '500',
+  },
+  resumeCardProgress: {
+    marginBottom: 18,
+  },
+  progressBarContainer: {
+    gap: 8,
+  },
+  progressBar: {
+    height: 8,
+    backgroundColor: 'rgba(255,255,255,0.3)',
+    borderRadius: 4,
+    overflow: 'hidden',
+  },
+  progressBarFill: {
+    height: '100%',
+    backgroundColor: '#4CAF50',
+    borderRadius: 4,
+  },
+  progressText: {
+    fontSize: 12,
+    color: 'rgba(255,255,255,0.8)',
+    fontWeight: '500',
+  },
+  resumeCardNewUserText: {
+    fontSize: 13,
+    color: 'rgba(255,255,255,0.9)',
+    lineHeight: 20,
+    fontWeight: '500',
+  },
+  resumeCardCTA: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    paddingTop: 12,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(255,255,255,0.2)',
+  },
+  resumeCardCTAText: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: Colors.white,
   },
 
   // ===== QUICK ACTIONS =====
