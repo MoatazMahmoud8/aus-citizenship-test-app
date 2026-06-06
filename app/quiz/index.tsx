@@ -299,7 +299,12 @@ export default function QuizScreen() {
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.headerTop}>
-          <TouchableOpacity onPress={handleQuit} style={styles.quitButton}>
+          <TouchableOpacity 
+            onPress={handleQuit} 
+            style={styles.quitButton}
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+            activeOpacity={0.6}
+          >
             <Ionicons name="close" size={24} color={Colors.darkGray} />
           </TouchableOpacity>
           <Text style={styles.questionNumber}>
@@ -458,6 +463,12 @@ const styles = StyleSheet.create({
   },
   quitButton: {
     padding: Spacing.xs,
+    width: 40,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 20,
+    backgroundColor: Colors.lightGray,
   },
   questionNumber: {
     fontSize: Fonts.sizes.md,

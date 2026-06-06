@@ -298,77 +298,6 @@ export default function HomeScreen() {
         </View>
       )}
 
-      {/* ===== STUDY CATEGORIES ===== */}
-      <View style={styles.sectionHeader}>
-        <View style={[styles.infoIconCircle, { backgroundColor: Colors.lightGreen }]}>
-          <Ionicons name="library" size={18} color={Colors.green} />
-        </View>
-        <Text style={styles.sectionTitle}>Study Categories</Text>
-      </View>
-
-      <View style={styles.categoryGrid}>
-        {[
-          {
-            icon: 'heart' as const,
-            color: Colors.valuesColor,
-            bgColor: '#FDECEA',
-            title: 'Australian Values',
-            count: categoryCounts.australian_values,
-            route: '/study/values' as const,
-            badge: '⚠️ Must get ALL correct',
-            emoji: '❤️',
-          },
-          {
-            icon: 'globe' as const,
-            color: Colors.australiaColor,
-            bgColor: Colors.lightBlue,
-            title: 'Australia & Its People',
-            count: categoryCounts.australia_and_its_people,
-            route: '/study/australia_people' as const,
-            emoji: '🌏',
-          },
-          {
-            icon: 'shield-checkmark' as const,
-            color: Colors.democraticColor,
-            bgColor: Colors.lightGreen,
-            title: 'Democratic Beliefs',
-            count: categoryCounts.democratic_beliefs,
-            route: '/study/democratic' as const,
-            emoji: '🛡️',
-          },
-          {
-            icon: 'business' as const,
-            color: Colors.governmentColor,
-            bgColor: Colors.lightGold,
-            title: 'Government & Law',
-            count: categoryCounts.government_and_law,
-            route: '/study/government' as const,
-            emoji: '🏛️',
-          },
-        ].map((cat, idx) => (
-          <TouchableOpacity
-            key={idx}
-            style={styles.categoryCard}
-            onPress={() => router.push(cat.route)}
-            activeOpacity={0.7}
-          >
-            <View style={[styles.categoryIconBg, { backgroundColor: cat.bgColor }]}>
-              <Text style={{ fontSize: 24 }}>{cat.emoji}</Text>
-            </View>
-            <View style={styles.categoryContent}>
-              <Text style={styles.categoryTitle}>{cat.title}</Text>
-              <Text style={styles.categoryCount}>{cat.count} questions</Text>
-              {cat.badge && (
-                <View style={[styles.categoryBadge, { backgroundColor: '#FDECEA' }]}>
-                  <Text style={[styles.categoryBadgeText, { color: Colors.valuesColor }]}>{cat.badge}</Text>
-                </View>
-              )}
-            </View>
-            <Ionicons name="chevron-forward" size={18} color={Colors.gray} />
-          </TouchableOpacity>
-        ))}
-      </View>
-
       {/* ===== QUESTION BANK INFO ===== */}
       <View style={styles.bankInfo}>
         <LinearGradient
@@ -581,52 +510,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: '700',
     color: Colors.charcoal,
-  },
-
-  // ===== CATEGORIES =====
-  categoryGrid: {
-    paddingHorizontal: Spacing.lg,
-  },
-  categoryCard: {
-    backgroundColor: Colors.white,
-    borderRadius: 14,
-    padding: 16,
-    marginBottom: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    ...Shadows.small,
-  },
-  categoryIconBg: {
-    width: 48,
-    height: 48,
-    borderRadius: 14,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  categoryContent: {
-    flex: 1,
-    marginLeft: 14,
-  },
-  categoryTitle: {
-    fontSize: 15,
-    fontWeight: '700',
-    color: Colors.charcoal,
-  },
-  categoryCount: {
-    fontSize: 12,
-    color: Colors.gray,
-    marginTop: 2,
-  },
-  categoryBadge: {
-    marginTop: 6,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 6,
-    alignSelf: 'flex-start',
-  },
-  categoryBadgeText: {
-    fontSize: 11,
-    fontWeight: '600',
   },
 
   // ===== BANK INFO =====
