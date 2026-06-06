@@ -229,70 +229,54 @@ export default function HomeScreen() {
 
       {/* ===== QUICK ACTIONS ===== */}
       <View style={styles.quickActionsSection}>
-        <Text style={styles.quickActionsTitle}>Quick Start</Text>
+        <Text style={styles.quickActionsTitle}>Get Started</Text>
         
-        {/* Full Practice Test */}
+        {/* Full Practice Test - Primary CTA */}
         <TouchableOpacity
-          style={styles.actionCard}
+          style={styles.actionCardLarge}
           onPress={() => router.push('/quiz?mode=full')}
           activeOpacity={0.85}
         >
-          <View style={[styles.actionCardContent2, { backgroundColor: '#0052CC' }]}>
-            <View style={styles.actionCardLeft}>
-              <View style={styles.actionCardIconBg}>
-                <Ionicons name="document-text" size={24} color="#0052CC" />
-              </View>
-              <View style={styles.actionCardText}>
-                <Text style={styles.actionCardTitle2}>Full Practice Test</Text>
-                <Text style={styles.actionCardSubtitle2}>20 questions · 45 minutes</Text>
-              </View>
+          <View style={styles.actionCardLargeContent}>
+            <View style={styles.actionCardLargeIcon}>
+              <Ionicons name="document-text" size={48} color="#0052CC" />
             </View>
-            <Ionicons name="chevron-forward" size={22} color="#0052CC" />
+            <View style={styles.actionCardLargeText}>
+              <Text style={styles.actionCardLargeTitle}>Full Practice Test</Text>
+              <Text style={styles.actionCardLargeSubtitle}>20 questions • 45 minutes</Text>
+              <Text style={styles.actionCardLargeDesc}>Complete exam experience</Text>
+            </View>
+            <Ionicons name="arrow-forward" size={24} color="#0052CC" style={styles.actionCardLargeArrow} />
           </View>
         </TouchableOpacity>
 
-        {/* Quick Exam */}
-        <TouchableOpacity
-          style={styles.actionCard}
-          onPress={() => router.push({
-            pathname: '/quiz',
-            params: { examId: '-1' }
-          })}
-          activeOpacity={0.85}
-        >
-          <View style={[styles.actionCardContent2, { backgroundColor: '#FF6B35' }]}>
-            <View style={styles.actionCardLeft}>
-              <View style={[styles.actionCardIconBg, { backgroundColor: '#FFF3E0' }]}>
-                <Text style={{ fontSize: 20 }}>⚡</Text>
-              </View>
-              <View style={styles.actionCardText}>
-                <Text style={styles.actionCardTitle2}>Quick Exam</Text>
-                <Text style={styles.actionCardSubtitle2}>15 most repeated · ~7 min</Text>
-              </View>
-            </View>
-            <Ionicons name="chevron-forward" size={22} color="#FF6B35" />
-          </View>
-        </TouchableOpacity>
+        {/* Quick Actions Grid */}
+        <View style={styles.actionCardGrid}>
+          {/* Quick Exam */}
+          <TouchableOpacity
+            style={[styles.actionCardSmall, { borderTopColor: '#FF6B35' }]}
+            onPress={() => router.push({
+              pathname: '/quiz',
+              params: { examId: '-1' }
+            })}
+            activeOpacity={0.85}
+          >
+            <Text style={styles.actionCardSmallIcon}>⚡</Text>
+            <Text style={styles.actionCardSmallTitle}>Quick Exam</Text>
+            <Text style={styles.actionCardSmallSubtitle}>15 questions</Text>
+          </TouchableOpacity>
 
-        {/* Study by Topic */}
-        <TouchableOpacity
-          style={styles.actionCard}
-          onPress={() => router.push('/study')}
-          activeOpacity={0.85}
-        >
-          <View style={[styles.actionCardContent2, { backgroundColor: '#00843D' }]}>
-            <View style={styles.actionCardLeft}>
-              <View style={styles.actionCardIconBg}>
-                <Ionicons name="library" size={24} color="#00843D" />
-              </View>
-              <View style={styles.actionCardText}>
-                <Text style={styles.actionCardTitle2}>Study by Topic</Text>
-                <Text style={styles.actionCardSubtitle2}>Learn material · Review notes</Text>
-              </View>
-            </View>
-            <Ionicons name="chevron-forward" size={22} color="#00843D" />
-          </View>
-        </TouchableOpacity>
+          {/* Study by Topic */}
+          <TouchableOpacity
+            style={[styles.actionCardSmall, { borderTopColor: '#00843D' }]}
+            onPress={() => router.push('/study')}
+            activeOpacity={0.85}
+          >
+            <Ionicons name="library" size={36} color="#00843D" />
+            <Text style={styles.actionCardSmallTitle}>Study Topics</Text>
+            <Text style={styles.actionCardSmallSubtitle}>Learn material</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       {/* ===== TEST FORMAT INFO ===== */}
@@ -463,54 +447,93 @@ const styles = StyleSheet.create({
   quickActionsSection: {
     paddingHorizontal: Spacing.lg,
     marginTop: -10,
-    marginBottom: Spacing.md,
-    gap: 10,
+    marginBottom: Spacing.lg,
   },
   quickActionsTitle: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: '800',
     color: Colors.charcoal,
-    marginBottom: 8,
+    marginBottom: 16,
   },
-  actionCard: {
-    borderRadius: 12,
+  
+  // Large primary action card
+  actionCardLarge: {
+    marginBottom: 16,
+    borderRadius: 16,
     overflow: 'hidden',
+    backgroundColor: Colors.white,
+    ...Shadows.medium,
   },
-  actionCardContent2: {
+  actionCardLargeContent: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    borderRadius: 12,
+    paddingHorizontal: 18,
+    paddingVertical: 20,
   },
-  actionCardLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flex: 1,
-  },
-  actionCardIconBg: {
-    width: 48,
-    height: 48,
-    borderRadius: 10,
-    backgroundColor: 'rgba(255,255,255,0.9)',
+  actionCardLargeIcon: {
+    width: 68,
+    height: 68,
+    borderRadius: 16,
+    backgroundColor: '#E3EFFF',
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 12,
+    marginRight: 16,
   },
-  actionCardText: {
+  actionCardLargeText: {
     flex: 1,
   },
-  actionCardTitle2: {
-    fontSize: 15,
-    fontWeight: '700',
-    color: Colors.white,
+  actionCardLargeTitle: {
+    fontSize: 18,
+    fontWeight: '800',
+    color: Colors.charcoal,
+    marginBottom: 4,
+  },
+  actionCardLargeSubtitle: {
+    fontSize: 13,
+    color: Colors.gray,
+    fontWeight: '600',
     marginBottom: 2,
   },
-  actionCardSubtitle2: {
+  actionCardLargeDesc: {
     fontSize: 12,
-    color: 'rgba(255,255,255,0.85)',
-    lineHeight: 16,
+    color: Colors.darkGray,
+    fontStyle: 'italic',
+  },
+  actionCardLargeArrow: {
+    marginLeft: 8,
+  },
+
+  // Small action cards grid
+  actionCardGrid: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  actionCardSmall: {
+    flex: 1,
+    backgroundColor: Colors.white,
+    borderRadius: 14,
+    borderTopWidth: 4,
+    paddingVertical: 18,
+    paddingHorizontal: 14,
+    alignItems: 'center',
+    ...Shadows.small,
+  },
+  actionCardSmallIcon: {
+    fontSize: 40,
+    marginBottom: 10,
+  },
+  actionCardSmallTitle: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: Colors.charcoal,
+    textAlign: 'center',
+    marginBottom: 4,
+  },
+  actionCardSmallSubtitle: {
+    fontSize: 11,
+    color: Colors.gray,
+    textAlign: 'center',
+    fontWeight: '500',
   },
 
   // ===== INFO CARD =====
