@@ -228,34 +228,6 @@ export default function HomeScreen() {
         </View>
       </View>
 
-      {/* ===== QUICK EXAM (FOR TIME-PRESSED USERS) ===== */}
-      <TouchableOpacity
-        style={styles.startButton}
-        onPress={() => router.push({
-          pathname: '/quiz',
-          params: { examId: '-1' }
-        })}
-        activeOpacity={0.85}
-      >
-        <LinearGradient
-          colors={['#E85D2A', '#C94A1F', '#A83D1A']}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={styles.startButtonGradient}
-        >
-          <View style={styles.startButtonIcon}>
-            <Text style={{ fontSize: 20 }}>⚡</Text>
-          </View>
-          <View style={styles.startButtonText}>
-            <Text style={styles.startButtonTitle}>Quick Exam</Text>
-            <Text style={styles.startButtonSubtitle}>
-              15 most repeated questions · ~7 minutes
-            </Text>
-          </View>
-          <Ionicons name="chevron-forward" size={22} color="rgba(255,255,255,0.7)" />
-        </LinearGradient>
-      </TouchableOpacity>
-
       {/* ===== TEST FORMAT INFO ===== */}
       <View style={styles.infoCard}>
         <View style={styles.infoHeader}>
@@ -505,47 +477,6 @@ const styles = StyleSheet.create({
   },
   iconEmoji: {
     fontSize: 18,
-  },
-
-  // ===== START BUTTON =====
-  startButton: {
-    marginHorizontal: Spacing.lg,
-    marginTop: -18,
-    borderRadius: 16,
-    overflow: 'hidden',
-    shadowColor: '#00843D',
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.35,
-    shadowRadius: 12,
-    elevation: 10,
-  },
-  startButtonGradient: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 18,
-    paddingHorizontal: 20,
-  },
-  startButtonIcon: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  startButtonText: {
-    flex: 1,
-    marginLeft: 14,
-  },
-  startButtonTitle: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: Colors.white,
-  },
-  startButtonSubtitle: {
-    fontSize: 13,
-    color: 'rgba(255,255,255,0.8)',
-    marginTop: 2,
   },
 
   // ===== INFO CARD =====
