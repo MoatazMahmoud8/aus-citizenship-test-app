@@ -213,7 +213,7 @@ export default function HomeScreen() {
           </View>
 
           <Text style={styles.heroSubtitle}>
-            Based on "Our Common Bond"{"\n"}the official resource booklet
+            Master the official "Our Common Bond"{"\n"}booklet with confidence.
           </Text>
 
           {/* Aussie icons */}
@@ -380,6 +380,19 @@ export default function HomeScreen() {
               <Text style={styles.infoGridNumber}>{progress.currentStreak}</Text>
             </LinearGradient>
             <Text style={styles.infoGridLabel}>Day{'\n'}Streak 🔥</Text>
+          </View>
+        </View>
+      </View>
+
+      {/* ===== VALUES MANDATORY ALERT ===== */}
+      <View style={styles.mandatoryAlert}>
+        <View style={styles.alertContent}>
+          <Ionicons name="alert-circle" size={20} color="#DC3545" style={{ marginRight: 12 }} />
+          <View style={{ flex: 1 }}>
+            <Text style={styles.alertTitle}>Mandatory Values Questions</Text>
+            <Text style={styles.alertDescription}>
+              You must get all 5 values questions correct to pass the official exam.
+            </Text>
           </View>
         </View>
       </View>
@@ -696,6 +709,32 @@ const styles = StyleSheet.create({
     color: Colors.darkGray,
     textAlign: 'center',
     lineHeight: 14,
+  },
+
+  // ===== MANDATORY ALERT =====
+  mandatoryAlert: {
+    marginHorizontal: Spacing.lg,
+    marginBottom: Spacing.lg,
+    padding: 16,
+    backgroundColor: '#FFF5F7',
+    borderRadius: 12,
+    borderLeftWidth: 4,
+    borderLeftColor: '#DC3545',
+  },
+  alertContent: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
+  alertTitle: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#DC3545',
+    marginBottom: 4,
+  },
+  alertDescription: {
+    fontSize: 13,
+    color: '#721C24',
+    lineHeight: 18,
   },
 
   // ===== SECTIONS =====
