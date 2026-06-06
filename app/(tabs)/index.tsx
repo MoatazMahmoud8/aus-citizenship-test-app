@@ -347,74 +347,42 @@ export default function HomeScreen() {
       </View>
 
       {/* ===== TEST FORMAT INFO ===== */}
+      {/* ===== LIVE PROGRESS DASHBOARD ===== */}
       <View style={styles.infoCard}>
         <View style={styles.infoHeader}>
-          <View style={styles.infoIconCircle}>
-            <Ionicons name="document-text" size={20} color={Colors.blue} />
+          <View style={[styles.infoIconCircle, { backgroundColor: Colors.lightGold }]}>
+            <Ionicons name="stats-chart" size={20} color="#B8860B" />
           </View>
-          <Text style={styles.infoTitle}>Official Test Format</Text>
+          <Text style={styles.infoTitle}>Your Progress</Text>
         </View>
 
         <View style={styles.infoGrid}>
           <View style={styles.infoGridItem}>
             <LinearGradient colors={['#002B7F', '#0048CC']} style={styles.infoGridBadge}>
-              <Text style={styles.infoGridNumber}>20</Text>
+              <Text style={styles.infoGridNumber}>{progress.totalQuizzesTaken}</Text>
             </LinearGradient>
-            <Text style={styles.infoGridLabel}>Questions</Text>
+            <Text style={styles.infoGridLabel}>Mock Tests{'\n'}Done</Text>
           </View>
           <View style={styles.infoGridItem}>
             <LinearGradient colors={['#00843D', '#00A84D']} style={styles.infoGridBadge}>
-              <Text style={styles.infoGridNumber}>75%</Text>
+              <Text style={styles.infoGridNumber}>{Math.round(progress.averageScore)}%</Text>
             </LinearGradient>
-            <Text style={styles.infoGridLabel}>Pass mark</Text>
+            <Text style={styles.infoGridLabel}>Average{'\n'}Score</Text>
           </View>
           <View style={styles.infoGridItem}>
             <LinearGradient colors={['#DC3545', '#E85565']} style={styles.infoGridBadge}>
               <Text style={styles.infoGridNumber}>5/5</Text>
             </LinearGradient>
-            <Text style={styles.infoGridLabel}>Values{'\n'}required</Text>
+            <Text style={styles.infoGridLabel}>Values{'\n'}Mastered</Text>
           </View>
           <View style={styles.infoGridItem}>
             <LinearGradient colors={['#495057', '#6C757D']} style={styles.infoGridBadge}>
-              <Text style={styles.infoGridNumber}>45m</Text>
+              <Text style={styles.infoGridNumber}>{progress.currentStreak}</Text>
             </LinearGradient>
-            <Text style={styles.infoGridLabel}>Time limit</Text>
+            <Text style={styles.infoGridLabel}>Day{'\n'}Streak 🔥</Text>
           </View>
         </View>
       </View>
-
-      {/* ===== QUICK STATS ===== */}
-      {progress.totalQuizzesTaken > 0 && (
-        <View style={styles.statsCard}>
-          <View style={styles.infoHeader}>
-            <View style={[styles.infoIconCircle, { backgroundColor: Colors.lightGold }]}>
-              <Ionicons name="trending-up" size={20} color="#B8860B" />
-            </View>
-            <Text style={styles.infoTitle}>Your Progress</Text>
-          </View>
-          <View style={styles.statsGrid}>
-            <View style={styles.statItem}>
-              <Text style={styles.statNumber}>{progress.totalQuizzesTaken}</Text>
-              <Text style={styles.statLabel}>Tests{'\n'}Taken</Text>
-            </View>
-            <View style={styles.statDivider} />
-            <View style={styles.statItem}>
-              <Text style={styles.statNumber}>{Math.round(progress.averageScore)}%</Text>
-              <Text style={styles.statLabel}>Average{'\n'}Score</Text>
-            </View>
-            <View style={styles.statDivider} />
-            <View style={styles.statItem}>
-              <Text style={[styles.statNumber, { color: Colors.green }]}>{Math.round(progress.bestScore)}%</Text>
-              <Text style={styles.statLabel}>Best{'\n'}Score</Text>
-            </View>
-            <View style={styles.statDivider} />
-            <View style={styles.statItem}>
-              <Text style={styles.statNumber}>{progress.currentStreak}🔥</Text>
-              <Text style={styles.statLabel}>Day{'\n'}Streak</Text>
-            </View>
-          </View>
-        </View>
-      )}
 
       <View style={{ height: 32 }} />
     </ScrollView>
@@ -726,41 +694,6 @@ const styles = StyleSheet.create({
   infoGridLabel: {
     fontSize: 11,
     color: Colors.darkGray,
-    textAlign: 'center',
-    lineHeight: 14,
-  },
-
-  // ===== STATS =====
-  statsCard: {
-    marginHorizontal: Spacing.lg,
-    marginBottom: Spacing.lg,
-    padding: 20,
-    backgroundColor: Colors.white,
-    borderRadius: 16,
-    ...Shadows.medium,
-  },
-  statsGrid: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  statItem: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  statDivider: {
-    width: 1,
-    height: 36,
-    backgroundColor: Colors.lightGray,
-  },
-  statNumber: {
-    fontSize: 22,
-    fontWeight: '800',
-    color: Colors.blue,
-  },
-  statLabel: {
-    fontSize: 11,
-    color: Colors.gray,
-    marginTop: 4,
     textAlign: 'center',
     lineHeight: 14,
   },
