@@ -358,31 +358,35 @@ export default function HomeScreen() {
 
         <View style={styles.infoGrid}>
           <View style={styles.infoGridItem}>
-            <LinearGradient colors={['#002B7F', '#0048CC']} style={styles.infoGridBadge}>
+            <View style={styles.infoGridCardBg}>
+              <Text style={styles.infoGridIcon}>✓</Text>
               <Text style={styles.infoGridNumber}>{progress.totalQuizzesTaken} / 15</Text>
-            </LinearGradient>
-            <Text style={styles.infoGridSubtext}>Completed</Text>
+              <Text style={styles.infoGridSubtext}>Completed</Text>
+            </View>
             <Text style={styles.infoGridLabel}>Mock Tests{'\n'}Done</Text>
           </View>
           <View style={styles.infoGridItem}>
-            <LinearGradient colors={['#00843D', '#00A84D']} style={styles.infoGridBadge}>
+            <View style={styles.infoGridCardBg}>
+              <Text style={styles.infoGridIcon}>%</Text>
               <Text style={styles.infoGridNumber}>{Math.round(progress.averageScore)}%</Text>
-            </LinearGradient>
-            <Text style={styles.infoGridSubtext}>Ready</Text>
+              <Text style={styles.infoGridSubtext}>Ready</Text>
+            </View>
             <Text style={styles.infoGridLabel}>Average{'\n'}Score</Text>
           </View>
           <View style={styles.infoGridItem}>
-            <LinearGradient colors={['#DC3545', '#E85565']} style={styles.infoGridBadge}>
+            <View style={styles.infoGridCardBg}>
+              <Text style={styles.infoGridIcon}>🏅</Text>
               <Text style={styles.infoGridNumber}>0 / 5</Text>
-            </LinearGradient>
-            <Text style={styles.infoGridSubtext}>Mastered</Text>
+              <Text style={styles.infoGridSubtext}>Mastered</Text>
+            </View>
             <Text style={styles.infoGridLabel}>Values{'\n'}Mastered</Text>
           </View>
           <View style={styles.infoGridItem}>
-            <LinearGradient colors={['#495057', '#6C757D']} style={styles.infoGridBadge}>
+            <View style={styles.infoGridCardBg}>
+              <Text style={styles.infoGridIcon}>📅</Text>
               <Text style={styles.infoGridNumber}>{progress.currentStreak}</Text>
-            </LinearGradient>
-            <Text style={styles.infoGridSubtext}>Days Streak</Text>
+              <Text style={styles.infoGridSubtext}>Days Streak</Text>
+            </View>
             <Text style={styles.infoGridLabel}>Day{'\n'}Streak 🔥</Text>
           </View>
         </View>
@@ -695,30 +699,38 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
-  infoGridBadge: {
-    width: 52,
-    height: 52,
-    borderRadius: 14,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 8,
-  },
-  infoGridNumber: {
-    color: Colors.white,
-    fontWeight: '800',
-    fontSize: 16,
-  },
   infoGridLabel: {
     fontSize: 11,
     color: Colors.darkGray,
     textAlign: 'center',
     lineHeight: 14,
+    marginTop: 8,
   },
   infoGridSubtext: {
     fontSize: 10,
-    color: Colors.gray,
+    color: Colors.white,
     marginTop: 2,
-    marginBottom: 2,
+    marginBottom: 0,
+    textAlign: 'center',
+  },
+  infoGridCardBg: {
+    backgroundColor: '#6B7280',
+    borderRadius: 12,
+    padding: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 8,
+  },
+  infoGridIcon: {
+    fontSize: 28,
+    marginBottom: 4,
+    color: '#D4A574',
+  },
+  infoGridNumber: {
+    color: Colors.white,
+    fontWeight: '800',
+    fontSize: 16,
+    textAlign: 'center',
   },
 
   // ===== MANDATORY ALERT =====
