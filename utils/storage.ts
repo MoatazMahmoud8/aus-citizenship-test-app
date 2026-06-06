@@ -102,7 +102,7 @@ export async function updateProgressAfterQuiz(result: QuizResult): Promise<UserP
 
   await saveProgress(progress);
   return progress;
-}}
+}
 
 export async function updateCategoryScore(
   category: QuestionCategory,
