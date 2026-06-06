@@ -360,7 +360,7 @@ export default function HomeScreen() {
           <View style={styles.infoGrid}>
             <View style={styles.infoGridItem}>
               <LinearGradient colors={['#002B7F', '#0048CC']} style={styles.infoGridBadge}>
-                <Text style={styles.infoGridNumber}>{progress.totalQuizzesTaken} / 15</Text>
+                <Text style={styles.infoGridNumber}>{progress.totalQuizzesTaken} / 25</Text>
               </LinearGradient>
               <Text style={styles.infoGridSubtext}>Completed</Text>
               <Text style={styles.infoGridLabel}>Mock Tests{'\n'}Done</Text>

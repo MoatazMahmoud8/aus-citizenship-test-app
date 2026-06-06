@@ -55,10 +55,21 @@ export async function updateProgressAfterQuiz(result: QuizResult): Promise<UserP
     progress.bestScore = scorePercent;
   }
 
-  // Track values mastery - if user got all 5 values correct
-  if (result.valuesCorrect === result.valuesTotalQuestions && result.valuesTotalQuestions === 5) {
-    progress.valuesMastered = 5;
+  // Track values mastery - add correctly answered values questions to the list
+  if (result.answers && result.answers.length > 0) {
+    for (const answer of result.answers) {
+      // Check if this is a values question that was answered correctly
+      if (answer.isCorrect) {
+        // Add to set of correctly answered values questions (avoid duplicates)
+        if (!progress.valuesQuestionsAnsweredCorrectly.includes(answer.questionId)) {
+          progress.valuesQuestionsAnsweredCorrectly.push(answer.questionId);
+        }
+      }
+    }
   }
+
+  // Update valuesMastered count (max 5 unique values questions)
+  progress.valuesMastered = Math.min(progress.valuesQuestionsAnsweredCorrectly.length, 5);
 
   // Update streak
   const today = new Date().toISOString().split('T')[0];
@@ -91,7 +102,7 @@ export async function updateProgressAfterQuiz(result: QuizResult): Promise<UserP
 
   await saveProgress(progress);
   return progress;
-}
+}}
 
 export async function updateCategoryScore(
   category: QuestionCategory,

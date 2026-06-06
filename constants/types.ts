@@ -65,7 +65,8 @@ export interface UserProgress {
   categoryScores: Record<QuestionCategory, CategoryScore>;
   bookmarkedQuestions: number[];
   completedStudySections: string[];
-  valuesMastered: number; // 0-5: number of values questions user has answered correctly
+  valuesQuestionsAnsweredCorrectly: number[]; // IDs of values questions answered correctly
+  valuesMastered: number; // Count of unique values questions answered correctly (0-5)
 }
 
 export interface CategoryScore {
@@ -90,6 +91,7 @@ export const DEFAULT_PROGRESS: UserProgress = {
   },
   bookmarkedQuestions: [],
   completedStudySections: [],
+  valuesQuestionsAnsweredCorrectly: [],
   valuesMastered: 0,
 };
 
