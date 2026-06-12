@@ -1626,6 +1626,20 @@ export const governmentQuestions: Question[] = [
   },
   {
     id: 616,
+    question: 'How many senators does each territory nominate to the Australian Parliament?',
+    options: [
+      '4',
+      '2',
+      '12',
+    ],
+    correctAnswer: 1,
+    category: 'government_and_law',
+    isValuesQuestion: false,
+    explanation: 'Each territory, including the Northern Territory, nominates 2 senators to the Australian Parliament. In contrast, each state nominates 12 senators.',
+    source: 'Our Common Bond - Government and the Law',
+  },
+  {
+    id: 617,
     question: 'What is the name of the representatives in the Senate?',
     options: [
       'Member of Parliament',
@@ -1639,7 +1653,7 @@ export const governmentQuestions: Question[] = [
     source: 'Our Common Bond - Government and the Law',
   },
   {
-    id: 617,
+    id: 618,
     question: 'How do Senators come up with new laws or changes to existing laws?',
     options: [
       'They consider, debate and vote',
@@ -1653,7 +1667,7 @@ export const governmentQuestions: Question[] = [
     source: 'Our Common Bond - Government and the Law',
   },
   {
-    id: 618,
+    id: 619,
     question: 'What do members of the Senate discuss?',
     options: [
       'Local community services',
@@ -1667,7 +1681,7 @@ export const governmentQuestions: Question[] = [
     source: 'Our Common Bond - Government and the Law',
   },
   {
-    id: 619,
+    id: 620,
     question: 'Which of these statements about Australian states is correct?',
     options: [
       'Each state has its own army',
@@ -1681,7 +1695,7 @@ export const governmentQuestions: Question[] = [
     source: 'Our Common Bond - Government and the Law',
   },
   {
-    id: 620,
+    id: 621,
     question: 'Where are state and territory governments based?',
     options: [
       'In Canberra',
