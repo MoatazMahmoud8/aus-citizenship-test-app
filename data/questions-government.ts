@@ -2939,6 +2939,34 @@ export const governmentQuestions: Question[] = [
     source: 'Our Common Bond - Government and the Law',
     recallCount: 1,
   },
+  {
+    id: 640,
+    question: 'How often must federal elections be held in Australia?',
+    options: [
+      'At least every 3 years',
+      'At least every 5 years',
+      'At least every 4 years',
+    ],
+    correctAnswer: 0,
+    category: 'government_and_law',
+    isValuesQuestion: false,
+    explanation: 'Federal elections must be held at least every 3 years in Australia, allowing citizens to vote for their representatives in the House of Representatives and Senate.',
+    source: 'Our Common Bond - Government and the Law',
+  },
+  {
+    id: 641,
+    question: 'In what year was the referendum on the Australian Constitution held?',
+    options: [
+      '1896',
+      '1898',
+      '1900',
+    ],
+    correctAnswer: 1,
+    category: 'government_and_law',
+    isValuesQuestion: false,
+    explanation: 'The referendum on the Australian Constitution was held in 1898, and the Constitution came into effect on 1 January 1901.',
+    source: 'Our Common Bond - Government and the Law',
+  },
 
 ];
 
