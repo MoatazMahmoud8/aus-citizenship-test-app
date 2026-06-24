@@ -63,6 +63,16 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="review"
+        options={{
+          title: 'Review',
+          headerTitle: '📋 Review Wrong Answers',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="alert-circle" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="progress"
         options={{
           title: 'Progress',
