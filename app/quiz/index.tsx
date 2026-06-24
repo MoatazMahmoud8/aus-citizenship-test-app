@@ -175,10 +175,9 @@ export default function QuizScreen() {
     const scorePercent = questions.length > 0 ? (totalCorrect / questions.length) * 100 : 0;
     const valuesAllCorrect = valuesCorrect === valuesQuestionIds.length;
     const overallPass = scorePercent >= QUIZ_CONFIG.PASS_MARK_PERCENT;
-    const passed =
-      params.mode === 'full' || !params.mode
-        ? overallPass && (valuesQuestionIds.length === 0 || valuesAllCorrect)
-        : overallPass;
+    // CRITICAL: Values questions must be answered ALL correctly for ANY test to pass
+    // This is non-negotiable per citizenship test requirements
+    const passed = overallPass && (valuesQuestionIds.length === 0 || valuesAllCorrect);
 
     const result: QuizResult = {
       id: generateQuizId(),
