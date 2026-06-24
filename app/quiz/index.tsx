@@ -195,7 +195,7 @@ export default function QuizScreen() {
     try {
       // Save results
       await saveQuizResult(result);
-      await updateProgressAfterQuiz(result);
+      await updateProgressAfterQuiz(result, questions);
 
       // Update category scores
       const categoryGroups: Record<string, { correct: number; total: number }> = {};

@@ -67,6 +67,15 @@ export interface UserProgress {
   completedStudySections: string[];
   valuesQuestionsAnsweredCorrectly: number[]; // IDs of values questions answered correctly
   valuesMastered: number; // Count of unique values questions answered correctly (0-5)
+  wrongAnswersTracking: {
+    questionId: number;
+    questionText: string;
+    category: QuestionCategory;
+    timesWrong: number;
+    lastAttempted: string; // ISO timestamp
+    userSelectedAnswer: number; // Option index selected
+    correctAnswer: number; // Correct option index
+  }[]; // Track all wrong answers until user gets it right
 }
 
 export interface CategoryScore {
@@ -93,6 +102,7 @@ export const DEFAULT_PROGRESS: UserProgress = {
   completedStudySections: [],
   valuesQuestionsAnsweredCorrectly: [],
   valuesMastered: 0,
+  wrongAnswersTracking: [],
 };
 
 export interface Exam {

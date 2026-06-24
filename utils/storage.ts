@@ -40,7 +40,7 @@ export async function saveProgress(progress: UserProgress): Promise<void> {
   }
 }
 
-export async function updateProgressAfterQuiz(result: QuizResult): Promise<UserProgress> {
+export async function updateProgressAfterQuiz(result: QuizResult, questions?: any[]): Promise<UserProgress> {
   const progress = await getProgress();
 
   progress.totalQuizzesTaken += 1;
@@ -63,6 +63,39 @@ export async function updateProgressAfterQuiz(result: QuizResult): Promise<UserP
         // Add to set of correctly answered values questions (avoid duplicates)
         if (!progress.valuesQuestionsAnsweredCorrectly.includes(answer.questionId)) {
           progress.valuesQuestionsAnsweredCorrectly.push(answer.questionId);
+        }
+        
+        // Remove from wrong answers tracking if user got it right
+        progress.wrongAnswersTracking = progress.wrongAnswersTracking.filter(
+          (w) => w.questionId !== answer.questionId
+        );
+      } else {
+        // Track wrong answers
+        if (questions) {
+          const question = questions.find((q) => q.id === answer.questionId);
+          if (question) {
+            const existingWrongAnswer = progress.wrongAnswersTracking.find(
+              (w) => w.questionId === answer.questionId
+            );
+            
+            if (existingWrongAnswer) {
+              // Update existing wrong answer
+              existingWrongAnswer.timesWrong += 1;
+              existingWrongAnswer.lastAttempted = new Date().toISOString();
+              existingWrongAnswer.userSelectedAnswer = answer.selectedAnswer;
+            } else {
+              // Add new wrong answer
+              progress.wrongAnswersTracking.push({
+                questionId: answer.questionId,
+                questionText: question.question,
+                category: question.category,
+                timesWrong: 1,
+                lastAttempted: new Date().toISOString(),
+                userSelectedAnswer: answer.selectedAnswer,
+                correctAnswer: question.correctAnswer,
+              });
+            }
+          }
         }
       }
     }

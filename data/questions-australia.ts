@@ -694,10 +694,10 @@ export const australiaQuestions: Question[] = [
     id: 169,
     question: 'Why was a Welcome to Country traditionally performed?',
     options: ['To ensure visitors arriving in Australia properly identify themselves', 'To ensure visitors pay respect to Traditional Custodians', 'To ensure visitors had a safe and protected journey during their time on that land'],
-    correctAnswer: 2,
+    correctAnswer: 1,
     category: 'australia_and_its_people',
     isValuesQuestion: false,
-    explanation: 'A Welcome to Country was traditionally performed to ensure visitors had a safe and protected journey during their time on that land.',
+    explanation: 'A Welcome to Country was traditionally performed to acknowledge the Traditional Custodians\' connection to the land and show respect for the land and its people.',
     source: 'Our Common Bond - Australia and Its People',
   },
   {
