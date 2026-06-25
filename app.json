@@ -13,7 +13,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "xyz.jsmglobal.ace",
-      "buildNumber": "39",
+      "buildNumber": "38",
       "deploymentTarget": "15.1",
       "infoPlist": {
         "NSAppTransportSecurity": {
@@ -31,7 +31,7 @@
         "backgroundColor": "#002B7F"
       },
       "package": "xyz.jsmglobal.ace",
-      "versionCode": 117,
+      "versionCode": 118,
       "permissions": []
     },
     "web": {
