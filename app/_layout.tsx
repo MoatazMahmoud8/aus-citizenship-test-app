@@ -5,14 +5,21 @@ import { useState, useEffect } from 'react';
 import { Colors } from '../constants/theme';
 import AnimatedSplash from '../components/AnimatedSplash';
 import ErrorBoundary from '../components/ErrorBoundary';
-// TODO: Configure Sentry with environment variables (NOT hardcoded DSN)
-// import * as Sentry from '@sentry/react-native';
-// Sentry.init({
-//   dsn: process.env.EXPO_PUBLIC_SENTRY_DSN,
-//   sendDefaultPii: false,
-//   enableLogs: false,
-//   tracesSampleRate: 0.5,
-// });
+import * as Sentry from '@sentry/react-native';
+
+// Initialize Sentry with environment variables (NOT hardcoded)
+// Requires EXPO_PUBLIC_SENTRY_DSN to be set in .env or EAS secrets
+if (process.env.EXPO_PUBLIC_SENTRY_DSN) {
+  Sentry.init({
+    dsn: process.env.EXPO_PUBLIC_SENTRY_DSN,
+    sendDefaultPii: false,
+    enableLogs: false,
+    tracesSampleRate: 0.5,
+    environment: process.env.NODE_ENV || 'production',
+  });
+} else {
+  console.warn('⚠️ Sentry DSN not configured. Set EXPO_PUBLIC_SENTRY_DSN in environment variables.');
+}
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
