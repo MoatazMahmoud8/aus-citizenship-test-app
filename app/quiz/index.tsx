@@ -56,7 +56,7 @@ export default function QuizScreen() {
   const [hapticEnabled, setHapticEnabled] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
 
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const scrollRef = useRef<ScrollView>(null);
 
   // Initialize quiz
@@ -298,15 +298,16 @@ export default function QuizScreen() {
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.headerTop}>
-          <TouchableOpacity 
-            onPress={handleQuit}
-            pointerEvents="box-only"
-            style={styles.quitButton}
-            hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}
-            activeOpacity={0.5}
-          >
-            <Ionicons name="close" size={28} color={Colors.darkGray} />
-          </TouchableOpacity>
+          <View pointerEvents="box-only">
+            <TouchableOpacity 
+              onPress={handleQuit}
+              style={styles.quitButton}
+              hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}
+              activeOpacity={0.5}
+            >
+              <Ionicons name="close" size={28} color={Colors.darkGray} />
+            </TouchableOpacity>
+          </View>
           <Text style={styles.questionNumber}>
             {currentIndex + 1} / {questions.length}
           </Text>

@@ -2,13 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Colors, Spacing, Fonts, BorderRadius, Shadows } from '../constants/theme';
-import { UserProgress } from '../constants/types';
-import { getProgress, getAllQuestions } from '../utils/storage';
+import { Colors, Spacing, Fonts, BorderRadius, Shadows } from '../../constants/theme';
+import { UserProgress, QuestionCategory } from '../../constants/types';
+import { getProgress } from '../../utils/storage';
 
-interface WrongAnswerItem extends UserProgress['wrongAnswersTracking'][0] {
-  // Add question options if needed
-}
+type WrongAnswerItem = UserProgress['wrongAnswersTracking'][0];
 
 export default function ReviewScreen() {
   const insets = useSafeAreaInsets();
@@ -30,7 +28,7 @@ export default function ReviewScreen() {
         
         // Group by category
         const grouped: Record<string, WrongAnswerItem[]> = {};
-        progress.wrongAnswersTracking.forEach((item) => {
+        progress.wrongAnswersTracking.forEach((item: WrongAnswerItem) => {
           if (!grouped[item.category]) {
             grouped[item.category] = [];
           }
@@ -191,7 +189,7 @@ export default function ReviewScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.offWhite,
   },
   header: {
     paddingHorizontal: Spacing.lg,
@@ -223,7 +221,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   emptySubtitle: {
-    fontSize: Fonts.sizes.base,
+    fontSize: Fonts.sizes.sm,
     color: Colors.gray,
     marginTop: Spacing.md,
     textAlign: 'center',
@@ -240,7 +238,7 @@ const styles = StyleSheet.create({
     marginTop: Spacing.lg,
   },
   categoryLabel: {
-    fontSize: Fonts.sizes.base,
+    fontSize: Fonts.sizes.sm,
     fontWeight: '700',
     color: Colors.darkGray,
     marginBottom: Spacing.md,
@@ -250,7 +248,7 @@ const styles = StyleSheet.create({
     borderRadius: BorderRadius.lg,
     padding: Spacing.lg,
     marginBottom: Spacing.md,
-    ...Shadows.sm,
+    ...Shadows.small,
     borderLeftWidth: 4,
     borderLeftColor: Colors.error,
   },
@@ -274,7 +272,7 @@ const styles = StyleSheet.create({
   },
   questionText: {
     flex: 1,
-    fontSize: Fonts.sizes.base,
+    fontSize: Fonts.sizes.sm,
     fontWeight: '600',
     color: Colors.darkGray,
     lineHeight: 22,
@@ -302,12 +300,12 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   answerValueWrong: {
-    fontSize: Fonts.sizes.base,
+    fontSize: Fonts.sizes.sm,
     fontWeight: '700',
     color: Colors.error,
   },
   answerValueCorrect: {
-    fontSize: Fonts.sizes.base,
+    fontSize: Fonts.sizes.sm,
     fontWeight: '700',
     color: Colors.green,
   },
@@ -351,7 +349,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   tipTitle: {
-    fontSize: Fonts.sizes.base,
+    fontSize: Fonts.sizes.sm,
     fontWeight: '700',
     color: Colors.blue,
     marginBottom: Spacing.xs,

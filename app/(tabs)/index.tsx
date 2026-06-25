@@ -162,6 +162,7 @@ export default function HomeScreen() {
     averageScore: 0,
     bestScore: 0,
     currentStreak: 0,
+    valuesMastered: 0,
   });
 
   useEffect(() => {
@@ -175,6 +176,7 @@ export default function HomeScreen() {
       averageScore: p.averageScore,
       bestScore: p.bestScore,
       currentStreak: p.currentStreak,
+      valuesMastered: p.valuesMastered,
     });
   }, []);
 

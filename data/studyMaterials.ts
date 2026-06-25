@@ -422,7 +422,7 @@ export const studySections: StudySection[] = [
     subtitle: 'Quick Memory Guide',
     icon: 'calendar',
     color: '#FF6B35',
-    category: 'australia_facts',
+    category: 'australia_and_its_people',
     content: [
       {
         heading: '📅 Timeline: The BIG Years',
