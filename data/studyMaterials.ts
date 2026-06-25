@@ -493,6 +493,63 @@ export const studySections: StudySection[] = [
       '🔑 Constitution changed ONLY by referendum',
     ],
   },
+  {
+    id: 'timeline',
+    title: 'Australian History Timeline',
+    subtitle: 'Key Events from 1788 to Present',
+    icon: 'hourglass',
+    color: '#6C63FF',
+    category: 'australia_and_its_people',
+    content: [
+      {
+        heading: '🏛️ Timeline: From Colony to Nation',
+        body: 'Follow Australia\'s journey from British settlement to modern democracy. These dates are essential for citizenship test preparation.',
+        bulletPoints: [
+          '1788 (26 January) — First Fleet arrives from Great Britain with convicts and settlers; Captain Arthur Phillip is first Governor; marks beginning of European settlement',
+          '1851 — Gold discovered in New South Wales and Victoria; gold rush begins, attracts thousands of immigrants worldwide',
+          '1861 — Australian colonies begin establishing responsible governments; move toward self-governance from British rule',
+          '1898 — Constitution referendum held; Australians vote on the draft Constitution for federation',
+          '1901 (1 January) — The Constitution comes into effect; six separate colonies unite into the Commonwealth of Australia; federation becomes official',
+          '1902 — Women gain the right to vote in federal elections; Australia becomes one of the first nations in the world to grant women\'s voting rights',
+          '1967 — Referendum held; over 90% of Australians vote Yes to count Aboriginal and Torres Strait Islander peoples in the Census; removes federal discrimination',
+          'Present Day — Australia is a parliamentary democracy; constitutional monarchy with Queen as head of state; Governor-General represents the King',
+        ],
+      },
+      {
+        heading: '📍 Major Events by Period',
+        body: 'Understanding the major turning points in Australian history:',
+        bulletPoints: [
+          'Early Settlement (1788-1850s): British colony established; transportation of convicts; gradual expansion',
+          'Gold Rush Era (1851+): Massive population growth; development of new regions; increasing diversity',
+          'Self-Government (1860s-1890s): Colonies gain control over their own affairs; road to federation begins',
+          'Federation Period (1898-1901): Constitutional debate; referendum on union; creation of Commonwealth',
+          'Early Commonwealth (1901-1967): Nation building; women\'s rights expansion; gradual rights improvements',
+          'Modern Australia (1967-Present): Aboriginal rights recognition; multicultural society; democratic evolution',
+        ],
+      },
+      {
+        heading: '⭐ Dates You MUST Remember',
+        body: 'These specific dates appear frequently on citizenship tests:',
+        bulletPoints: [
+          '1788 = First Fleet arrival and Australia Day origin',
+          '1851 = Gold discovery (NSW & Victoria)',
+          '1898 = Constitution referendum year',
+          '1901 = Federation (1 January) — Constitution came into effect',
+          '1902 = Women gained right to vote',
+          '1967 = Aboriginal voting rights referendum (over 90% Yes vote)',
+        ],
+      },
+    ],
+    keyFacts: [
+      '1788: First Fleet arrives = 26 January = Australia Day origin',
+      '1851: Gold discovered in NSW and Victoria',
+      '1898: Constitution referendum held',
+      '1901: Federation on 1 January; Constitution takes effect; 6 colonies become 1 nation',
+      '1902: Australia grants women the right to vote (world first!)',
+      '1967: Aboriginal peoples counted in Census after 90%+ referendum vote',
+      'Today: Parliamentary democracy, constitutional monarchy, Governor-General represents King',
+    ],
+  },
 ];
 
 export default studySections;

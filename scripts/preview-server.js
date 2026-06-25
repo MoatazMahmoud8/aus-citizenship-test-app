@@ -1,0 +1,438 @@
+#!/usr/bin/env node
+/**
+ * Local Study Materials Preview Server
+ * Run: npm run preview-study
+ * Visit: http://localhost:3000
+ */
+
+import express from 'express';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const app = express();
+const PORT = 3000;
+
+// Mock study sections data (in production, import from studyMaterials.ts)
+const studySections = JSON.parse(fs.readFileSync(path.join(__dirname, 'study-sections.json'), 'utf8'));
+
+// Serve static files
+app.use(express.static('public'));
+app.use(express.json());
+
+// Timeline page
+app.get('/', (req, res) => {
+  const html = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Australian History Timeline - ACE Citizenship Study</title>
+      <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+        
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          min-height: 100vh;
+          padding: 20px;
+        }
+        
+        .container {
+          max-width: 1000px;
+          margin: 0 auto;
+          background: white;
+          border-radius: 12px;
+          box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+          overflow: hidden;
+        }
+        
+        .header {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          padding: 40px 20px;
+          text-align: center;
+        }
+        
+        .header h1 {
+          font-size: 32px;
+          margin-bottom: 10px;
+        }
+        
+        .header p {
+          font-size: 16px;
+          opacity: 0.9;
+        }
+        
+        .nav {
+          display: flex;
+          gap: 10px;
+          padding: 20px;
+          background: #f5f5f5;
+          overflow-x: auto;
+          flex-wrap: wrap;
+        }
+        
+        .nav button {
+          padding: 10px 20px;
+          border: none;
+          background: white;
+          color: #667eea;
+          border-radius: 6px;
+          cursor: pointer;
+          font-weight: 600;
+          transition: all 0.3s;
+        }
+        
+        .nav button:hover,
+        .nav button.active {
+          background: #667eea;
+          color: white;
+        }
+        
+        .content {
+          padding: 40px 20px;
+        }
+        
+        .section {
+          display: none;
+        }
+        
+        .section.active {
+          display: block;
+        }
+        
+        .timeline-item {
+          display: flex;
+          margin-bottom: 40px;
+          position: relative;
+        }
+        
+        .timeline-item:not(:last-child)::after {
+          content: '';
+          position: absolute;
+          left: 30px;
+          top: 60px;
+          width: 2px;
+          height: 80px;
+          background: #667eea;
+        }
+        
+        .timeline-date {
+          flex-shrink: 0;
+          width: 60px;
+          height: 60px;
+          background: #667eea;
+          color: white;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: bold;
+          font-size: 14px;
+          text-align: center;
+          margin-right: 30px;
+          position: relative;
+          z-index: 1;
+        }
+        
+        .timeline-content {
+          flex: 1;
+          padding: 20px;
+          background: #f9f9f9;
+          border-radius: 8px;
+          border-left: 3px solid #667eea;
+        }
+        
+        .timeline-content h3 {
+          color: #333;
+          margin-bottom: 8px;
+          font-size: 18px;
+        }
+        
+        .timeline-content p {
+          color: #666;
+          line-height: 1.6;
+          font-size: 14px;
+        }
+        
+        .key-dates {
+          background: #f0f4ff;
+          border-left: 4px solid #667eea;
+          padding: 20px;
+          margin-top: 30px;
+          border-radius: 8px;
+        }
+        
+        .key-dates h3 {
+          color: #667eea;
+          margin-bottom: 15px;
+        }
+        
+        .key-dates ul {
+          list-style: none;
+          padding: 0;
+        }
+        
+        .key-dates li {
+          padding: 10px 0;
+          color: #333;
+          font-size: 14px;
+          border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .key-dates li:before {
+          content: '⭐ ';
+          margin-right: 8px;
+        }
+        
+        .footer {
+          background: #f5f5f5;
+          padding: 20px;
+          text-align: center;
+          color: #999;
+          font-size: 12px;
+          border-top: 1px solid #e0e0e0;
+        }
+        
+        @media (max-width: 768px) {
+          .header h1 {
+            font-size: 24px;
+          }
+          
+          .timeline-date {
+            width: 50px;
+            height: 50px;
+            font-size: 12px;
+            margin-right: 20px;
+          }
+          
+          .timeline-item:not(:last-child)::after {
+            left: 25px;
+            height: 60px;
+          }
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <h1>🏛️ Australian History Timeline</h1>
+          <p>From 1788 to Present - Essential Dates for Citizenship Test</p>
+        </div>
+        
+        <div class="nav">
+          <button class="nav-btn active" data-section="timeline">Timeline</button>
+          <button class="nav-btn" data-section="periods">Historical Periods</button>
+          <button class="nav-btn" data-section="must-remember">Must Remember Dates</button>
+          <button class="nav-btn" data-section="key-facts">Key Facts</button>
+        </div>
+        
+        <div class="content">
+          <!-- Timeline Section -->
+          <div id="timeline" class="section active">
+            <div class="timeline-item">
+              <div class="timeline-date">1788</div>
+              <div class="timeline-content">
+                <h3>26 January - First Fleet Arrives</h3>
+                <p>First Fleet from Great Britain arrives with convicts and settlers. Captain Arthur Phillip becomes the first Governor. This marks the beginning of European settlement in Australia. This date is now celebrated as Australia Day.</p>
+              </div>
+            </div>
+            
+            <div class="timeline-item">
+              <div class="timeline-date">1851</div>
+              <div class="timeline-content">
+                <h3>Gold Discovered</h3>
+                <p>Gold is discovered in the colonies of New South Wales and Victoria, triggering a major gold rush. This attracts thousands of immigrants from around the world and dramatically increases Australia's population.</p>
+              </div>
+            </div>
+            
+            <div class="timeline-item">
+              <div class="timeline-date">1861</div>
+              <div class="timeline-content">
+                <h3>Responsible Government</h3>
+                <p>Australian colonies begin establishing responsible governments. This marks the move toward self-governance and independence from direct British rule.</p>
+              </div>
+            </div>
+            
+            <div class="timeline-item">
+              <div class="timeline-date">1898</div>
+              <div class="timeline-content">
+                <h3>Constitution Referendum</h3>
+                <p>Constitution referendum is held. Australians vote on the draft Constitution for federation, deciding whether to unite as one nation.</p>
+              </div>
+            </div>
+            
+            <div class="timeline-item">
+              <div class="timeline-date">1901</div>
+              <div class="timeline-content">
+                <h3>1 January - Federation & Constitution</h3>
+                <p>The Constitution comes into effect on 1 January. Six separate British colonies officially unite into the Commonwealth of Australia. This is the birth of modern Australia as a nation.</p>
+              </div>
+            </div>
+            
+            <div class="timeline-item">
+              <div class="timeline-date">1902</div>
+              <div class="timeline-content">
+                <h3>Women Gain Right to Vote</h3>
+                <p>Women gain the right to vote in federal elections. Australia becomes one of the first nations in the world to grant women voting rights - a major progressive milestone.</p>
+              </div>
+            </div>
+            
+            <div class="timeline-item">
+              <div class="timeline-date">1967</div>
+              <div class="timeline-content">
+                <h3>Aboriginal Rights Referendum</h3>
+                <p>A referendum is held. Over 90% of Australians vote Yes to count Aboriginal and Torres Strait Islander peoples in the Census, removing federal discrimination and extending equal rights.</p>
+              </div>
+            </div>
+            
+            <div class="key-dates">
+              <h3>Essential Timeline Summary</h3>
+              <ul>
+                <li><strong>1788:</strong> First Fleet arrives (26 January) - Australia Day origin</li>
+                <li><strong>1851:</strong> Gold discovered in NSW and Victoria</li>
+                <li><strong>1898:</strong> Constitution referendum year</li>
+                <li><strong>1901:</strong> Federation (1 January) - Constitution takes effect</li>
+                <li><strong>1902:</strong> Women granted right to vote</li>
+                <li><strong>1967:</strong> Aboriginal peoples counted in Census (90%+ Yes vote)</li>
+              </ul>
+            </div>
+          </div>
+          
+          <!-- Historical Periods Section -->
+          <div id="periods" class="section">
+            <div style="padding: 20px;">
+              <h2 style="margin-bottom: 20px; color: #333;">Australian History Periods</h2>
+              
+              <div class="timeline-content" style="margin-bottom: 20px;">
+                <h3>Early Settlement (1788-1850s)</h3>
+                <p>British colony established with convict transportation. Gradual expansion of settlement. Indigenous Australian population decimated by disease and conflict.</p>
+              </div>
+              
+              <div class="timeline-content" style="margin-bottom: 20px;">
+                <h3>Gold Rush Era (1851+)</h3>
+                <p>Massive population growth following gold discoveries. Development of new regions. Increasing ethnic diversity among immigrants.</p>
+              </div>
+              
+              <div class="timeline-content" style="margin-bottom: 20px;">
+                <h3>Self-Government (1860s-1890s)</h3>
+                <p>Colonies gain control over their own affairs. Responsible government established in each colony. Road to federation begins.</p>
+              </div>
+              
+              <div class="timeline-content" style="margin-bottom: 20px;">
+                <h3>Federation Period (1898-1901)</h3>
+                <p>Constitutional debate and negotiation. Referendum on union held (1898). Creation of the Commonwealth of Australia (1901).</p>
+              </div>
+              
+              <div class="timeline-content" style="margin-bottom: 20px;">
+                <h3>Early Commonwealth (1901-1967)</h3>
+                <p>Nation building and institutional development. Gradual expansion of women's rights. Continuous debates about Aboriginal rights.</p>
+              </div>
+              
+              <div class="timeline-content">
+                <h3>Modern Australia (1967-Present)</h3>
+                <p>Aboriginal rights recognition milestone (1967). Evolution toward multicultural society. Democratic development and constitutional evolution.</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Must Remember Section -->
+          <div id="must-remember" class="section">
+            <div style="padding: 20px;">
+              <h2 style="margin-bottom: 30px; color: #333;">Dates You MUST Remember for the Test</h2>
+              <div class="key-dates">
+                <ul style="border: none;">
+                  <li><strong>1788</strong> = First Fleet arrival and Australia Day origin (26 January)</li>
+                  <li><strong>1851</strong> = Gold discovery in NSW & Victoria</li>
+                  <li><strong>1898</strong> = Constitution referendum year</li>
+                  <li><strong>1901</strong> = Federation date (1 January); Constitution takes effect</li>
+                  <li><strong>1902</strong> = Women gained the right to vote</li>
+                  <li><strong>1967</strong> = Aboriginal voting rights referendum (over 90% Yes)</li>
+                  <li><strong>26 January</strong> = Australia Day (celebrates First Fleet arrival)</li>
+                  <li><strong>25 April</strong> = ANZAC Day (remembers soldiers at Gallipoli)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Key Facts Section -->
+          <div id="key-facts" class="section">
+            <div style="padding: 20px;">
+              <h2 style="margin-bottom: 30px; color: #333;">Key Facts Summary</h2>
+              <div class="key-dates">
+                <h3>Historical Facts to Know</h3>
+                <ul>
+                  <li>Australia began as British colony with convict transportation</li>
+                  <li>Gold discoveries in 1851 attracted worldwide immigration</li>
+                  <li>Six colonies united in 1901 to form the Commonwealth</li>
+                  <li>Constitution came into effect on 1 January 1901</li>
+                  <li>Women's voting rights granted in 1902 (world-first!)</li>
+                  <li>Aboriginal peoples gained equal Census rights in 1967</li>
+                  <li>Australia is a constitutional monarchy with Westminster system</li>
+                  <li>Governor-General represents the King/Queen</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="footer">
+          <p>ACE Citizenship Study - Australian History Timeline Preview</p>
+          <p>Last updated: June 2026 | Based on "Our Common Bond" curriculum</p>
+        </div>
+      </div>
+      
+      <script>
+        // Navigation functionality
+        const navBtns = document.querySelectorAll('.nav-btn');
+        const sections = document.querySelectorAll('.section');
+        
+        navBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            // Remove active from all buttons and sections
+            navBtns.forEach(b => b.classList.remove('active'));
+            sections.forEach(s => s.classList.remove('active'));
+            
+            // Add active to clicked button and corresponding section
+            btn.classList.add('active');
+            const sectionId = btn.getAttribute('data-section');
+            document.getElementById(sectionId).classList.add('active');
+          });
+        });
+      </script>
+    </body>
+    </html>
+  `;
+  res.send(html);
+});
+
+// API endpoint for study sections
+app.get('/api/study-sections', (req, res) => {
+  res.json(studySections);
+});
+
+// API endpoint for timeline
+app.get('/api/timeline', (req, res) => {
+  const timelineSection = studySections.find(s => s.id === 'timeline');
+  res.json(timelineSection);
+});
+
+app.listen(PORT, () => {
+  console.log(`
+╔════════════════════════════════════════════╗
+║  📚 ACE Study Materials Preview Server     ║
+║  🌐 http://localhost:${PORT}               ║
+║                                            ║
+║  Timeline: ✓                               ║
+║  API: /api/study-sections                  ║
+║  API: /api/timeline                        ║
+╚════════════════════════════════════════════╝
+  `);
+});
