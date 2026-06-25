@@ -9,6 +9,7 @@ import {
   Alert,
   Linking,
   Platform,
+  Share,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors, Fonts, Spacing, BorderRadius, Shadows } from '../../constants/theme';
@@ -79,7 +80,6 @@ export default function SettingsScreen() {
 
   const handleShareApp = async () => {
     try {
-      const { Share } = await import('react-native');
       const url = Platform.OS === 'ios' ? APP_STORE_URL : GOOGLE_PLAY_URL;
       await Share.share({ message: `${SHARE_TEXT}\n${url}`, url });
     } catch (error) {
