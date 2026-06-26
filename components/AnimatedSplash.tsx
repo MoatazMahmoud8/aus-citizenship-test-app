@@ -215,7 +215,7 @@ export default function AnimatedSplash({ onFinish }: AnimatedSplashProps) {
         <Text style={styles.welcomeDescription}>
           Prepare for your Australian Citizenship Test with 519 real exam-style questions.
         </Text>
-        <Text style={styles.welcomeDate}>Version: June 2026 Updated</Text>
+        <Text style={styles.welcomeDate}>Version: July 2026 Updated</Text>
       </Animated.View>
     </Animated.View>
   );

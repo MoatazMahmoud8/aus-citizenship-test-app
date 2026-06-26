@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity, Alert, RefreshControl } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Colors, Spacing, Fonts, BorderRadius, Shadows } from '../../constants/theme';
@@ -12,36 +13,52 @@ export default function ReviewScreen() {
   const insets = useSafeAreaInsets();
   const [wrongAnswers, setWrongAnswers] = useState<WrongAnswerItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [groupedByCategory, setGroupedByCategory] = useState<Record<string, WrongAnswerItem[]>>({});
 
+  // Load data on mount AND every time user navigates to this tab
   useEffect(() => {
     loadWrongAnswers();
+  }, []);
+  
+  useFocusEffect(
+    React.useCallback(() => {
+      loadWrongAnswers();
+    }, [])
+  );
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    loadWrongAnswers().then(() => setRefreshing(false));
   }, []);
 
   const loadWrongAnswers = async () => {
     try {
-      setLoading(true);
+      if (!refreshing) setLoading(true);
       const progress = await getProgress();
       
+      console.log('🔄 Loading wrong answers:', progress.wrongAnswersTracking.length);
+      
+      setWrongAnswers(progress.wrongAnswersTracking || []);
+      
+      // Group by category
+      const grouped: Record<string, WrongAnswerItem[]> = {};
       if (progress.wrongAnswersTracking && progress.wrongAnswersTracking.length > 0) {
-        setWrongAnswers(progress.wrongAnswersTracking);
-        
-        // Group by category
-        const grouped: Record<string, WrongAnswerItem[]> = {};
         progress.wrongAnswersTracking.forEach((item: WrongAnswerItem) => {
           if (!grouped[item.category]) {
             grouped[item.category] = [];
           }
           grouped[item.category].push(item);
         });
-        
-        setGroupedByCategory(grouped);
       }
+      
+      setGroupedByCategory(grouped);
     } catch (error) {
       console.error('Error loading wrong answers:', error);
       Alert.alert('Error', 'Failed to load your wrong answers');
     } finally {
       setLoading(false);
+      setRefreshing(false);
     }
   };
 
@@ -103,6 +120,9 @@ export default function ReviewScreen() {
     <ScrollView
       style={[styles.container, { paddingTop: insets.top }]}
       contentContainerStyle={{ paddingBottom: insets.bottom + Spacing.xl }}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={Colors.blue} />
+      }
     >
       <View style={styles.header}>
         <Text style={styles.title}>📋 Your Wrong Answers</Text>

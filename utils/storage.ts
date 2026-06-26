@@ -41,6 +41,11 @@ export async function saveProgress(progress: UserProgress): Promise<void> {
 }
 
 export async function updateProgressAfterQuiz(result: QuizResult, questions?: any[]): Promise<UserProgress> {
+  console.log('🚀 updateProgressAfterQuiz called with:');
+  console.log('  - Result answers:', result.answers.length);
+  console.log('  - Questions provided:', questions?.length || 0);
+  console.log('  - Correct answers:', result.correctAnswers);
+  
   const progress = await getProgress();
 
   progress.totalQuizzesTaken += 1;
@@ -57,6 +62,7 @@ export async function updateProgressAfterQuiz(result: QuizResult, questions?: an
 
   // Track values mastery - add correctly answered values questions to the list
   if (result.answers && result.answers.length > 0) {
+    console.log('📝 Processing answers...');
     for (const answer of result.answers) {
       // Check if this is a values question that was answered correctly
       if (answer.isCorrect) {
@@ -71,7 +77,7 @@ export async function updateProgressAfterQuiz(result: QuizResult, questions?: an
         );
       } else {
         // Track wrong answers
-        if (questions) {
+        if (questions && questions.length > 0) {
           const question = questions.find((q) => q.id === answer.questionId);
           if (question) {
             const existingWrongAnswer = progress.wrongAnswersTracking.find(
@@ -83,8 +89,10 @@ export async function updateProgressAfterQuiz(result: QuizResult, questions?: an
               existingWrongAnswer.timesWrong += 1;
               existingWrongAnswer.lastAttempted = new Date().toISOString();
               existingWrongAnswer.userSelectedAnswer = answer.selectedAnswer;
+              console.log('✏️ Updated wrong answer Q' + answer.questionId);
             } else {
               // Add new wrong answer
+              console.log('❌ Adding wrong answer for Q' + answer.questionId + ':', question.question.substring(0, 50));
               progress.wrongAnswersTracking.push({
                 questionId: answer.questionId,
                 questionText: question.question,
@@ -95,7 +103,11 @@ export async function updateProgressAfterQuiz(result: QuizResult, questions?: an
                 correctAnswer: question.correctAnswer,
               });
             }
+          } else {
+            console.warn('⚠️ Question not found for Q' + answer.questionId);
           }
+        } else {
+          console.warn('⚠️ Questions array not provided or empty');
         }
       }
     }
@@ -133,6 +145,7 @@ export async function updateProgressAfterQuiz(result: QuizResult, questions?: an
     // We'll need to update the category based on the question data
   }
 
+  console.log('📊 Saving progress with wrong answers:', progress.wrongAnswersTracking.length);
   await saveProgress(progress);
   return progress;
 }

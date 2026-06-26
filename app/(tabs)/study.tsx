@@ -36,39 +36,6 @@ export default function StudyScreen() {
         </View>
       </View>
 
-      {/* Study Sections */}
-      {studySections.map((section) => (
-        <TouchableOpacity
-          key={section.id}
-          style={styles.sectionCard}
-          onPress={() => router.push(`/study/${section.id}`)}
-          activeOpacity={0.7}
-        >
-          <View
-            style={[
-              styles.sectionIcon,
-              { backgroundColor: `${section.color}15` },
-            ]}
-          >
-            <Ionicons
-              name={section.icon as any}
-              size={32}
-              color={section.color}
-            />
-          </View>
-          <View style={styles.sectionContent}>
-            <Text style={styles.sectionTitle}>{section.title}</Text>
-            <Text style={styles.sectionSubtitle}>{section.subtitle}</Text>
-            <View style={styles.sectionMeta}>
-              <Text style={styles.sectionMetaText}>
-                {section.content.length} topics · {section.keyFacts.length} key facts
-              </Text>
-            </View>
-          </View>
-          <Ionicons name="chevron-forward" size={20} color={Colors.gray} />
-        </TouchableOpacity>
-      ))}
-
       {/* Tips Card */}
       <View style={styles.tipsCard}>
         <Text style={styles.tipsTitle}>💡 Study Tips</Text>
@@ -102,6 +69,38 @@ export default function StudyScreen() {
             Aim for consistent 90%+ scores before taking the real test
           </Text>
         </View>
+      </View>
+
+      {/* Study Sections Grid */}
+      <View style={styles.gridContainer}>
+        {studySections.map((section) => (
+          <TouchableOpacity
+            key={section.id}
+            style={styles.gridCard}
+            onPress={() => router.push(`/study/${section.id}`)}
+            activeOpacity={0.7}
+          >
+            <View
+              style={[
+                styles.sectionIcon,
+                { backgroundColor: `${section.color}15` },
+              ]}
+            >
+              <Ionicons
+                name={section.icon as any}
+                size={28}
+                color={section.color}
+              />
+            </View>
+            <Text style={styles.gridCardTitle}>{section.title}</Text>
+            <Text style={styles.gridCardSubtitle}>{section.subtitle}</Text>
+            <View style={styles.gridCardMeta}>
+              <Text style={styles.gridCardMetaText}>
+                {section.content.length} topics
+              </Text>
+            </View>
+          </TouchableOpacity>
+        ))}
       </View>
 
       <View style={{ height: 32 }} />
@@ -152,6 +151,43 @@ const styles = StyleSheet.create({
     fontSize: Fonts.sizes.xs,
     color: Colors.darkGray,
     lineHeight: 18,
+  },
+  gridContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingHorizontal: Spacing.md,
+    marginBottom: Spacing.lg,
+    justifyContent: 'space-between',
+  },
+  gridCard: {
+    width: '48%',
+    marginBottom: Spacing.lg,
+    padding: Spacing.lg,
+    backgroundColor: Colors.white,
+    borderRadius: BorderRadius.lg,
+    alignItems: 'center',
+    ...Shadows.small,
+  },
+  gridCardTitle: {
+    fontSize: Fonts.sizes.sm,
+    fontWeight: 'bold',
+    color: Colors.charcoal,
+    marginTop: Spacing.md,
+    textAlign: 'center',
+  },
+  gridCardSubtitle: {
+    fontSize: Fonts.sizes.xs,
+    color: Colors.gray,
+    marginTop: Spacing.xs,
+    textAlign: 'center',
+  },
+  gridCardMeta: {
+    marginTop: Spacing.sm,
+  },
+  gridCardMetaText: {
+    fontSize: Fonts.sizes.xs,
+    color: Colors.blue,
+    fontWeight: '600',
   },
   sectionCard: {
     flexDirection: 'row',
