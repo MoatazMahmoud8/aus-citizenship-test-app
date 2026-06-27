@@ -8,18 +8,16 @@ import ErrorBoundary from '../components/ErrorBoundary';
 import * as Sentry from '@sentry/react-native';
 
 // Initialize Sentry with environment variables (NOT hardcoded)
-// Requires EXPO_PUBLIC_SENTRY_DSN to be set in .env or EAS secrets
-if (process.env.EXPO_PUBLIC_SENTRY_DSN) {
-  Sentry.init({
-    dsn: process.env.EXPO_PUBLIC_SENTRY_DSN,
-    sendDefaultPii: false,
-    enableLogs: false,
-    tracesSampleRate: 0.5,
-    environment: process.env.NODE_ENV || 'production',
-  });
-} else {
-  console.warn('⚠️ Sentry DSN not configured. Set EXPO_PUBLIC_SENTRY_DSN in environment variables.');
-}
+// Sentry DSN is public (only allows sending errors, not reading data)
+const SENTRY_DSN = 'https://bcea9a1f04d519835e56e0bec8c78bcd@o4511495972126720.ingest.de.sentry.io/4511495998275664';
+
+Sentry.init({
+  dsn: SENTRY_DSN,
+  sendDefaultPii: false,
+  enableLogs: false,
+  tracesSampleRate: 0.5,
+  environment: process.env.NODE_ENV || 'production',
+});
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
