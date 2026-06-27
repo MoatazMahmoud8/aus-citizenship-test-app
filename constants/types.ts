@@ -75,6 +75,8 @@ export interface UserProgress {
     lastAttempted: string; // ISO timestamp
     userSelectedAnswer: number; // Option index selected
     correctAnswer: number; // Correct option index
+    options?: string[]; // All answer options text
+    explanation?: string; // Why the correct answer is right
   }[]; // Track all wrong answers until user gets it right
 }
 

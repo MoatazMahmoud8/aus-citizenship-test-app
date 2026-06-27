@@ -31,6 +31,7 @@ import {
   updateProgressAfterQuiz,
   updateCategoryScore,
   getSettings,
+  saveWrongAnswerImmediately,
 } from '../../utils/storage';
 import { formatTime, generateQuizId } from '../../utils/helpers';
 
@@ -124,6 +125,11 @@ export default function QuizScreen() {
         } else {
           Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
         }
+      }
+
+      // Save wrong answer immediately (don't wait for quiz to finish)
+      if (!isCorrect) {
+        saveWrongAnswerImmediately(currentQuestion, optionIndex);
       }
 
       setAnswers((prev) => [

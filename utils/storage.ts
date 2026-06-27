@@ -19,16 +19,27 @@ const STORAGE_KEYS = {
 export async function getProgress(): Promise<UserProgress> {
   try {
     const data = await AsyncStorage.getItem(STORAGE_KEYS.PROGRESS);
-    if (!data) return DEFAULT_PROGRESS;
+    if (!data) return { ...DEFAULT_PROGRESS };
     try {
-      return JSON.parse(data);
+      const parsed = JSON.parse(data);
+      // Merge with defaults to ensure new fields exist (e.g. wrongAnswersTracking)
+      return {
+        ...DEFAULT_PROGRESS,
+        ...parsed,
+        wrongAnswersTracking: parsed.wrongAnswersTracking || [],
+        valuesQuestionsAnsweredCorrectly: parsed.valuesQuestionsAnsweredCorrectly || [],
+        categoryScores: {
+          ...DEFAULT_PROGRESS.categoryScores,
+          ...parsed.categoryScores,
+        },
+      };
     } catch (parseError) {
       console.warn('Corrupted progress data, resetting:', parseError);
       await AsyncStorage.removeItem(STORAGE_KEYS.PROGRESS);
-      return DEFAULT_PROGRESS;
+      return { ...DEFAULT_PROGRESS };
     }
   } catch {
-    return DEFAULT_PROGRESS;
+    return { ...DEFAULT_PROGRESS };
   }
 }
 
@@ -37,6 +48,39 @@ export async function saveProgress(progress: UserProgress): Promise<void> {
     await AsyncStorage.setItem(STORAGE_KEYS.PROGRESS, JSON.stringify(progress));
   } catch (error) {
     console.error('Error saving progress:', error);
+  }
+}
+
+export async function saveWrongAnswerImmediately(question: any, selectedAnswer: number): Promise<void> {
+  try {
+    const progress = await getProgress();
+    const existingWrongAnswer = progress.wrongAnswersTracking.find(
+      (w) => w.questionId === question.id
+    );
+
+    if (existingWrongAnswer) {
+      existingWrongAnswer.timesWrong += 1;
+      existingWrongAnswer.lastAttempted = new Date().toISOString();
+      existingWrongAnswer.userSelectedAnswer = selectedAnswer;
+      existingWrongAnswer.options = question.options;
+      existingWrongAnswer.explanation = question.explanation;
+    } else {
+      progress.wrongAnswersTracking.push({
+        questionId: question.id,
+        questionText: question.question,
+        category: question.category,
+        timesWrong: 1,
+        lastAttempted: new Date().toISOString(),
+        userSelectedAnswer: selectedAnswer,
+        correctAnswer: question.correctAnswer,
+        options: question.options,
+        explanation: question.explanation,
+      });
+    }
+
+    await saveProgress(progress);
+  } catch (error) {
+    console.error('Error saving wrong answer:', error);
   }
 }
 

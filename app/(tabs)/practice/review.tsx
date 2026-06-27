@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Colors, Spacing, Fonts, BorderRadius, Shadows } from '../../../constants/theme';
 import { UserProgress, QuestionCategory } from '../../../constants/types';
-import { getProgress } from '../../../utils/storage';
+import { getProgress, saveProgress } from '../../../utils/storage';
 
 type WrongAnswerItem = UserProgress['wrongAnswersTracking'][0];
 
@@ -72,23 +72,27 @@ export default function ReviewScreen() {
     return labels[category] || category;
   };
 
-  const handleClearWrongAnswer = (questionId: number) => {
-    Alert.alert(
-      'Clear from Review',
-      'Remove this question from your review list?',
-      [
-        { text: 'Cancel', onPress: () => {}, style: 'cancel' },
-        {
-          text: 'Remove',
-          onPress: () => {
-            // TODO: Implement removal from tracking
-            Alert.alert('Cleared', 'Question removed from your review list');
-            loadWrongAnswers();
-          },
-          style: 'destructive',
-        },
-      ]
-    );
+  const handleClearWrongAnswer = async (questionId: number) => {
+    try {
+      const progress = await getProgress();
+      progress.wrongAnswersTracking = progress.wrongAnswersTracking.filter(
+        (w) => w.questionId !== questionId
+      );
+      await saveProgress(progress);
+      // Update local state immediately
+      const updated = wrongAnswers.filter((w) => w.questionId !== questionId);
+      setWrongAnswers(updated);
+      const grouped: Record<string, WrongAnswerItem[]> = {};
+      updated.forEach((item: WrongAnswerItem) => {
+        if (!grouped[item.category]) {
+          grouped[item.category] = [];
+        }
+        grouped[item.category].push(item);
+      });
+      setGroupedByCategory(grouped);
+    } catch (error) {
+      console.error('Error removing wrong answer:', error);
+    }
   };
 
   if (loading) {
@@ -141,35 +145,34 @@ export default function ReviewScreen() {
                 <View style={styles.attemptBadge}>
                   <Text style={styles.attemptText}>×{item.timesWrong}</Text>
                 </View>
-                <Text style={styles.questionText} numberOfLines={3}>
+                <Text style={styles.questionText}>
                   {item.questionText}
                 </Text>
               </View>
 
               <View style={styles.answerDetails}>
-                <View style={styles.answerRow}>
-                  <View style={[styles.answerLabel, { backgroundColor: '#FFE5E5' }]}>
-                    <Ionicons name="close-circle" size={16} color={Colors.error} />
-                    <Text style={[styles.answerLabelText, { color: Colors.error }]}>
-                      Your answer
-                    </Text>
-                  </View>
-                  <Text style={styles.answerValueWrong}>
-                    Option {String.fromCharCode(65 + item.userSelectedAnswer)}
-                  </Text>
+                <View style={styles.wrongAnswerBox}>
+                  <Ionicons name="close-circle" size={16} color={Colors.error} />
+                  <Text style={styles.answerLabelInline}>Your answer:</Text>
                 </View>
+                <Text style={styles.answerFullText}>
+                  {item.options ? item.options[item.userSelectedAnswer] : `Option ${String.fromCharCode(65 + item.userSelectedAnswer)}`}
+                </Text>
 
-                <View style={styles.answerRow}>
-                  <View style={[styles.answerLabel, { backgroundColor: '#E5F5E5' }]}>
-                    <Ionicons name="checkmark-circle" size={16} color={Colors.green} />
-                    <Text style={[styles.answerLabelText, { color: Colors.green }]}>
-                      Correct answer
-                    </Text>
-                  </View>
-                  <Text style={styles.answerValueCorrect}>
-                    Option {String.fromCharCode(65 + item.correctAnswer)}
-                  </Text>
+                <View style={styles.correctAnswerBox}>
+                  <Ionicons name="checkmark-circle" size={16} color={Colors.green} />
+                  <Text style={styles.correctLabelInline}>Correct answer:</Text>
                 </View>
+                <Text style={styles.correctFullText}>
+                  {item.options ? item.options[item.correctAnswer] : `Option ${String.fromCharCode(65 + item.correctAnswer)}`}
+                </Text>
+
+                {item.explanation ? (
+                  <View style={styles.explanationBox}>
+                    <Ionicons name="bulb" size={16} color={Colors.blue} />
+                    <Text style={styles.explanationText}>{item.explanation}</Text>
+                  </View>
+                ) : null}
               </View>
 
               <View style={styles.lastAttemptRow}>
@@ -299,7 +302,62 @@ const styles = StyleSheet.create({
   },
   answerDetails: {
     marginBottom: Spacing.md,
+  },
+  wrongAnswerBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.xs,
+    marginBottom: Spacing.xs,
+  },
+  answerLabelInline: {
+    fontSize: Fonts.sizes.xs,
+    fontWeight: '700',
+    color: Colors.error,
+  },
+  answerFullText: {
+    fontSize: Fonts.sizes.sm,
+    color: Colors.error,
+    backgroundColor: '#FFE5E5',
+    borderRadius: BorderRadius.md,
+    padding: Spacing.md,
+    marginBottom: Spacing.md,
+    lineHeight: 20,
+  },
+  correctAnswerBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.xs,
+    marginBottom: Spacing.xs,
+  },
+  correctLabelInline: {
+    fontSize: Fonts.sizes.xs,
+    fontWeight: '700',
+    color: Colors.green,
+  },
+  correctFullText: {
+    fontSize: Fonts.sizes.sm,
+    color: Colors.green,
+    backgroundColor: '#E5F5E5',
+    borderRadius: BorderRadius.md,
+    padding: Spacing.md,
+    marginBottom: Spacing.md,
+    lineHeight: 20,
+    fontWeight: '600',
+  },
+  explanationBox: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
     gap: Spacing.sm,
+    backgroundColor: '#E5F2FF',
+    borderRadius: BorderRadius.md,
+    padding: Spacing.md,
+    marginTop: Spacing.sm,
+  },
+  explanationText: {
+    flex: 1,
+    fontSize: Fonts.sizes.xs,
+    color: Colors.blue,
+    lineHeight: 18,
   },
   answerRow: {
     flexDirection: 'row',
