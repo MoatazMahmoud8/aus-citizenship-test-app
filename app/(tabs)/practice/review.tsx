@@ -3,9 +3,9 @@ import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity
 import { useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Colors, Spacing, Fonts, BorderRadius, Shadows } from '../../constants/theme';
-import { UserProgress, QuestionCategory } from '../../constants/types';
-import { getProgress } from '../../utils/storage';
+import { Colors, Spacing, Fonts, BorderRadius, Shadows } from '../../../constants/theme';
+import { UserProgress, QuestionCategory } from '../../../constants/types';
+import { getProgress } from '../../../utils/storage';
 
 type WrongAnswerItem = UserProgress['wrongAnswersTracking'][0];
 

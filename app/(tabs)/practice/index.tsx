@@ -8,9 +8,9 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { Colors, Fonts, Spacing, BorderRadius, Shadows } from '../../constants/theme';
-import { CATEGORY_INFO, QuestionCategory, QUIZ_CONFIG } from '../../constants/types';
-import { getQuestionCountByCategory, getAllExams, getTotalQuestionCount } from '../../data/questionBank';
+import { Colors, Fonts, Spacing, BorderRadius, Shadows } from '../../../constants/theme';
+import { CATEGORY_INFO, QuestionCategory, QUIZ_CONFIG } from '../../../constants/types';
+import { getQuestionCountByCategory, getAllExams, getTotalQuestionCount } from '../../../data/questionBank';
 
 export default function PracticeScreen() {
   const router = useRouter();
@@ -45,6 +45,24 @@ export default function PracticeScreen() {
           {totalQuestions} questions across {allExams.length} practice exams. Choose a format below.
         </Text>
       </View>
+
+      {/* Review Wrong Answers Button */}
+      <TouchableOpacity
+        style={styles.reviewCard}
+        onPress={() => router.push('/practice/review')}
+        activeOpacity={0.7}
+      >
+        <View style={styles.reviewIcon}>
+          <Ionicons name="alert-circle" size={28} color="#DC3545" />
+        </View>
+        <View style={styles.reviewContent}>
+          <Text style={styles.reviewTitle}>📋 Review Wrong Answers</Text>
+          <Text style={styles.reviewSubtitle}>
+            Study questions you answered incorrectly
+          </Text>
+        </View>
+        <Ionicons name="chevron-forward" size={24} color={Colors.gray} />
+      </TouchableOpacity>
 
       {/* Most Repeated Questions */}
       <Text style={styles.sectionTitle}>⚡ Most Repeated Questions</Text>
@@ -174,6 +192,34 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.sm,
   },
   headerSubtitle: {
+    fontSize: Fonts.sizes.sm,
+    color: Colors.darkGray,
+  },
+  reviewCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginHorizontal: Spacing.lg,
+    marginBottom: Spacing.lg,
+    padding: Spacing.lg,
+    backgroundColor: '#FFE5E5',
+    borderRadius: BorderRadius.lg,
+    borderLeftWidth: 4,
+    borderLeftColor: '#DC3545',
+    ...Shadows.small,
+  },
+  reviewIcon: {
+    marginRight: Spacing.md,
+  },
+  reviewContent: {
+    flex: 1,
+  },
+  reviewTitle: {
+    fontSize: Fonts.sizes.md,
+    fontWeight: 'bold',
+    color: Colors.charcoal,
+    marginBottom: Spacing.xs,
+  },
+  reviewSubtitle: {
     fontSize: Fonts.sizes.sm,
     color: Colors.darkGray,
   },
