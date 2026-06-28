@@ -274,7 +274,15 @@ export default function SettingsScreen() {
       <View style={styles.settingsGroup}>
         <TouchableOpacity
           style={styles.linkRow}
-          onPress={() => Linking.openURL('mailto:support@jsmglobal.xyz')}
+          onPress={async () => {
+            const url = 'mailto:support@jsmglobal.xyz';
+            const canOpen = await Linking.canOpenURL(url);
+            if (canOpen) {
+              await Linking.openURL(url);
+            } else {
+              Alert.alert('No Email App', 'Please email us at support@jsmglobal.xyz');
+            }
+          }}
         >
           <Ionicons name="mail" size={22} color={Colors.blue} />
           <View style={styles.linkContent}>
