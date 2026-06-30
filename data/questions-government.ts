@@ -302,7 +302,7 @@ export const governmentQuestions: Question[] = [
     question: 'In Australia, who can have a say in forming the laws and policies of a government?',
     options: [
       'Only members of parliament',
-      'Only the Queen and the Prime Minister',
+      'Only the King and the Prime Minister',
       'All Australians',
     ],
     correctAnswer: 2,
@@ -427,7 +427,7 @@ export const governmentQuestions: Question[] = [
     id: 531,
     question: 'What happened in Australia on 1 January 1901?',
     options: [
-      'The birth of the Queen of Australia',
+      'The birth of the King of Australia',
       'The colonies became one independent nation',
       'Aboriginal peoples were allowed to be counted in the Census',
     ],
@@ -469,7 +469,7 @@ export const governmentQuestions: Question[] = [
     id: 534,
     question: 'Which one of the following was established by the Australian Constitution?',
     options: [
-      "The Queen's day-to-day role in government",
+      "The King's day-to-day role in government",
       "The name of Australia's National rugby team",
       'The High Court of Australia',
     ],
@@ -513,7 +513,7 @@ export const governmentQuestions: Question[] = [
     options: [
       'It can only be changed by the Prime Minister',
       'It can only be changed through a special vote',
-      'It can only be changed by Her Majesty Queen Elizabeth II',
+      'It can only be changed by His Majesty King Charles III',
     ],
     correctAnswer: 1,
     category: 'government_and_law',
@@ -749,7 +749,7 @@ export const governmentQuestions: Question[] = [
     id: 554,
     question: 'What does the Executive include?',
     options: [
-      'Australian Government ministers and Her Majesty Queen Elizabeth II',
+      'Australian Government ministers and His Majesty King Charles III',
       'The Governor-General and judges',
       'The Prime Minister, Australian government ministers and the Governor-General',
     ],
@@ -831,16 +831,16 @@ export const governmentQuestions: Question[] = [
   },
   {
     id: 560,
-    question: 'Which of these statements about the Queen of Australia is correct?',
+    question: 'Which of these statements about the King of Australia is correct?',
     options: [
-      'In Australia, the Queen does not have a day-to-day role in government',
-      'The Queen appoints the Governor-General as the Prime Minister of Australia',
-      'The Queen is the leader of the Australian Government',
+      'In Australia, the King does not have a day-to-day role in government',
+      'The King appoints the Governor-General as the Prime Minister of Australia',
+      'The King is the leader of the Australian Government',
     ],
     correctAnswer: 0,
     category: 'government_and_law',
     isValuesQuestion: false,
-    explanation: 'The Queen does not have a day-to-day role in Australian government; her powers are delegated to the Governor-General.',
+    explanation: 'The King does not have a day-to-day role in Australian government; her powers are delegated to the Governor-General.',
     source: 'Our Common Bond - Government and the Law',
   },
   {
@@ -862,20 +862,20 @@ export const governmentQuestions: Question[] = [
     id: 562,
     question: 'How is the Governor-General appointed?',
     options: [
-      'The Prime Minister appoints the Governor-General, on advice from the Queen of Australia',
+      'The Prime Minister appoints the Governor-General, on advice from the King of Australia',
       'The Parliament appoints the Governor-General, on advice from the Australian Prime Minister',
-      'The Queen appoints the Governor-General as her representative in Australia, on advice from the Australian Prime Minister',
+      'The King appoints the Governor-General as her representative in Australia, on advice from the Australian Prime Minister',
     ],
     correctAnswer: 2,
     category: 'government_and_law',
     isValuesQuestion: false,
-    explanation: 'The Queen appoints the Governor-General on the advice of the Australian Prime Minister.',
+    explanation: 'The King appoints the Governor-General on the advice of the Australian Prime Minister.',
     source: 'Our Common Bond - Government and the Law',
     recallCount: 1,
   },
   {
     id: 563,
-    question: 'In each of the states, who represents the Queen?',
+    question: 'In each of the states, who represents the King?',
     options: [
       'The Governor-General',
       'A Governor',
@@ -884,7 +884,7 @@ export const governmentQuestions: Question[] = [
     correctAnswer: 1,
     category: 'government_and_law',
     isValuesQuestion: false,
-    explanation: 'In each state, a Governor represents the Queen.',
+    explanation: 'In each state, a Governor represents the King.',
     source: 'Our Common Bond - Government and the Law',
   },
   {
@@ -920,28 +920,28 @@ export const governmentQuestions: Question[] = [
     question: 'In Australia, who is the Head of State?',
     options: [
       'The Prime Minister',
-      'The Queen of Australia',
+      'The King of Australia',
       'The Governor',
     ],
     correctAnswer: 1,
     category: 'government_and_law',
     isValuesQuestion: false,
-    explanation: 'The Queen of Australia is the Head of State.',
+    explanation: 'The King of Australia is the Head of State.',
     source: 'Our Common Bond - Government and the Law',
     recallCount: 2,
   },
   {
     id: 567,
-    question: "Why are the Queen's powers delegated to the Governor-General in Australia?",
+    question: "Why are the King's powers delegated to the Governor-General in Australia?",
     options: [
-      'Because the Queen is retired',
+      'Because the King is retired',
       'Because Australia is too remote',
-      'Because the Queen does not live in Australia',
+      'Because the King does not live in Australia',
     ],
     correctAnswer: 2,
     category: 'government_and_law',
     isValuesQuestion: false,
-    explanation: 'Since the Queen does not live in Australia, her powers are delegated to the Governor-General.',
+    explanation: 'Since the King does not live in Australia, her powers are delegated to the Governor-General.',
     source: 'Our Common Bond - Government and the Law',
     recallCount: 1,
   },
@@ -963,7 +963,7 @@ export const governmentQuestions: Question[] = [
     id: 569,
     question: 'In the Australian system, who is the leader of the Australian Government?',
     options: [
-      'The Queen of Australia',
+      'The King of Australia',
       'The Governor-General',
       'The Prime Minister',
     ],
@@ -1009,7 +1009,7 @@ export const governmentQuestions: Question[] = [
     options: [
       'Being a member of the British royal family',
       'Signing all Bills passed by the Australian Parliament into law',
-      'Being appointed by the Queen of Australia to represent her in certain official ceremonies',
+      'Being appointed by the King of Australia to represent her in certain official ceremonies',
     ],
     correctAnswer: 1,
     category: 'government_and_law',
@@ -1084,7 +1084,7 @@ export const governmentQuestions: Question[] = [
     correctAnswer: 2,
     category: 'government_and_law',
     isValuesQuestion: false,
-    explanation: 'The Governor-General represents the Head of State (the Queen) in Australia.',
+    explanation: 'The Governor-General represents the Head of State (the King) in Australia.',
     source: 'Our Common Bond - Government and the Law',
   },
   {
@@ -1107,7 +1107,7 @@ export const governmentQuestions: Question[] = [
     options: [
       'The Governor-General',
       'The Prime Minister',
-      'The Queen of Australia',
+      'The King of Australia',
     ],
     correctAnswer: 1,
     category: 'government_and_law',
@@ -1161,7 +1161,7 @@ export const governmentQuestions: Question[] = [
     id: 583,
     question: 'How are Government Ministers chosen?',
     options: [
-      'By the Queen of Australia',
+      'By the King of Australia',
       'By the people of Australia',
       'By a government leader',
     ],
@@ -1446,7 +1446,7 @@ export const governmentQuestions: Question[] = [
     options: [
       'The Upper House',
       'The Lower House',
-      "The Queen's House",
+      "The King's House",
     ],
     correctAnswer: 1,
     category: 'government_and_law',
@@ -1752,7 +1752,7 @@ export const governmentQuestions: Question[] = [
   },
   {
     id: 624,
-    question: 'Who represents the Queen of Australia in each state?',
+    question: 'Who represents the King of Australia in each state?',
     options: [
       'A Premier',
       'A Governor',
@@ -1761,12 +1761,12 @@ export const governmentQuestions: Question[] = [
     correctAnswer: 1,
     category: 'government_and_law',
     isValuesQuestion: false,
-    explanation: 'A Governor represents the Queen in each Australian state.',
+    explanation: 'A Governor represents the King in each Australian state.',
     source: 'Our Common Bond - Government and the Law',
   },
   {
     id: 625,
-    question: 'Who represents the Queen of Australia in the Northern Territory?',
+    question: 'Who represents the King of Australia in the Northern Territory?',
     options: [
       'A Governor',
       'A Chief Minister',
@@ -1775,7 +1775,7 @@ export const governmentQuestions: Question[] = [
     correctAnswer: 2,
     category: 'government_and_law',
     isValuesQuestion: false,
-    explanation: 'An Administrator represents the Queen in the Northern Territory.',
+    explanation: 'An Administrator represents the King in the Northern Territory.',
     source: 'Our Common Bond - Government and the Law',
   },
   {
@@ -2051,7 +2051,7 @@ export const governmentQuestions: Question[] = [
     options: [
       'The leader of the party or coalition of parties with the majority of members in the House of Representatives',
       'The Prime Minister with the majority of the votes',
-      'The Queen of Australia appoints the leader of the government',
+      'The King of Australia appoints the leader of the government',
     ],
     correctAnswer: 0,
     category: 'government_and_law',
@@ -2093,7 +2093,7 @@ export const governmentQuestions: Question[] = [
     options: [
       'The Prime Minister',
       'The Governor-General',
-      'The Queen of Australia',
+      'The King of Australia',
     ],
     correctAnswer: 0,
     category: 'government_and_law',
@@ -2177,7 +2177,7 @@ export const governmentQuestions: Question[] = [
     options: [
       'The High Court of Australia',
       'The Australian Parliament',
-      'The Queen of Australia',
+      'The King of Australia',
     ],
     correctAnswer: 1,
     category: 'government_and_law',
@@ -2261,7 +2261,7 @@ export const governmentQuestions: Question[] = [
     options: [
       'If the majority of members in each House of Parliament agree to the Bill',
       'If the Prime Minister agrees to the Bill',
-      'If the Queen of Australia gives her Royal Assent',
+      'If the King of Australia gives her Royal Assent',
     ],
     correctAnswer: 0,
     category: 'government_and_law',
@@ -2273,7 +2273,7 @@ export const governmentQuestions: Question[] = [
     id: 661,
     question: 'What happens to a Bill once the majority of members in each House of Parliament agree to it?',
     options: [
-      'It goes to the Queen of Australia',
+      'It goes to the King of Australia',
       'It becomes a law',
       'It goes to the Governor-General',
     ],
@@ -2287,7 +2287,7 @@ export const governmentQuestions: Question[] = [
     id: 662,
     question: 'When does a Bill become a law?',
     options: [
-      'When the Queen of Australia signs it',
+      'When the King of Australia signs it',
       'When the Governor-General signs it',
       'When the majority of members in each House of Parliament agree to the Bill',
     ],
@@ -2302,8 +2302,8 @@ export const governmentQuestions: Question[] = [
     question: "In Australian politics, what is called 'Royal Assent'?",
     options: [
       'When the Governor-General signs a Bill so that it becomes law',
-      'When Her Majesty Queen Elizabeth II makes an official visit to Australia',
-      'When the Queen of Australia appoints the Governor-General',
+      'When His Majesty King Charles III makes an official visit to Australia',
+      'When the King of Australia appoints the Governor-General',
     ],
     correctAnswer: 0,
     category: 'government_and_law',

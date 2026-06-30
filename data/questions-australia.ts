@@ -4,7 +4,7 @@ export const australiaQuestions: Question[] = [
   {
     id: 101,
     question: 'In the citizenship pledge, who do you pledge your loyalty to?',
-    options: ['The Commonwealth and its people', 'The Queen of Australia', 'Australia and its people'],
+    options: ['The Commonwealth and its people', 'The King of Australia', 'Australia and its people'],
     correctAnswer: 2,
     category: 'australia_and_its_people',
     isValuesQuestion: false,
@@ -694,10 +694,10 @@ export const australiaQuestions: Question[] = [
     id: 169,
     question: 'Why was a Welcome to Country traditionally performed?',
     options: ['To ensure visitors arriving in Australia properly identify themselves', 'To ensure visitors pay respect to Traditional Custodians', 'To ensure visitors had a safe and protected journey during their time on that land'],
-    correctAnswer: 1,
+    correctAnswer: 2,
     category: 'australia_and_its_people',
     isValuesQuestion: false,
-    explanation: 'A Welcome to Country was traditionally performed to acknowledge the Traditional Custodians\' connection to the land and show respect for the land and its people.',
+    explanation: 'A Welcome to Country was traditionally performed to ensure visitors had a safe and protected journey during their time on that land.',
     source: 'Our Common Bond - Australia and Its People',
   },
   {
@@ -764,7 +764,7 @@ export const australiaQuestions: Question[] = [
   {
     id: 176,
     question: 'What do people reflect on Australia Day?',
-    options: ["On the contribution of Australia's Head of State, Queen Elizabeth II", 'On the courage and commitment of all servicemen and women', 'On our history, and the people who have contributed to our shared achievements'],
+    options: ["On the contribution of Australia's Head of State, King Charles III", 'On the courage and commitment of all servicemen and women', 'On our history, and the people who have contributed to our shared achievements'],
     correctAnswer: 2,
     category: 'australia_and_its_people',
     isValuesQuestion: false,
@@ -774,7 +774,7 @@ export const australiaQuestions: Question[] = [
   {
     id: 177,
     question: 'What is the biggest annual public holiday in Australia?',
-    options: ['The birthday of Her Majesty Queen Elizabeth II', 'Anzac Day', 'Australia Day'],
+    options: ['The birthday of His Majesty King Charles III', 'Anzac Day', 'Australia Day'],
     correctAnswer: 2,
     category: 'australia_and_its_people',
     isValuesQuestion: false,
@@ -794,7 +794,7 @@ export const australiaQuestions: Question[] = [
   {
     id: 179,
     question: 'What happens on 25 April each year?',
-    options: ['We commemorate Anzac Day', 'We celebrate Australia Day', 'We celebrate the birthday of Her Majesty Queen Elizabeth II'],
+    options: ['We commemorate Anzac Day', 'We celebrate Australia Day', 'We celebrate the birthday of His Majesty King Charles III'],
     correctAnswer: 0,
     category: 'australia_and_its_people',
     isValuesQuestion: false,
@@ -905,7 +905,7 @@ export const australiaQuestions: Question[] = [
   {
     id: 190,
     question: 'On the Australian National Flag, what does the Union Jack represent?',
-    options: ["Australia's Head of State, Queen Elizabeth II", 'The Union of States called the Commonwealth of Australia', 'Our history of British settlement and the laws and institutions we inherited as a result'],
+    options: ["Australia's Head of State, King Charles III", 'The Union of States called the Commonwealth of Australia', 'Our history of British settlement and the laws and institutions we inherited as a result'],
     correctAnswer: 2,
     category: 'australia_and_its_people',
     isValuesQuestion: false,
@@ -1100,7 +1100,7 @@ export const australiaQuestions: Question[] = [
   {
     id: 209,
     question: 'What does the Commonwealth Coat of Arms symbolise?',
-    options: ['Her Majesty Queen Elizabeth II', 'The Aboriginal People', 'The Commonwealth of Australia'],
+    options: ['His Majesty King Charles III', 'The Aboriginal People', 'The Commonwealth of Australia'],
     correctAnswer: 2,
     category: 'australia_and_its_people',
     isValuesQuestion: false,
@@ -1130,7 +1130,7 @@ export const australiaQuestions: Question[] = [
   {
     id: 212,
     question: 'In the Commonwealth Coat of Arms, what does the shield in the centre represent?',
-    options: ["Australia's army", 'Her Majesty Queen Elizabeth II', 'The six states and federation'],
+    options: ["Australia's army", 'His Majesty King Charles III', 'The six states and federation'],
     correctAnswer: 2,
     category: 'australia_and_its_people',
     isValuesQuestion: false,

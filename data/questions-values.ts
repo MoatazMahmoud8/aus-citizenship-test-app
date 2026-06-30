@@ -117,7 +117,7 @@ export const valuesQuestions: Question[] = [
   {
     id: 12,
     question: 'In Australia, where does the power of the government come from?',
-    options: ['The Queen of Australia', 'The Prime Minister', 'The Australian people'],
+    options: ['The King of Australia', 'The Prime Minister', 'The Australian people'],
     correctAnswer: 2,
     category: 'australian_values',
     isValuesQuestion: true,

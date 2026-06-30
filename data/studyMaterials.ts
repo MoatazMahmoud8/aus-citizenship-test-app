@@ -512,7 +512,7 @@ export const studySections: StudySection[] = [
           '1901 (1 January) — The Constitution comes into effect; six separate colonies unite into the Commonwealth of Australia; federation becomes official',
           '1902 — Women gain the right to vote in federal elections; Australia becomes one of the first nations in the world to grant women\'s voting rights',
           '1967 — Referendum held; over 90% of Australians vote Yes to count Aboriginal and Torres Strait Islander peoples in the Census; removes federal discrimination',
-          'Present Day — Australia is a parliamentary democracy; constitutional monarchy with Queen as head of state; Governor-General represents the King',
+          'Present Day — Australia is a parliamentary democracy; constitutional monarchy with King as head of state; Governor-General represents the King',
         ],
       },
       {
