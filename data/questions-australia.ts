@@ -673,7 +673,7 @@ export const australiaQuestions: Question[] = [
   {
     id: 167,
     question: 'Which one of these is a Northern Territory icon?',
-    options: ['Kata Tjuta', 'Queens Canyon', 'Ningaloo'],
+    options: ['Kata Tjuta', 'Kings Canyon', 'Ningaloo'],
     correctAnswer: 0,
     category: 'australia_and_its_people',
     isValuesQuestion: false,

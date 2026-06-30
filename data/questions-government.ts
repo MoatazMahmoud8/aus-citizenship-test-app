@@ -840,7 +840,7 @@ export const governmentQuestions: Question[] = [
     correctAnswer: 0,
     category: 'government_and_law',
     isValuesQuestion: false,
-    explanation: 'The King does not have a day-to-day role in Australian government; her powers are delegated to the Governor-General.',
+    explanation: 'The King does not have a day-to-day role in Australian government; his powers are delegated to the Governor-General.',
     source: 'Our Common Bond - Government and the Law',
   },
   {
@@ -864,7 +864,7 @@ export const governmentQuestions: Question[] = [
     options: [
       'The Prime Minister appoints the Governor-General, on advice from the King of Australia',
       'The Parliament appoints the Governor-General, on advice from the Australian Prime Minister',
-      'The King appoints the Governor-General as her representative in Australia, on advice from the Australian Prime Minister',
+      'The King appoints the Governor-General as his representative in Australia, on advice from the Australian Prime Minister',
     ],
     correctAnswer: 2,
     category: 'government_and_law',
@@ -1009,7 +1009,7 @@ export const governmentQuestions: Question[] = [
     options: [
       'Being a member of the British royal family',
       'Signing all Bills passed by the Australian Parliament into law',
-      'Being appointed by the King of Australia to represent her in certain official ceremonies',
+      'Being appointed by the King of Australia to represent him in certain official ceremonies',
     ],
     correctAnswer: 1,
     category: 'government_and_law',
@@ -1709,7 +1709,7 @@ export const governmentQuestions: Question[] = [
     source: 'Our Common Bond - Government and the Law',
   },
   {
-    id: 621,
+    id: 9024,
     question: 'What is the name of the leader of a state government?',
     options: [
       'Governor',
@@ -2261,7 +2261,7 @@ export const governmentQuestions: Question[] = [
     options: [
       'If the majority of members in each House of Parliament agree to the Bill',
       'If the Prime Minister agrees to the Bill',
-      'If the King of Australia gives her Royal Assent',
+      'If the King of Australia gives his Royal Assent',
     ],
     correctAnswer: 0,
     category: 'government_and_law',
@@ -2940,7 +2940,7 @@ export const governmentQuestions: Question[] = [
     recallCount: 1,
   },
   {
-    id: 640,
+    id: 9025,
     question: 'How often must federal elections be held in Australia?',
     options: [
       'At least every 3 years',
@@ -2954,7 +2954,7 @@ export const governmentQuestions: Question[] = [
     source: 'Our Common Bond - Government and the Law',
   },
   {
-    id: 641,
+    id: 9026,
     question: 'In what year was the referendum on the Australian Constitution held?',
     options: [
       '1896',
