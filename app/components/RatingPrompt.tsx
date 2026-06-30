@@ -114,7 +114,7 @@ export default function RatingPrompt({ visible, onDismiss }: RatingPromptProps) 
         title: 'Awesome!',
         message: `Would you mind taking 10 seconds to leave us a 5-star rating on the ${STORE_NAME}? It really helps other learners discover the app.`,
         primary: {
-          label: busy ? 'Opening…' : `Rate on ${STORE_NAME}`,
+          label: busy ? 'Opening…' : `Rate Us`,
           onPress: handleRate,
           icon: 'star' as const,
         },
@@ -277,6 +277,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: Colors.white,
     textAlign: 'center',
+    flexShrink: 1,
   },
   hint: {
     fontSize: Fonts.sizes.sm,
