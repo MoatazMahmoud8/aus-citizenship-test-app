@@ -80,8 +80,7 @@ export default function QuizScreen() {
       quizQuestions = generateExamQuiz(examId);
     } else if (params.mode === 'category' && params.category) {
       quizQuestions = generateCategoryQuiz(
-        params.category as QuestionCategory,
-        20
+        params.category as QuestionCategory
       );
     } else if (params.mode === 'quick' && params.count) {
       const count = parseInt(params.count, 10) || 10;

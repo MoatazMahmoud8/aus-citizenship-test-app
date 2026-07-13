@@ -210,7 +210,7 @@ export default function ResultScreen() {
       <View style={styles.actions}>
         <TouchableOpacity
           style={styles.primaryButton}
-          onPress={() => router.replace('/quiz')}
+          onPress={() => router.replace('/(tabs)/practice')}
           activeOpacity={0.8}
         >
           <Ionicons name="refresh" size={20} color={Colors.white} />
