@@ -41,6 +41,7 @@ export const australiaQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'Aboriginal and Torres Strait Islander peoples are Australia\'s Indigenous cultures, with deep connections to the land spanning tens of thousands of years.',
     source: 'Our Common Bond - Australia and Its People',
+    recallCount: 2,
   },
   {
     id: 105,
@@ -51,6 +52,7 @@ export const australiaQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'Aboriginal and Torres Strait Islander peoples have the oldest continuous cultures and traditions in the world, dating back tens of thousands of years.',
     source: 'Our Common Bond - Australia and Its People',
+    recallCount: 2,
   },
   {
     id: 106,
@@ -689,6 +691,7 @@ export const australiaQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'A Welcome to Country is a cultural practice performed by an Aboriginal or Torres Strait Islander custodian to welcome visitors to their traditional land.',
     source: 'Our Common Bond - Australia and Its People',
+    recallCount: 2,
   },
   {
     id: 169,
@@ -699,6 +702,7 @@ export const australiaQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'A Welcome to Country was traditionally performed to ensure visitors had a safe and protected journey during their time on that land.',
     source: 'Our Common Bond - Australia and Its People',
+    recallCount: 2,
   },
   {
     id: 170,
@@ -709,6 +713,7 @@ export const australiaQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'A Welcome to Country is usually the first item of proceedings to open an event, and can take various forms including speeches, dance, or smoking ceremonies.',
     source: 'Our Common Bond - Australia and Its People',
+    recallCount: 2,
   },
   {
     id: 171,
@@ -739,6 +744,7 @@ export const australiaQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'A Welcome to Country is usually the first item of proceedings to open an event in Aboriginal or Torres Strait Islander cultures.',
     source: 'Our Common Bond - Australia and Its People',
+    recallCount: 2,
   },
   {
     id: 174,
@@ -881,6 +887,7 @@ export const australiaQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'The Australian National Flag features the colours blue, white, and red.',
     source: 'Our Common Bond - Australia and Its People',
+    recallCount: 2,
   },
   {
     id: 188,
@@ -891,6 +898,7 @@ export const australiaQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'The background colour of the Australian National Flag is blue.',
     source: 'Our Common Bond - Australia and Its People',
+    recallCount: 2,
   },
   {
     id: 189,

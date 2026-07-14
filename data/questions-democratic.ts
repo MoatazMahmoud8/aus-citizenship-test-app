@@ -28,6 +28,7 @@ export const democraticQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'Australia\'s system of government is a parliamentary democracy, where citizens vote for representatives to make decisions on their behalf.',
     source: 'Our Common Bond - Democratic Beliefs',
+    recallCount: 2,
   },
   {
     id: 303,
@@ -57,6 +58,7 @@ export const democraticQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'In Australia, the power of the government comes from the Australian people, who elect their representatives.',
     source: 'Our Common Bond - Democratic Beliefs',
+    recallCount: 2,
   },
   {
     id: 305,
@@ -537,6 +539,7 @@ export const democraticQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'Australian citizens must vote in federal and state or territory elections, and in referendums. Voting is compulsory.',
     source: 'Our Common Bond - Democratic Beliefs',
+    recallCount: 2,
   },
   {
     id: 339,
@@ -566,6 +569,7 @@ export const democraticQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'Voting in federal and state or territory elections and referendums is a compulsory responsibility of Australian citizens.',
     source: 'Our Common Bond - Democratic Beliefs',
+    recallCount: 2,
   },
   {
     id: 341,
@@ -724,6 +728,7 @@ export const democraticQuestions: Question[] = [
     isValuesQuestion: false,
     explanation: 'Australian citizens aged 18 years or over are required to vote in federal and state or territory elections, and in referendums.',
     source: 'Our Common Bond - Democratic Beliefs',
+    recallCount: 2,
   },
   {
     id: 352,

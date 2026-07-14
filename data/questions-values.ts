@@ -739,6 +739,7 @@ export const valuesQuestions: Question[] = [
     isValuesQuestion: true,
     explanation: 'The spirit of mateship means helping each other in times of need, a core Australian value.',
     source: 'Our Common Bond - Australian Values',
+    recallCount: 2,
   },
   {
     id: 73,
@@ -749,6 +750,7 @@ export const valuesQuestions: Question[] = [
     isValuesQuestion: true,
     explanation: 'Taking a meal to an elderly neighbor is an example of mateship — looking out for and helping others.',
     source: 'Our Common Bond - Australian Values',
+    recallCount: 2,
   },
   {
     id: 74,
@@ -789,6 +791,7 @@ export const valuesQuestions: Question[] = [
     isValuesQuestion: true,
     explanation: 'English is the national language of Australia and is valued as an important unifying element of society.',
     source: 'Our Common Bond - Australian Values',
+    recallCount: 2,
   },
   {
     id: 78,
@@ -799,6 +802,7 @@ export const valuesQuestions: Question[] = [
     isValuesQuestion: true,
     explanation: 'English is valued as an important unifying element of Australian society.',
     source: 'Our Common Bond - Australian Values',
+    recallCount: 2,
   },
   {
     id: 79,
@@ -809,6 +813,7 @@ export const valuesQuestions: Question[] = [
     isValuesQuestion: true,
     explanation: 'Learning English helps integrate into the community, find employment, and access education.',
     source: 'Our Common Bond - Australian Values',
+    recallCount: 2,
   },
   {
     id: 80,
@@ -829,6 +834,7 @@ export const valuesQuestions: Question[] = [
     isValuesQuestion: true,
     explanation: 'Yes, learning English helps with education, employment, and community integration in Australia.',
     source: 'Our Common Bond - Australian Values',
+    recallCount: 2,
   },
   {
     id: 82,

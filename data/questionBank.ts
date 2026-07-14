@@ -60,15 +60,33 @@ function shuffleArray<T>(array: T[]): T[] {
 // Generate a quiz with the official format:
 // 5 values questions (must get all correct) + 15 general questions
 // Total: 20 questions, need 75% (15/20) to pass
+// Prioritizes high-frequency questions (recallCount) to appear more often
 export function generateQuiz(): Question[] {
-  const values = shuffleArray(getValuesQuestions()).slice(0, 5);
-  const nonValues = shuffleArray(
-    loadQuestions().filter((q) => !q.isValuesQuestion)
-  ).slice(0, 15);
+  const valuesPool = getValuesQuestions();
+  const nonValuesPool = loadQuestions().filter((q) => !q.isValuesQuestion);
+
+  // Pick values questions: prioritize those with recallCount
+  const values = weightedShuffle(valuesPool).slice(0, 5);
+
+  // Pick non-values questions: prioritize those with recallCount
+  const nonValues = weightedShuffle(nonValuesPool).slice(0, 15);
 
   // Mix values questions throughout the quiz (not all at the start)
   const combined = [...values, ...nonValues];
   return shuffleArray(combined);
+}
+
+// Weighted shuffle: questions with higher recallCount appear earlier
+function weightedShuffle(questions: Question[]): Question[] {
+  return [...questions].sort(() => {
+    // Random factor with bias toward recallCount
+    return Math.random() - 0.5;
+  }).sort((a, b) => {
+    // Higher recallCount = more likely to be picked (sorted earlier)
+    const aWeight = (a.recallCount || 0) * Math.random();
+    const bWeight = (b.recallCount || 0) * Math.random();
+    return bWeight - aWeight;
+  });
 }
 
 // Generate a category-specific practice quiz
