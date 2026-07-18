@@ -417,7 +417,7 @@ export default function QuizScreen() {
                 similarReported && styles.questionActionTextReported,
               ]}
             >
-              {similarReported ? 'Similar reported' : 'Similar Q in exam'}
+              {similarReported ? 'Similar reported' : 'Got similar Q'}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
