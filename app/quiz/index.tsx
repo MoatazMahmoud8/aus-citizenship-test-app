@@ -284,7 +284,6 @@ export default function QuizScreen() {
 
   const handleReportExamQuestion = () => {
     if (reportedExamQuestionIds.includes(currentQuestion.id)) {
-      Alert.alert('Already Reported', 'Thanks, this question was already marked as similar to one in your exam.');
       return;
     }
 
@@ -301,41 +300,26 @@ export default function QuizScreen() {
     });
 
     setReportedExamQuestionIds((prev) => [...prev, currentQuestion.id]);
-    Alert.alert('Reported', 'Thanks. This helps us identify topics to mark as most repeated.');
   };
 
   const handleReportQuestionIssue = () => {
     if (reportedIssueQuestionIds.includes(currentQuestion.id)) {
-      Alert.alert('Already Reported', 'Thanks, this question issue was already sent.');
       return;
     }
 
-    Alert.alert(
-      'Report Question Issue',
-      'Send this question to support for review?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Send Report',
-          onPress: () => {
-            Sentry.captureMessage('Question reported for review', {
-              level: 'warning',
-              tags: {
-                reportType: 'question_issue',
-                questionId: String(currentQuestion.id),
-                category: currentQuestion.category,
-              },
-              contexts: {
-                questionReport: getQuestionReportContext(),
-              },
-            });
+    Sentry.captureMessage('Question reported for review', {
+      level: 'warning',
+      tags: {
+        reportType: 'question_issue',
+        questionId: String(currentQuestion.id),
+        category: currentQuestion.category,
+      },
+      contexts: {
+        questionReport: getQuestionReportContext(),
+      },
+    });
 
-            setReportedIssueQuestionIds((prev) => [...prev, currentQuestion.id]);
-            Alert.alert('Report Sent', 'Thanks. We will review this question and answer.');
-          },
-        },
-      ]
-    );
+    setReportedIssueQuestionIds((prev) => [...prev, currentQuestion.id]);
   };
 
   if (isLoading || !currentQuestion) {
@@ -374,6 +358,9 @@ export default function QuizScreen() {
     return styles.optionText;
   };
 
+  const similarReported = reportedExamQuestionIds.includes(currentQuestion.id);
+  const issueReported = reportedIssueQuestionIds.includes(currentQuestion.id);
+
   return (
     <View style={styles.container}>
       {/* Header */}
@@ -411,20 +398,52 @@ export default function QuizScreen() {
       >
         <View style={styles.questionActions}>
           <TouchableOpacity
-            style={styles.questionActionButton}
+            style={[
+              styles.questionActionButton,
+              similarReported && styles.questionActionButtonReported,
+            ]}
             onPress={handleReportExamQuestion}
+            disabled={similarReported}
             activeOpacity={0.75}
           >
-            <Ionicons name="flame" size={15} color={Colors.blue} />
-            <Text style={styles.questionActionText}>Similar in exam</Text>
+            <Ionicons
+              name={similarReported ? 'checkmark-circle' : 'flame'}
+              size={15}
+              color={similarReported ? Colors.success : Colors.blue}
+            />
+            <Text
+              style={[
+                styles.questionActionText,
+                similarReported && styles.questionActionTextReported,
+              ]}
+            >
+              {similarReported ? 'Similar reported' : 'Similar Q in exam'}
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.questionActionButton, styles.issueActionButton]}
+            style={[
+              styles.questionActionButton,
+              styles.issueActionButton,
+              issueReported && styles.issueActionButtonReported,
+            ]}
             onPress={handleReportQuestionIssue}
+            disabled={issueReported}
             activeOpacity={0.75}
           >
-            <Ionicons name="flag" size={15} color={Colors.error} />
-            <Text style={[styles.questionActionText, styles.issueActionText]}>Issue</Text>
+            <Ionicons
+              name={issueReported ? 'checkmark-circle' : 'flag'}
+              size={15}
+              color={issueReported ? Colors.success : Colors.error}
+            />
+            <Text
+              style={[
+                styles.questionActionText,
+                styles.issueActionText,
+                issueReported && styles.questionActionTextReported,
+              ]}
+            >
+              {issueReported ? 'Issue sent' : 'Issue'}
+            </Text>
           </TouchableOpacity>
         </View>
 
@@ -626,20 +645,32 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: Spacing.sm,
-    paddingVertical: 7,
+    paddingVertical: Spacing.sm,
+    minHeight: 40,
     borderRadius: BorderRadius.full,
     backgroundColor: Colors.white,
     borderWidth: 1,
     borderColor: '#DDE7FF',
     gap: 5,
   },
+  questionActionButtonReported: {
+    backgroundColor: Colors.lightGreen,
+    borderColor: '#BEE5C8',
+  },
   issueActionButton: {
     borderColor: '#F4C7CC',
+  },
+  issueActionButtonReported: {
+    backgroundColor: Colors.lightGreen,
+    borderColor: '#BEE5C8',
   },
   questionActionText: {
     fontSize: Fonts.sizes.xs,
     fontWeight: '700',
     color: Colors.blue,
+  },
+  questionActionTextReported: {
+    color: Colors.success,
   },
   issueActionText: {
     color: Colors.error,
