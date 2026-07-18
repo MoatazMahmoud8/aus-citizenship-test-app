@@ -12,6 +12,7 @@ import {
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
+import * as Sentry from '@sentry/react-native';
 import { Colors, Fonts, Spacing, BorderRadius, Shadows } from '../../constants/theme';
 import {
   Question,
@@ -56,6 +57,8 @@ export default function QuizScreen() {
   const [showTimer, setShowTimer] = useState(true);
   const [hapticEnabled, setHapticEnabled] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const [reportedExamQuestionIds, setReportedExamQuestionIds] = useState<number[]>([]);
+  const [reportedIssueQuestionIds, setReportedIssueQuestionIds] = useState<number[]>([]);
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const scrollRef = useRef<ScrollView>(null);
@@ -262,6 +265,79 @@ export default function QuizScreen() {
     );
   };
 
+  const getQuestionReportContext = () => ({
+    questionId: currentQuestion.id,
+    question: currentQuestion.question,
+    category: currentQuestion.category,
+    source: currentQuestion.source,
+    quizMode: params.mode || 'practice',
+    quizCategory: params.category || 'all',
+    currentIndex: currentIndex + 1,
+    totalQuestions: questions.length,
+    selectedAnswerIndex: selectedAnswer,
+    selectedAnswer:
+      selectedAnswer !== null ? currentQuestion.options[selectedAnswer] : null,
+    correctAnswerIndex: currentQuestion.correctAnswer,
+    correctAnswer: currentQuestion.options[currentQuestion.correctAnswer],
+    explanationShown: showExplanation,
+  });
+
+  const handleReportExamQuestion = () => {
+    if (reportedExamQuestionIds.includes(currentQuestion.id)) {
+      Alert.alert('Already Reported', 'Thanks, this question was already marked as seen in your exam.');
+      return;
+    }
+
+    Sentry.captureMessage('Question reported as seen in real exam', {
+      level: 'info',
+      tags: {
+        reportType: 'seen_in_exam',
+        questionId: String(currentQuestion.id),
+        category: currentQuestion.category,
+      },
+      contexts: {
+        questionReport: getQuestionReportContext(),
+      },
+    });
+
+    setReportedExamQuestionIds((prev) => [...prev, currentQuestion.id]);
+    Alert.alert('Reported', 'Thanks. This helps us identify questions to mark as most repeated.');
+  };
+
+  const handleReportQuestionIssue = () => {
+    if (reportedIssueQuestionIds.includes(currentQuestion.id)) {
+      Alert.alert('Already Reported', 'Thanks, this question issue was already sent.');
+      return;
+    }
+
+    Alert.alert(
+      'Report Question Issue',
+      'Send this question to support for review?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Send Report',
+          onPress: () => {
+            Sentry.captureMessage('Question reported for review', {
+              level: 'warning',
+              tags: {
+                reportType: 'question_issue',
+                questionId: String(currentQuestion.id),
+                category: currentQuestion.category,
+              },
+              contexts: {
+                questionReport: getQuestionReportContext(),
+              },
+            });
+
+            setReportedIssueQuestionIds((prev) => [...prev, currentQuestion.id]);
+            Alert.alert('Report Sent', 'Thanks. We will review this question and answer.');
+          },
+        },
+      ]
+    );
+  };
+
   if (isLoading || !currentQuestion) {
     return (
       <View style={styles.loadingContainer}>
@@ -333,6 +409,25 @@ export default function QuizScreen() {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
+        <View style={styles.questionActions}>
+          <TouchableOpacity
+            style={styles.questionActionButton}
+            onPress={handleReportExamQuestion}
+            activeOpacity={0.75}
+          >
+            <Ionicons name="flame" size={15} color={Colors.blue} />
+            <Text style={styles.questionActionText}>In my exam</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.questionActionButton, styles.issueActionButton]}
+            onPress={handleReportQuestionIssue}
+            activeOpacity={0.75}
+          >
+            <Ionicons name="flag" size={15} color={Colors.error} />
+            <Text style={[styles.questionActionText, styles.issueActionText]}>Issue</Text>
+          </TouchableOpacity>
+        </View>
+
         <Text style={styles.questionText}>{currentQuestion.question}</Text>
 
         {/* Options */}
@@ -520,6 +615,34 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     padding: Spacing.lg,
+  },
+  questionActions: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    gap: Spacing.sm,
+    marginBottom: Spacing.md,
+  },
+  questionActionButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: Spacing.sm,
+    paddingVertical: 7,
+    borderRadius: BorderRadius.full,
+    backgroundColor: Colors.white,
+    borderWidth: 1,
+    borderColor: '#DDE7FF',
+    gap: 5,
+  },
+  issueActionButton: {
+    borderColor: '#F4C7CC',
+  },
+  questionActionText: {
+    fontSize: Fonts.sizes.xs,
+    fontWeight: '700',
+    color: Colors.blue,
+  },
+  issueActionText: {
+    color: Colors.error,
   },
   questionText: {
     fontSize: Fonts.sizes.xl,
