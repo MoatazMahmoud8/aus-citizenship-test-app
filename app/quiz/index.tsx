@@ -284,14 +284,14 @@ export default function QuizScreen() {
 
   const handleReportExamQuestion = () => {
     if (reportedExamQuestionIds.includes(currentQuestion.id)) {
-      Alert.alert('Already Reported', 'Thanks, this question was already marked as seen in your exam.');
+      Alert.alert('Already Reported', 'Thanks, this question was already marked as similar to one in your exam.');
       return;
     }
 
-    Sentry.captureMessage('Question reported as seen in real exam', {
+    Sentry.captureMessage('Question reported as similar to real exam topic', {
       level: 'info',
       tags: {
-        reportType: 'seen_in_exam',
+        reportType: 'similar_in_exam',
         questionId: String(currentQuestion.id),
         category: currentQuestion.category,
       },
@@ -301,7 +301,7 @@ export default function QuizScreen() {
     });
 
     setReportedExamQuestionIds((prev) => [...prev, currentQuestion.id]);
-    Alert.alert('Reported', 'Thanks. This helps us identify questions to mark as most repeated.');
+    Alert.alert('Reported', 'Thanks. This helps us identify topics to mark as most repeated.');
   };
 
   const handleReportQuestionIssue = () => {
@@ -416,7 +416,7 @@ export default function QuizScreen() {
             activeOpacity={0.75}
           >
             <Ionicons name="flame" size={15} color={Colors.blue} />
-            <Text style={styles.questionActionText}>In my exam</Text>
+            <Text style={styles.questionActionText}>Similar in exam</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.questionActionButton, styles.issueActionButton]}
