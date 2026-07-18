@@ -13,6 +13,13 @@ import { studySections } from '../../data/studyMaterials';
 
 export default function StudyScreen() {
   const router = useRouter();
+  const featuredStudyIds = ['numbers_dates', 'timeline'];
+  const featuredSections = studySections.filter((section) =>
+    featuredStudyIds.includes(section.id)
+  );
+  const coreStudySections = studySections.filter(
+    (section) => !featuredStudyIds.includes(section.id)
+  );
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -71,9 +78,76 @@ export default function StudyScreen() {
         </View>
       </View>
 
+      {/* Quick Memory Hub */}
+      <View style={styles.memoryHub}>
+        <View style={styles.memoryHubHeader}>
+          <View style={styles.memoryHubIcon}>
+            <Ionicons name="flash" size={22} color={Colors.white} />
+          </View>
+          <View style={styles.memoryHubTitleGroup}>
+            <Text style={styles.memoryHubEyebrow}>High-yield review</Text>
+            <Text style={styles.memoryHubTitle}>Timeline, Numbers & Dates</Text>
+          </View>
+        </View>
+
+        <Text style={styles.memoryHubText}>
+          Review the years, dates, parliament numbers, voting rules, and history
+          milestones learners most often mix up.
+        </Text>
+
+        <View style={styles.memoryChips}>
+          <View style={styles.memoryChip}>
+            <Text style={styles.memoryChipValue}>1788</Text>
+            <Text style={styles.memoryChipLabel}>First Fleet</Text>
+          </View>
+          <View style={styles.memoryChip}>
+            <Text style={styles.memoryChipValue}>1901</Text>
+            <Text style={styles.memoryChipLabel}>Federation</Text>
+          </View>
+          <View style={styles.memoryChip}>
+            <Text style={styles.memoryChipValue}>76</Text>
+            <Text style={styles.memoryChipLabel}>Senators</Text>
+          </View>
+          <View style={styles.memoryChip}>
+            <Text style={styles.memoryChipValue}>18+</Text>
+            <Text style={styles.memoryChipLabel}>Voting age</Text>
+          </View>
+        </View>
+
+        <View style={styles.memoryLinks}>
+          {featuredSections.map((section) => (
+            <TouchableOpacity
+              key={section.id}
+              style={styles.memoryLink}
+              onPress={() => router.push(`/study/${section.id}`)}
+              activeOpacity={0.75}
+            >
+              <View
+                style={[
+                  styles.memoryLinkIcon,
+                  { backgroundColor: `${section.color}18` },
+                ]}
+              >
+                <Ionicons
+                  name={section.icon as any}
+                  size={20}
+                  color={section.color}
+                />
+              </View>
+              <View style={styles.memoryLinkContent}>
+                <Text style={styles.memoryLinkTitle}>{section.title}</Text>
+                <Text style={styles.memoryLinkSubtitle}>{section.subtitle}</Text>
+              </View>
+              <Ionicons name="chevron-forward" size={18} color={Colors.gray} />
+            </TouchableOpacity>
+          ))}
+        </View>
+      </View>
+
       {/* Study Sections Grid */}
+      <Text style={styles.studyGridTitle}>Study Cards</Text>
       <View style={styles.gridContainer}>
-        {studySections.map((section) => (
+        {coreStudySections.map((section) => (
           <TouchableOpacity
             key={section.id}
             style={styles.gridCard}
@@ -158,6 +232,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.md,
     marginBottom: Spacing.lg,
     justifyContent: 'space-between',
+  },
+  studyGridTitle: {
+    fontSize: Fonts.sizes.lg,
+    fontWeight: 'bold',
+    color: Colors.charcoal,
+    marginHorizontal: Spacing.lg,
+    marginBottom: Spacing.md,
   },
   gridCard: {
     width: '48%',
@@ -255,5 +336,104 @@ const styles = StyleSheet.create({
     fontSize: Fonts.sizes.sm,
     color: Colors.darkGray,
     lineHeight: 20,
+  },
+  memoryHub: {
+    marginHorizontal: Spacing.lg,
+    marginBottom: Spacing.lg,
+    padding: Spacing.lg,
+    backgroundColor: Colors.darkBlue,
+    borderRadius: BorderRadius.lg,
+    ...Shadows.medium,
+  },
+  memoryHubHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: Spacing.md,
+  },
+  memoryHubIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: BorderRadius.md,
+    backgroundColor: Colors.blue,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: Spacing.md,
+  },
+  memoryHubTitleGroup: {
+    flex: 1,
+  },
+  memoryHubEyebrow: {
+    fontSize: Fonts.sizes.xs,
+    color: Colors.gold,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+  },
+  memoryHubTitle: {
+    fontSize: Fonts.sizes.lg,
+    fontWeight: 'bold',
+    color: Colors.white,
+    marginTop: 2,
+  },
+  memoryHubText: {
+    fontSize: Fonts.sizes.sm,
+    color: 'rgba(255,255,255,0.86)',
+    lineHeight: 20,
+    marginBottom: Spacing.md,
+  },
+  memoryChips: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: Spacing.sm,
+    marginBottom: Spacing.md,
+  },
+  memoryChip: {
+    width: '48%',
+    paddingVertical: Spacing.sm,
+    paddingHorizontal: Spacing.md,
+    backgroundColor: 'rgba(255,255,255,0.12)',
+    borderRadius: BorderRadius.md,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.16)',
+  },
+  memoryChipValue: {
+    fontSize: Fonts.sizes.lg,
+    fontWeight: 'bold',
+    color: Colors.gold,
+  },
+  memoryChipLabel: {
+    fontSize: Fonts.sizes.xs,
+    color: 'rgba(255,255,255,0.78)',
+    marginTop: 2,
+  },
+  memoryLinks: {
+    gap: Spacing.sm,
+  },
+  memoryLink: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: Spacing.md,
+    backgroundColor: Colors.white,
+    borderRadius: BorderRadius.md,
+  },
+  memoryLinkIcon: {
+    width: 38,
+    height: 38,
+    borderRadius: BorderRadius.sm,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: Spacing.md,
+  },
+  memoryLinkContent: {
+    flex: 1,
+  },
+  memoryLinkTitle: {
+    fontSize: Fonts.sizes.sm,
+    fontWeight: 'bold',
+    color: Colors.charcoal,
+  },
+  memoryLinkSubtitle: {
+    fontSize: Fonts.sizes.xs,
+    color: Colors.gray,
+    marginTop: 2,
   },
 });

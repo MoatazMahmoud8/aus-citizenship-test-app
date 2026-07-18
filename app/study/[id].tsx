@@ -52,10 +52,20 @@ export default function StudyDetailScreen() {
 
       {/* Key Facts Quick Reference */}
       <View style={styles.keyFactsCard}>
-        <Text style={styles.keyFactsTitle}>🔑 Key Facts to Remember</Text>
+        <View style={styles.keyFactsHeader}>
+          <View style={styles.keyFactsIcon}>
+            <Ionicons name="key" size={20} color={Colors.blue} />
+          </View>
+          <View style={styles.keyFactsTitleGroup}>
+            <Text style={styles.keyFactsTitle}>Key Facts to Remember</Text>
+            <Text style={styles.keyFactsSubtitle}>Quick points to review before practice</Text>
+          </View>
+        </View>
         {section.keyFacts.map((fact, index) => (
           <View key={index} style={styles.keyFactRow}>
-            <Text style={styles.keyFactBullet}>•</Text>
+            <View style={styles.keyFactNumber}>
+              <Text style={styles.keyFactNumberText}>{index + 1}</Text>
+            </View>
             <Text style={styles.keyFactText}>{fact}</Text>
           </View>
         ))}
@@ -172,32 +182,66 @@ const styles = StyleSheet.create({
   keyFactsCard: {
     margin: Spacing.lg,
     padding: Spacing.lg,
-    backgroundColor: Colors.lightGold,
+    backgroundColor: Colors.white,
     borderRadius: BorderRadius.lg,
     borderWidth: 1,
-    borderColor: '#E6D295',
+    borderColor: '#DDE7FF',
+    ...Shadows.small,
+  },
+  keyFactsHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: Spacing.md,
+  },
+  keyFactsIcon: {
+    width: 42,
+    height: 42,
+    borderRadius: BorderRadius.md,
+    backgroundColor: Colors.lightBlue,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: Spacing.md,
+  },
+  keyFactsTitleGroup: {
+    flex: 1,
   },
   keyFactsTitle: {
     fontSize: Fonts.sizes.lg,
     fontWeight: 'bold',
     color: Colors.charcoal,
-    marginBottom: Spacing.md,
+  },
+  keyFactsSubtitle: {
+    fontSize: Fonts.sizes.xs,
+    color: Colors.gray,
+    marginTop: 2,
   },
   keyFactRow: {
     flexDirection: 'row',
+    alignItems: 'flex-start',
+    backgroundColor: Colors.offWhite,
+    borderRadius: BorderRadius.md,
+    padding: Spacing.md,
     marginBottom: Spacing.sm,
   },
-  keyFactBullet: {
-    fontSize: Fonts.sizes.md,
-    color: Colors.darkGray,
+  keyFactNumber: {
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    backgroundColor: Colors.blue,
+    alignItems: 'center',
+    justifyContent: 'center',
     marginRight: Spacing.sm,
+  },
+  keyFactNumberText: {
+    fontSize: Fonts.sizes.xs,
+    color: Colors.white,
     fontWeight: 'bold',
   },
   keyFactText: {
     flex: 1,
-    fontSize: Fonts.sizes.md,
+    fontSize: Fonts.sizes.sm,
     color: Colors.darkGray,
-    lineHeight: 22,
+    lineHeight: 20,
   },
   sectionTitle: {
     fontSize: Fonts.sizes.lg,
