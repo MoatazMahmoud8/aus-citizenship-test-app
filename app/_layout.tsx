@@ -61,6 +61,8 @@ function RootLayout() {
           options={{
             title: 'Practice Test',
             presentation: 'card',
+            headerBackTitle: 'Back',
+            headerBackTitleVisible: true,
           }}
         />
         <Stack.Screen
