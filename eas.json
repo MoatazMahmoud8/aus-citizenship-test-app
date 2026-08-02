@@ -24,7 +24,6 @@
       }
     },
     "production": {
-      "autoIncrement": false,
       "credentialsSource": "remote",
       "node": "22.15.0",
       "prebuildCommand": "prebuild --clean",
