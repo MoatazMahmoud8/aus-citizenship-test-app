@@ -25,7 +25,6 @@
     },
     "production": {
       "autoIncrement": false,
-      "appVersionSource": "local",
       "credentialsSource": "remote",
       "node": "22.15.0",
       "prebuildCommand": "prebuild --clean",
